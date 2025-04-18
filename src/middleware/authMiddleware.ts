@@ -1,4 +1,4 @@
-import { PrismaClient } from "../generated/prisma/client.js";
+import { PrismaClient } from "../../generated/prisma";
 import type { Response, Request, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
@@ -10,7 +10,11 @@ interface jwtInterface {
 
 const prisma = new PrismaClient();
 
-export const isauthenticated = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+export const isauthenticated = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
   try {
     const token = req.cookies.jwt;
 
@@ -26,6 +30,8 @@ export const isauthenticated = async (req: Request, res: Response, next: NextFun
 
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET) as jwtInterface;
 
+    console.log(decodedToken.id);
+
     const user = await prisma.user.findUnique({
       where: {
         id: decodedToken.id,
@@ -39,7 +45,6 @@ export const isauthenticated = async (req: Request, res: Response, next: NextFun
 
     req.user = user;
     next();
-
   } catch (err: any) {
     if (err instanceof jwt.JsonWebTokenError) {
       res.status(401).json({ message: "Invalid token" });
