@@ -11251,7 +11251,7 @@ export namespace Prisma {
     addresses?: AddressListRelationFilter
     carts?: CartListRelationFilter
     orders?: OrderListRelationFilter
-  }, "id" | "email">
+  }, "id" | "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
@@ -11316,7 +11316,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Category"> | Date | string
     updatedAt?: DateTimeFilter<"Category"> | Date | string
     products?: ProductListRelationFilter
-  }, "id" | "name">
+  }, "id" | "id" | "name">
 
   export type CategoryOrderByWithAggregationInput = {
     id?: SortOrder
@@ -11385,7 +11385,7 @@ export namespace Prisma {
     Category?: XOR<CategoryNullableScalarRelationFilter, CategoryWhereInput> | null
     cartItems?: CartItemListRelationFilter
     orderItems?: OrderItemListRelationFilter
-  }, "id">
+  }, "id" | "id">
 
   export type ProductOrderByWithAggregationInput = {
     id?: SortOrder
@@ -11464,7 +11464,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Address"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     Order?: OrderListRelationFilter
-  }, "id">
+  }, "id" | "id">
 
   export type AddressOrderByWithAggregationInput = {
     id?: SortOrder
@@ -11535,7 +11535,7 @@ export namespace Prisma {
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     cartItems?: CartItemListRelationFilter
     order?: XOR<OrderNullableScalarRelationFilter, OrderWhereInput> | null
-  }, "id">
+  }, "id" | "id">
 
   export type CartOrderByWithAggregationInput = {
     id?: SortOrder
@@ -11596,7 +11596,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"CartItem"> | Date | string
     cart?: XOR<CartScalarRelationFilter, CartWhereInput>
     product?: XOR<ProductScalarRelationFilter, ProductWhereInput>
-  }, "id">
+  }, "id" | "id">
 
   export type CartItemOrderByWithAggregationInput = {
     id?: SortOrder
@@ -11673,7 +11673,7 @@ export namespace Prisma {
     cart?: XOR<CartScalarRelationFilter, CartWhereInput>
     address?: XOR<AddressNullableScalarRelationFilter, AddressWhereInput> | null
     orderItems?: OrderItemListRelationFilter
-  }, "id" | "cartId">
+  }, "id" | "id" | "cartId">
 
   export type OrderOrderByWithAggregationInput = {
     id?: SortOrder
@@ -11742,7 +11742,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"OrderItem"> | Date | string
     order?: XOR<OrderScalarRelationFilter, OrderWhereInput>
     product?: XOR<ProductScalarRelationFilter, ProductWhereInput>
-  }, "id">
+  }, "id" | "id">
 
   export type OrderItemOrderByWithAggregationInput = {
     id?: SortOrder

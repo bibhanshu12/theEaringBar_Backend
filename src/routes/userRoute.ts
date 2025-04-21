@@ -1,15 +1,19 @@
-import { Router } from "express";
-import { getAllUsers, Signup } from "../controllers/User_Controller.ts";
-import { validate } from "../middleware/validateMiddleware.ts";
-import { signUpInput,signInInput } from "../validation/index.ts";
-import { catchAsync } from "../utils/catchAsync.ts";
-import { isauthenticated } from "../middleware/authMiddleware.ts";
+    import { Router } from "express";
+    import { forgetPassword, getAllUsers, signIn, signOut, signUp } from "../controllers/User_Controller";
+    import { validate } from "../middleware/validateMiddleware";
+    import { signUpInput,signInInput } from "../validation/index";
+    import { catchAsync } from "../utils/catchAsync";
+    import { isAdmin, isauthenticated } from "../middleware/authMiddleware";
 
 
-export const router=Router();
+    export const router=Router();
 
 
-router.post('/signup',validate(signUpInput),catchAsync(Signup));
-router.get('/allusers',isauthenticated,catchAsync(getAllUsers))
+    router.post('/signup',validate(signUpInput),catchAsync(signUp));
+    router.post('/signin',validate(signInInput),catchAsync(signIn));
+    router.post("/signout",isauthenticated,catchAsync(signOut));
+    router.post('/passwordchange',isauthenticated,catchAsync(forgetPassword))
+    router.get('/allusers',isauthenticated,isAdmin,catchAsync(getAllUsers));
+
 
 

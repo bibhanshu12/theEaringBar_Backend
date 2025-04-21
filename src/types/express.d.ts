@@ -1,10 +1,10 @@
-import type { User } from "../generated/prisma/client.js"; // adjust the path if needed
+  import type { User } from "../generated/prisma/client"; // adjust the path if needed
 
 
-declare global {
-  namespace Express {
-    interface Request {
-      user?: User;
+  declare global {
+    namespace Express {
+      interface Request {
+        user?: User;
+      }
     }
   }
-}

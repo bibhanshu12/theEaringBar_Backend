@@ -15,7 +15,7 @@ datasource db {
 }
 
 model User {
-  id        String    @id @default(uuid())
+  id        String    @id @unique @default(uuid())
   email     String    @unique
   password  String
   firstName String
@@ -36,7 +36,7 @@ enum userRole {
 }
 
 model Category {
-  id          Int       @id @default(autoincrement())
+  id          Int       @id @unique @default(autoincrement())
   name        String    @unique
   description String?
   products    Product[]
@@ -45,7 +45,7 @@ model Category {
 }
 
 model Product {
-  id          String      @id @default(uuid())
+  id          String      @id @unique @default(uuid())
   name        String
   description String?
   price       Float
@@ -58,7 +58,7 @@ model Product {
 }
 
 model Address {
-  id        String   @id @default(uuid())
+  id        String   @id @unique @default(uuid())
   userId    String
   user      User     @relation(fields: [userId], references: [id])
   street    String
@@ -73,7 +73,7 @@ model Address {
 }
 
 model Cart {
-  id        String     @id @default(uuid())
+  id        String     @id @unique @default(uuid())
   userId    String
   user      User       @relation(fields: [userId], references: [id])
   cartItems CartItem[]
@@ -84,7 +84,7 @@ model Cart {
 }
 
 model CartItem {
-  id        String   @id @default(uuid())
+  id        String   @id @unique @default(uuid())
   cartId    String
   cart      Cart     @relation(fields: [cartId], references: [id])
   productId String
@@ -95,7 +95,7 @@ model CartItem {
 }
 
 model Order {
-  id          String      @id @default(uuid())
+  id          String      @id @unique @default(uuid())
   userId      String
   user        User        @relation(fields: [userId], references: [id])
   cart        Cart        @relation(fields: [cartId], references: [id])
@@ -121,7 +121,7 @@ enum OrderStatus {
 /// MODEL: OrderItem
 /// Stores a snapshot of the product data (e.g., price) at the time of order placement.
 model OrderItem {
-  id        String   @id @default(uuid())
+  id        String   @id @unique @default(uuid())
   orderId   String
   order     Order    @relation(fields: [orderId], references: [id])
   productId String
