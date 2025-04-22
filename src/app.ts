@@ -1,9 +1,11 @@
-import express from "express";
-import cors from "cors";
-import dotenv from "dotenv";
-import router from "./routes/userRoute";
-import cookieParser from "cookie-parser";
-// Configure environment variables
+
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+ import {router} from "../src/routes/userRoute"
+ import {router as addressRouter} from "../src/routes/addressRoute"
+ import cookieParser from "cookie-parser"
+
 dotenv.config();
 
 const app = express();
@@ -14,7 +16,8 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/api", router);
+app.use('/api',router);
+app.use('/api',addressRouter);
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

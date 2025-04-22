@@ -1,13 +1,19 @@
-import { Router } from "express";
-import { getAllUsers, Signup } from "../controllers/User_Controller";
-import { validate } from "../middleware/validateMiddleware";
-import { signUpInput } from "../validation/index";
-import { catchAsync } from "../utils/catchAsync";
-import { isauthenticated } from "../middleware/authMiddleware";
+    import { Router } from "express";
+    import { forgetPassword, getAllUsers, signIn, signOut, signUp } from "../controllers/User_Controller";
+    import { validate } from "../middleware/validateMiddleware";
+    import { signUpInput,signInInput } from "../validation/index";
+    import { catchAsync } from "../utils/catchAsync";
+    import { isAdmin, isauthenticated } from "../middleware/authMiddleware";
 
-const router = Router();
 
-router.post("/signup", validate(signUpInput), catchAsync(Signup));
-router.get("/allusers", isauthenticated, catchAsync(getAllUsers));
+    export const router=Router();
 
-export default router;
+
+    router.post('/signup',validate(signUpInput),catchAsync(signUp));
+    router.post('/signin',validate(signInInput),catchAsync(signIn));
+    router.post("/signout",isauthenticated,catchAsync(signOut));
+    router.post('/passwordchange',isauthenticated,catchAsync(forgetPassword))
+    router.get('/allusers',isauthenticated,isAdmin,catchAsync(getAllUsers));
+
+
+
