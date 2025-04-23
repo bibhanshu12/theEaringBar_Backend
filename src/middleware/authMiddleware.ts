@@ -1,4 +1,8 @@
-// types.d.ts - Create this file in your project
+import { PrismaClient } from "../generated/prisma/client";
+import type { Response, Request, NextFunction } from "express";
+import jwt from "jsonwebtoken";
+import { ApiError } from '../utils/apiErrorUtils';
+
 declare namespace Express {
   export interface Request {
     user: {
@@ -7,16 +11,10 @@ declare namespace Express {
       firstName: string;
       lastName: string;
       role: string;
-      // Add other user properties as needed
     };
   }
 }
 
-// authMiddleware.ts
-import { PrismaClient } from '../generated/prisma';
-import type { Response, Request, NextFunction } from "express";
-import jwt from "jsonwebtoken";
-import { ApiError } from '../utils/apiErrorUtils';
 
 interface jwtInterface {
   userId: string;

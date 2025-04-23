@@ -49,11 +49,16 @@ export const updateAddressValidate = yup.object({
 });
 
 
-export const addProductValidate=yup.object({
-
-  name:yup.string().required(),
-  description:yup.string().max(30,"should be less then 30 letters ").required(),
-  price:yup.number().max(10,"limit is 10!").required(),
-  stock:yup.number().required(),
-  // image:,
-})
+export const addProductSchema = yup.object({
+  name: yup.string().required("Product name is required"),
+  description: yup.string(),
+  price: yup.number().positive("Price must be positive").required("Price is required"),
+  stock: yup.number().integer().min(0).required("Stock is required"),
+  categoryId: yup.number().required("Category ID is required"),
+  colors: yup.array().of(
+    yup.object({
+      colorId: yup.string().required("Color ID is required"),
+      stock: yup.number().integer().min(0).required("Stock per color is required")
+    })
+  ).optional()
+});

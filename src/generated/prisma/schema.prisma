@@ -30,7 +30,7 @@ enum userRole {
 }
 
 model Category {
-  id          Int       @id @default(autoincrement())
+  id          Int       @id @unique @default(autoincrement())
   name        String    @unique
   description String?
   products    Product[]
@@ -39,20 +39,35 @@ model Category {
 }
 
 model Product {
-  id          String      @id @default(uuid())
+  id          String         @id @unique @default(uuid())
   name        String
   description String?
+  images      ProductImage[] // Changed from imageUrl to images relation
   price       Float
   stock       Int
-  imageUrl    String?
-  Category    Category?   @relation(fields: [categoryId], references: [id])
+  Category    Category?      @relation(fields: [categoryId], references: [id])
   categoryId  Int?
+  colors      ProductColor[]
   cartItems   CartItem[]
   orderItems  OrderItem[]
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+}
+
+// New model for product images
+model ProductImage {
+  id        String   @id @unique @default(uuid())
+  imageUrl  String
+  publicId  String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String
+  isDefault Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Address {
-  id        String   @id @default(uuid())
+  id        String   @id @unique @default(uuid())
   userId    String
   user      User     @relation(fields: [userId], references: [id])
   street    String
@@ -67,34 +82,36 @@ model Address {
 }
 
 model Cart {
-  id        String     @id @default(uuid())
+  id        String     @id @unique @default(uuid())
   userId    String
   user      User       @relation(fields: [userId], references: [id])
   cartItems CartItem[]
   isOrdered Boolean    @default(false)
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
-  order     Order? // One-to-one relation with Order
+  order     Order? // One-to-one relation with Order imp to know 
 }
 
 model CartItem {
-  id        String   @id @default(uuid())
+  id        String   @id @unique @default(uuid())
   cartId    String
   cart      Cart     @relation(fields: [cartId], references: [id])
   productId String
   product   Product  @relation(fields: [productId], references: [id])
+  colorId   String?
+  color     Color?   @relation(fields: [colorId], references: [id], onDelete: SetNull)
   quantity  Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Order {
-  id          String      @id @default(uuid())
+  id          String      @id @unique @default(uuid())
   userId      String
   user        User        @relation(fields: [userId], references: [id])
   cart        Cart        @relation(fields: [cartId], references: [id])
   cartId      String      @unique
-  addressId   String? // Make this unique for one-to-one relation
+  addressId   String?
   address     Address?    @relation(fields: [addressId], references: [id])
   totalAmount Float
   status      OrderStatus @default(PENDING)
@@ -103,7 +120,6 @@ model Order {
   orderItems  OrderItem[]
 }
 
-/// Enum representing order statuses.
 enum OrderStatus {
   PENDING
   CONFIRMED
@@ -115,12 +131,38 @@ enum OrderStatus {
 /// MODEL: OrderItem
 /// Stores a snapshot of the product data (e.g., price) at the time of order placement.
 model OrderItem {
-  id        String   @id @default(uuid())
+  id        String   @id @unique @default(uuid())
   orderId   String
   order     Order    @relation(fields: [orderId], references: [id])
   productId String
   product   Product  @relation(fields: [productId], references: [id])
+  colorId   String?
+  color     Color?   @relation(fields: [colorId], references: [id], onDelete: SetNull)
   quantity  Int      @default(1)
-  price     Float // Price per unit at time of purchase
+  price     Float
   createdAt DateTime @default(now())
+}
+
+model Color {
+  id         String         @id @unique @default(uuid())
+  name       String         @unique
+  hexCode    String         @unique
+  products   ProductColor[]
+  cartItems  CartItem[] // Add this relation
+  orderItems OrderItem[] // Add this relation
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
+}
+
+model ProductColor {
+  id        String   @id @unique @default(uuid())
+  product   Product  @relation(fields: [productId], references: [id])
+  productId String
+  color     Color    @relation(fields: [colorId], references: [id])
+  colorId   String
+  stock     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  @@unique([productId, colorId])
 }
