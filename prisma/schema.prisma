@@ -70,7 +70,7 @@ model ProductCategory {
   updatedAt  DateTime @default(now())
 
   @@unique([productId, categoryId])
-}
+} 
 
 // New model for product images
 model ProductImage {

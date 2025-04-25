@@ -1,7 +1,7 @@
 import express from "express";
-import { addProduct, allProducts, deleteProduct } from "../controllers/Product_Controller";
+import { addProduct, allProducts, deleteProduct, updateProduct } from "../controllers/Product_Controller";
 import { validate } from "../middleware/validateMiddleware";
-import { addProductSchema } from "../validation/index";
+import { addProductSchema, updateProductSchema } from "../validation/index";
 import { upload } from "../middleware/multerfileuploader";
 import { isAdmin, isauthenticated } from "../middleware/authMiddleware";
 
@@ -16,5 +16,13 @@ router.post(
   addProduct
 );
 
+router.post(
+  "/updateproduct/:productId",
+  isauthenticated,
+  isAdmin,
+  upload.array("images", 5),
+  validate(updateProductSchema),
+  updateProduct
+);
 router.delete("/delproduct/:productId",isauthenticated,isAdmin,deleteProduct);
 router.get("/allproducts",isauthenticated,isAdmin,allProducts);

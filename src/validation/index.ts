@@ -96,3 +96,45 @@ export const addProductSchema = yup.object({
     )
     .optional(),
 });
+
+export const updateProductSchema = yup.object({
+  name: yup.string().optional(),
+  description: yup.string().optional(),
+  price: yup
+    .string()
+    .optional()
+    .test("is-decimal", "Price must be a number", (val) => val === undefined || !isNaN(Number(val))),
+  categoryIds: yup
+    .array()
+    .transform((value, original) => {
+      if (typeof original === 'string') {
+        try {
+          return JSON.parse(original);
+        } catch {
+          return [];
+        }
+      }
+      return value;
+    })
+    .of(yup.string())
+    .optional(),
+  colors: yup
+    .array()
+    .transform((value, original) => {
+      if (typeof original === 'string') {
+        try {
+          return JSON.parse(original);
+        } catch {
+          return [];
+        }
+      }
+      return value;
+    })
+    .of(
+      yup.object({
+        name: yup.string().required("Color name is required"),
+        stock: yup.number().integer().min(0).required("Stock per color is required"),
+      })
+    )
+    .optional(),
+});
