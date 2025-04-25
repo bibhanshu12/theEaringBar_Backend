@@ -5,6 +5,7 @@ import { signUpInput,signInInput } from "../validation/index";
 import * as bcrypt from "bcrypt"
 import type { Asserts } from 'yup'
 import { generateToken } from "../utils/generateToken.util";
+import jwt from "jsonwebtoken";
 
 const prisma = new PrismaClient();
 
@@ -85,11 +86,28 @@ export const signIn=async(req:Request,res:Response)=>{
      if(!matchpassword){
         throw new ApiError(400,"Password didn't match !")
     }
+   
     
+
+
+    // const token = jwt.sign({ userId: existUser.id }, process.env.JWT_SECRET, { expiresIn: '1d' });
+    // res
+    //   .cookie("jwt", token, {
+    //     httpOnly: true,
+    //     secure: process.env.NODE_ENV === "production",
+    //     sameSite: "lax",
+    //     maxAge: 24 * 60 * 60 * 1000,
+    //   })
+    //   .status(200)
+    //   .json({
+    //     msg: "LoggedIn Successful!",
+    //     user: { /*…*/ },
+    //   });
+    
+
+
     const token=generateToken(existUser.id.toString(),res);
-
-
-
+    
      if(!token){
         return new ApiError(400,"Failed to generate Token !")
     }
@@ -208,6 +226,7 @@ export const getAllUsers=async(req:Request,res:Response)=>{
         firstName: true,
         email: true,
         addresses:true,
+        role:true,
       },
     });
 

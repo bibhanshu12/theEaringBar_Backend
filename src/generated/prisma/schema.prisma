@@ -1,6 +1,12 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
 generator client {
   provider = "prisma-client-js"
-  output   = "../generated/prisma"
+  output   = "../src/generated/prisma"
 }
 
 datasource db {
@@ -30,28 +36,39 @@ enum userRole {
 }
 
 model Category {
-  id          Int       @id @unique @default(autoincrement())
-  name        String    @unique
+  id          Int               @id @unique @default(autoincrement())
+  name        String            @unique
   description String?
-  products    Product[]
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  products    ProductCategory[] // Changed from Product[] to ProductCategory[]
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
 }
 
 model Product {
-  id          String         @id @unique @default(uuid())
+  id          String            @id @unique @default(uuid())
   name        String
   description String?
-  images      ProductImage[] // Changed from imageUrl to images relation
+  images      ProductImage[]
   price       Float
   stock       Int
-  Category    Category?      @relation(fields: [categoryId], references: [id])
-  categoryId  Int?
+  categories  ProductCategory[] // Changed from single Category to many
   colors      ProductColor[]
   cartItems   CartItem[]
   orderItems  OrderItem[]
-  createdAt   DateTime       @default(now())
-  updatedAt   DateTime       @updatedAt
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+}
+
+model ProductCategory {
+  id         String   @id @unique @default(uuid())
+  product    Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId  String
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now())
+
+  @@unique([productId, categoryId])
 }
 
 // New model for product images
@@ -77,7 +94,7 @@ model Address {
   label     String?
   state     String
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime @default(now())
   Order     Order[]
 }
 

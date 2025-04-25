@@ -1,5 +1,5 @@
 import express from "express";
-import { addProduct } from "../controllers/Product_Controller";
+import { addProduct, allProducts, deleteProduct } from "../controllers/Product_Controller";
 import { validate } from "../middleware/validateMiddleware";
 import { addProductSchema } from "../validation/index";
 import { upload } from "../middleware/multerfileuploader";
@@ -12,11 +12,9 @@ router.post(
   isauthenticated,
   isAdmin,
   upload.array("images", 5),
-  (req, res, next) => {
-    console.log(">>>> req.body:", req.body);
-    console.log(">>>> req.files:", req.files?.map(f => f.fieldname, f => f.originalname));
-    next();
-  },
   validate(addProductSchema),
   addProduct
 );
+
+router.delete("/delproduct/:productId",isauthenticated,isAdmin,deleteProduct);
+router.get("/allproducts",isauthenticated,isAdmin,allProducts);

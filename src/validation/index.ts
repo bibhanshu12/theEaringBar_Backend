@@ -49,16 +49,50 @@ export const updateAddressValidate = yup.object({
 });
 
 
+
+
 export const addProductSchema = yup.object({
   name: yup.string().required("Product name is required"),
-  description: yup.string(),
-  price: yup.number().positive("Price must be positive").required("Price is required"),
-  stock: yup.number().integer().min(0).required("Stock is required"),
-  categoryId: yup.number().required("Category ID is required"),
-  colors: yup.array().of(
-    yup.object({
-      colorId: yup.string().required("Color ID is required"),
-      stock: yup.number().integer().min(0).required("Stock per color is required")
+  description: yup.string().optional(),
+  price: yup
+    .string()
+    .required("Price is required")
+    .test("is-decimal", "Price must be a number", (val) => !isNaN(Number(val))),
+  categoryIds: yup
+    .array()
+    .transform((value, original) => {
+      if (typeof original === 'string') {
+        try {
+          return JSON.parse(original);
+        } catch {
+          return [];
+        }
+      }
+      return value;
     })
-  ).optional()
+    .of(yup.string().required("Category ID is required"))
+    .min(1, "At least one category is required"),
+  colors: yup
+    .array()
+    .transform((value, original) => {
+      if (typeof original === 'string') {
+        try {
+          return JSON.parse(original);
+        } catch {
+          return [];
+        }
+      }
+      return value;
+    })
+    .of(
+      yup.object({
+        name: yup.string().required("Color name is required"),
+        stock: yup
+          .number()
+          .integer()
+          .min(0)
+          .required("Stock per color is required"),
+      })
+    )
+    .optional(),
 });

@@ -54,7 +54,6 @@ export const isauthenticated = async (
       res.status(404).json({ message: "User not found!" });
       return;
     }
-
     req.user = user;
 
     next();
@@ -74,21 +73,16 @@ export const isauthenticated = async (
 };
 
 export const isAdmin = (req: Request, res: Response, next: NextFunction): void => {
-  // No need for async here since we're not doing any async operations
-  try {
-    if (!req.user || req.user.role !== "ADMIN") {
-      res.status(403).json({ message: "Access denied: Admin only" });
-      return;
-    }
-    
-    next();
-  } catch (err: any) {
-    res.status(500).json({ message: "Server error", error: err.message });
+  if (!req.user || req.user.role !== "ADMIN") {
+
+    res.status(403).json({ message: "Access denied: Admin only" });
+    return; 
   }
+  
+  next();
 };
 
 export const isVendor = (req: Request, res: Response, next: NextFunction): void => {
-  // No need for async here since we're not doing any async operations
   try {
     if (!req.user || (req.user.role !== "VENDOR" && req.user.role !== "ADMIN")) {
       res.status(403).json({ message: "Access denied: only Admin or Vendor can have access !" });
