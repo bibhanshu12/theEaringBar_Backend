@@ -23,10 +23,15 @@ export const addCart = async (req: Request, res: Response) => {
         },
       });
     
+
+      if (!stockData) {
+        throw new ApiError(404, "Color not found for this product");
+      }
+
       if(stockData){
 
         if(quantity>stockData?.stock){
-            res.status(400).json({msg:`Only ${stockData?.stock} left for this color. Can't order above stock`})
+            res.status(400).json({msg:`Only ${stockData?.stock} left for this color. Can't order above stock`,stock:stockData.stock})
             return;
         }
 
@@ -37,6 +42,7 @@ export const addCart = async (req: Request, res: Response) => {
     let cartCheck = await prisma.cart.findFirst({
       where: {
         userId: user.id,
+        isOrdered:false
       },
     });
 
@@ -71,21 +77,21 @@ export const addCart = async (req: Request, res: Response) => {
       };
     }
 
-    // const cartItem = await prisma.cartItem.upsert({
-    //   where: whereUnique,
-    //   update: {
-    //     quantity: { increment: quantity },
-    //   },
-    //   create: {
-    //     cartId: cartCheck.id,
-    //     productId,
-    //     colorId, //will be not in use if undefined
-    //     quantity,
-    //   },
-    // });
+    const cartItem = await prisma.cartItem.upsert({
+      where: whereUnique,
+      update: {
+        quantity: { increment: quantity },
+      },
+      create: {
+        cartId: cartCheck.id,
+        productId,
+        colorId, //will be not in use if undefined
+        quantity,
+      },
+    });
 
-    // res.status(200).json({ msg: "Item added to Cart !", cartItem });
-    res.status(200).json({ msg: "Item added to Cart !", stockData });
+    res.status(200).json({ msg: "Item added to Cart !", cartItem });
+  return;
   } catch (err: any) {
     res.status(400).json({ msg: "Failed to Add to cart!" });
     return;
@@ -96,7 +102,7 @@ export const showCart = async (req: Request, res: Response) => {
   try {
     const userId = req.user?.id;
     const getcart = await prisma.cart.findFirst({
-      where: { userId },
+      where: { userId ,isOrdered:false },
     });
     if (!getcart) {
       throw new ApiError(400, "Cannot fetch cartId");
@@ -106,12 +112,16 @@ export const showCart = async (req: Request, res: Response) => {
         cartId: getcart.id,
       },
     });
+
     res.status(200).json({ status: "success", getCartItems });
   } catch (err: any) {
     res.status(400).json({ msg: "failed to show cart", err: err.message });
   }
 };
 
+
+
+//call this to remove cartItem
 export const deletecartItem = async (req: Request, res: Response) => {
   try {
     const { productId, colorId, cartItemId, cartId } = req.body;

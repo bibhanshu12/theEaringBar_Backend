@@ -7,6 +7,7 @@ import dotenv from 'dotenv';
  import {router as productRouter} from "../src/routes/productRoute"
  import cookieParser from "cookie-parser"
 import {router as categoryRouter} from "../src/routes/categoryRoute"
+import {router as OrderRouter} from "../src/routes/OrderRoute"
 // import { Request,Response } from 'express';
 
 dotenv.config();
@@ -27,6 +28,7 @@ app.use('/api',router);
 app.use('/api',addressRouter);
 app.use('/api',productRouter)
 app.use('/api',categoryRouter)
+app.use('/api',OrderRouter)
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
