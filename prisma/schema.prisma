@@ -39,7 +39,7 @@ model Category {
   id          Int              @id @unique @default(autoincrement())
   name        String           @unique
   description String?
-  products    ProductCategory[] // Changed from Product[] to ProductCategory[]
+  products    ProductCategory[] 
   createdAt   DateTime         @default(now())
   updatedAt   DateTime         @updatedAt
 }
@@ -51,7 +51,7 @@ model Product {
   images      ProductImage[]
   price       Float
   stock       Int
-  categories  ProductCategory[] // Changed from single Category to many
+  categories  ProductCategory[] 
   colors      ProductColor[]
   cartItems   CartItem[]
   orderItems  OrderItem[]
@@ -72,7 +72,6 @@ model ProductCategory {
   @@unique([productId, categoryId])
 } 
 
-// New model for product images
 model ProductImage {
   id        String   @id @unique @default(uuid())
   imageUrl  String
@@ -145,6 +144,10 @@ model CartItem {
   quantity  Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+
+  @@unique([cartId, productId, colorId])  //very important for using cartId_productId_colorId like this things 
+  @@unique([cartId, productId]) //same to here
 }
 
 model Order {

@@ -165,6 +165,23 @@ exports.Prisma.ProductImageScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.ColorScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  hexCode: 'hexCode',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ProductColorScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  colorId: 'colorId',
+  stock: 'stock',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.AddressScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -217,23 +234,6 @@ exports.Prisma.OrderItemScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
-exports.Prisma.ColorScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  hexCode: 'hexCode',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.ProductColorScalarFieldEnum = {
-  id: 'id',
-  productId: 'productId',
-  colorId: 'colorId',
-  stock: 'stock',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -268,13 +268,13 @@ exports.Prisma.ModelName = {
   Product: 'Product',
   ProductCategory: 'ProductCategory',
   ProductImage: 'ProductImage',
+  Color: 'Color',
+  ProductColor: 'ProductColor',
   Address: 'Address',
   Cart: 'Cart',
   CartItem: 'CartItem',
   Order: 'Order',
-  OrderItem: 'OrderItem',
-  Color: 'Color',
-  ProductColor: 'ProductColor'
+  OrderItem: 'OrderItem'
 };
 
 /**

@@ -39,6 +39,16 @@ export type ProductCategory = $Result.DefaultSelection<Prisma.$ProductCategoryPa
  */
 export type ProductImage = $Result.DefaultSelection<Prisma.$ProductImagePayload>
 /**
+ * Model Color
+ * 
+ */
+export type Color = $Result.DefaultSelection<Prisma.$ColorPayload>
+/**
+ * Model ProductColor
+ * 
+ */
+export type ProductColor = $Result.DefaultSelection<Prisma.$ProductColorPayload>
+/**
  * Model Address
  * 
  */
@@ -64,16 +74,6 @@ export type Order = $Result.DefaultSelection<Prisma.$OrderPayload>
  * Stores a snapshot of the product data (e.g., price) at the time of order placement.
  */
 export type OrderItem = $Result.DefaultSelection<Prisma.$OrderItemPayload>
-/**
- * Model Color
- * 
- */
-export type Color = $Result.DefaultSelection<Prisma.$ColorPayload>
-/**
- * Model ProductColor
- * 
- */
-export type ProductColor = $Result.DefaultSelection<Prisma.$ProductColorPayload>
 
 /**
  * Enums
@@ -284,6 +284,26 @@ export class PrismaClient<
   get productImage(): Prisma.ProductImageDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.color`: Exposes CRUD operations for the **Color** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Colors
+    * const colors = await prisma.color.findMany()
+    * ```
+    */
+  get color(): Prisma.ColorDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.productColor`: Exposes CRUD operations for the **ProductColor** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ProductColors
+    * const productColors = await prisma.productColor.findMany()
+    * ```
+    */
+  get productColor(): Prisma.ProductColorDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.address`: Exposes CRUD operations for the **Address** model.
     * Example usage:
     * ```ts
@@ -332,26 +352,6 @@ export class PrismaClient<
     * ```
     */
   get orderItem(): Prisma.OrderItemDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.color`: Exposes CRUD operations for the **Color** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Colors
-    * const colors = await prisma.color.findMany()
-    * ```
-    */
-  get color(): Prisma.ColorDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.productColor`: Exposes CRUD operations for the **ProductColor** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more ProductColors
-    * const productColors = await prisma.productColor.findMany()
-    * ```
-    */
-  get productColor(): Prisma.ProductColorDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -797,13 +797,13 @@ export namespace Prisma {
     Product: 'Product',
     ProductCategory: 'ProductCategory',
     ProductImage: 'ProductImage',
+    Color: 'Color',
+    ProductColor: 'ProductColor',
     Address: 'Address',
     Cart: 'Cart',
     CartItem: 'CartItem',
     Order: 'Order',
-    OrderItem: 'OrderItem',
-    Color: 'Color',
-    ProductColor: 'ProductColor'
+    OrderItem: 'OrderItem'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -822,7 +822,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "category" | "product" | "productCategory" | "productImage" | "address" | "cart" | "cartItem" | "order" | "orderItem" | "color" | "productColor"
+      modelProps: "user" | "category" | "product" | "productCategory" | "productImage" | "color" | "productColor" | "address" | "cart" | "cartItem" | "order" | "orderItem"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1196,6 +1196,154 @@ export namespace Prisma {
           }
         }
       }
+      Color: {
+        payload: Prisma.$ColorPayload<ExtArgs>
+        fields: Prisma.ColorFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ColorFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ColorPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ColorFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ColorPayload>
+          }
+          findFirst: {
+            args: Prisma.ColorFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ColorPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ColorFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ColorPayload>
+          }
+          findMany: {
+            args: Prisma.ColorFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ColorPayload>[]
+          }
+          create: {
+            args: Prisma.ColorCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ColorPayload>
+          }
+          createMany: {
+            args: Prisma.ColorCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ColorCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ColorPayload>[]
+          }
+          delete: {
+            args: Prisma.ColorDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ColorPayload>
+          }
+          update: {
+            args: Prisma.ColorUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ColorPayload>
+          }
+          deleteMany: {
+            args: Prisma.ColorDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ColorUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ColorUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ColorPayload>[]
+          }
+          upsert: {
+            args: Prisma.ColorUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ColorPayload>
+          }
+          aggregate: {
+            args: Prisma.ColorAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateColor>
+          }
+          groupBy: {
+            args: Prisma.ColorGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ColorGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ColorCountArgs<ExtArgs>
+            result: $Utils.Optional<ColorCountAggregateOutputType> | number
+          }
+        }
+      }
+      ProductColor: {
+        payload: Prisma.$ProductColorPayload<ExtArgs>
+        fields: Prisma.ProductColorFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ProductColorFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductColorPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ProductColorFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductColorPayload>
+          }
+          findFirst: {
+            args: Prisma.ProductColorFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductColorPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ProductColorFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductColorPayload>
+          }
+          findMany: {
+            args: Prisma.ProductColorFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductColorPayload>[]
+          }
+          create: {
+            args: Prisma.ProductColorCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductColorPayload>
+          }
+          createMany: {
+            args: Prisma.ProductColorCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ProductColorCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductColorPayload>[]
+          }
+          delete: {
+            args: Prisma.ProductColorDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductColorPayload>
+          }
+          update: {
+            args: Prisma.ProductColorUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductColorPayload>
+          }
+          deleteMany: {
+            args: Prisma.ProductColorDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ProductColorUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ProductColorUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductColorPayload>[]
+          }
+          upsert: {
+            args: Prisma.ProductColorUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductColorPayload>
+          }
+          aggregate: {
+            args: Prisma.ProductColorAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateProductColor>
+          }
+          groupBy: {
+            args: Prisma.ProductColorGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ProductColorGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ProductColorCountArgs<ExtArgs>
+            result: $Utils.Optional<ProductColorCountAggregateOutputType> | number
+          }
+        }
+      }
       Address: {
         payload: Prisma.$AddressPayload<ExtArgs>
         fields: Prisma.AddressFieldRefs
@@ -1566,154 +1714,6 @@ export namespace Prisma {
           }
         }
       }
-      Color: {
-        payload: Prisma.$ColorPayload<ExtArgs>
-        fields: Prisma.ColorFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.ColorFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ColorPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.ColorFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ColorPayload>
-          }
-          findFirst: {
-            args: Prisma.ColorFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ColorPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.ColorFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ColorPayload>
-          }
-          findMany: {
-            args: Prisma.ColorFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ColorPayload>[]
-          }
-          create: {
-            args: Prisma.ColorCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ColorPayload>
-          }
-          createMany: {
-            args: Prisma.ColorCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.ColorCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ColorPayload>[]
-          }
-          delete: {
-            args: Prisma.ColorDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ColorPayload>
-          }
-          update: {
-            args: Prisma.ColorUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ColorPayload>
-          }
-          deleteMany: {
-            args: Prisma.ColorDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.ColorUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.ColorUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ColorPayload>[]
-          }
-          upsert: {
-            args: Prisma.ColorUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ColorPayload>
-          }
-          aggregate: {
-            args: Prisma.ColorAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateColor>
-          }
-          groupBy: {
-            args: Prisma.ColorGroupByArgs<ExtArgs>
-            result: $Utils.Optional<ColorGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.ColorCountArgs<ExtArgs>
-            result: $Utils.Optional<ColorCountAggregateOutputType> | number
-          }
-        }
-      }
-      ProductColor: {
-        payload: Prisma.$ProductColorPayload<ExtArgs>
-        fields: Prisma.ProductColorFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.ProductColorFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProductColorPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.ProductColorFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProductColorPayload>
-          }
-          findFirst: {
-            args: Prisma.ProductColorFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProductColorPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.ProductColorFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProductColorPayload>
-          }
-          findMany: {
-            args: Prisma.ProductColorFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProductColorPayload>[]
-          }
-          create: {
-            args: Prisma.ProductColorCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProductColorPayload>
-          }
-          createMany: {
-            args: Prisma.ProductColorCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.ProductColorCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProductColorPayload>[]
-          }
-          delete: {
-            args: Prisma.ProductColorDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProductColorPayload>
-          }
-          update: {
-            args: Prisma.ProductColorUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProductColorPayload>
-          }
-          deleteMany: {
-            args: Prisma.ProductColorDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.ProductColorUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.ProductColorUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProductColorPayload>[]
-          }
-          upsert: {
-            args: Prisma.ProductColorUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProductColorPayload>
-          }
-          aggregate: {
-            args: Prisma.ProductColorAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateProductColor>
-          }
-          groupBy: {
-            args: Prisma.ProductColorGroupByArgs<ExtArgs>
-            result: $Utils.Optional<ProductColorGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.ProductColorCountArgs<ExtArgs>
-            result: $Utils.Optional<ProductColorCountAggregateOutputType> | number
-          }
-        }
-      }
     }
   } & {
     other: {
@@ -1803,13 +1803,13 @@ export namespace Prisma {
     product?: ProductOmit
     productCategory?: ProductCategoryOmit
     productImage?: ProductImageOmit
+    color?: ColorOmit
+    productColor?: ProductColorOmit
     address?: AddressOmit
     cart?: CartOmit
     cartItem?: CartItemOmit
     order?: OrderOmit
     orderItem?: OrderItemOmit
-    color?: ColorOmit
-    productColor?: ProductColorOmit
   }
 
   /* Types for Logging */
@@ -2047,6 +2047,55 @@ export namespace Prisma {
 
 
   /**
+   * Count Type ColorCountOutputType
+   */
+
+  export type ColorCountOutputType = {
+    products: number
+    cartItems: number
+    orderItems: number
+  }
+
+  export type ColorCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    products?: boolean | ColorCountOutputTypeCountProductsArgs
+    cartItems?: boolean | ColorCountOutputTypeCountCartItemsArgs
+    orderItems?: boolean | ColorCountOutputTypeCountOrderItemsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ColorCountOutputType without action
+   */
+  export type ColorCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ColorCountOutputType
+     */
+    select?: ColorCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ColorCountOutputType without action
+   */
+  export type ColorCountOutputTypeCountProductsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProductColorWhereInput
+  }
+
+  /**
+   * ColorCountOutputType without action
+   */
+  export type ColorCountOutputTypeCountCartItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CartItemWhereInput
+  }
+
+  /**
+   * ColorCountOutputType without action
+   */
+  export type ColorCountOutputTypeCountOrderItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OrderItemWhereInput
+  }
+
+
+  /**
    * Count Type AddressCountOutputType
    */
 
@@ -2135,55 +2184,6 @@ export namespace Prisma {
    * OrderCountOutputType without action
    */
   export type OrderCountOutputTypeCountOrderItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: OrderItemWhereInput
-  }
-
-
-  /**
-   * Count Type ColorCountOutputType
-   */
-
-  export type ColorCountOutputType = {
-    products: number
-    cartItems: number
-    orderItems: number
-  }
-
-  export type ColorCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    products?: boolean | ColorCountOutputTypeCountProductsArgs
-    cartItems?: boolean | ColorCountOutputTypeCountCartItemsArgs
-    orderItems?: boolean | ColorCountOutputTypeCountOrderItemsArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * ColorCountOutputType without action
-   */
-  export type ColorCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ColorCountOutputType
-     */
-    select?: ColorCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * ColorCountOutputType without action
-   */
-  export type ColorCountOutputTypeCountProductsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ProductColorWhereInput
-  }
-
-  /**
-   * ColorCountOutputType without action
-   */
-  export type ColorCountOutputTypeCountCartItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: CartItemWhereInput
-  }
-
-  /**
-   * ColorCountOutputType without action
-   */
-  export type ColorCountOutputTypeCountOrderItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: OrderItemWhereInput
   }
 
@@ -7935,6 +7935,2245 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: ProductImageInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Color
+   */
+
+  export type AggregateColor = {
+    _count: ColorCountAggregateOutputType | null
+    _min: ColorMinAggregateOutputType | null
+    _max: ColorMaxAggregateOutputType | null
+  }
+
+  export type ColorMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    hexCode: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ColorMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    hexCode: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ColorCountAggregateOutputType = {
+    id: number
+    name: number
+    hexCode: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ColorMinAggregateInputType = {
+    id?: true
+    name?: true
+    hexCode?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ColorMaxAggregateInputType = {
+    id?: true
+    name?: true
+    hexCode?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ColorCountAggregateInputType = {
+    id?: true
+    name?: true
+    hexCode?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ColorAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Color to aggregate.
+     */
+    where?: ColorWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Colors to fetch.
+     */
+    orderBy?: ColorOrderByWithRelationInput | ColorOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ColorWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Colors from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Colors.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Colors
+    **/
+    _count?: true | ColorCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ColorMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ColorMaxAggregateInputType
+  }
+
+  export type GetColorAggregateType<T extends ColorAggregateArgs> = {
+        [P in keyof T & keyof AggregateColor]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateColor[P]>
+      : GetScalarType<T[P], AggregateColor[P]>
+  }
+
+
+
+
+  export type ColorGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ColorWhereInput
+    orderBy?: ColorOrderByWithAggregationInput | ColorOrderByWithAggregationInput[]
+    by: ColorScalarFieldEnum[] | ColorScalarFieldEnum
+    having?: ColorScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ColorCountAggregateInputType | true
+    _min?: ColorMinAggregateInputType
+    _max?: ColorMaxAggregateInputType
+  }
+
+  export type ColorGroupByOutputType = {
+    id: string
+    name: string
+    hexCode: string
+    createdAt: Date
+    updatedAt: Date
+    _count: ColorCountAggregateOutputType | null
+    _min: ColorMinAggregateOutputType | null
+    _max: ColorMaxAggregateOutputType | null
+  }
+
+  type GetColorGroupByPayload<T extends ColorGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ColorGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ColorGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ColorGroupByOutputType[P]>
+            : GetScalarType<T[P], ColorGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ColorSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    hexCode?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    products?: boolean | Color$productsArgs<ExtArgs>
+    cartItems?: boolean | Color$cartItemsArgs<ExtArgs>
+    orderItems?: boolean | Color$orderItemsArgs<ExtArgs>
+    _count?: boolean | ColorCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["color"]>
+
+  export type ColorSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    hexCode?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["color"]>
+
+  export type ColorSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    hexCode?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["color"]>
+
+  export type ColorSelectScalar = {
+    id?: boolean
+    name?: boolean
+    hexCode?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ColorOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "hexCode" | "createdAt" | "updatedAt", ExtArgs["result"]["color"]>
+  export type ColorInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    products?: boolean | Color$productsArgs<ExtArgs>
+    cartItems?: boolean | Color$cartItemsArgs<ExtArgs>
+    orderItems?: boolean | Color$orderItemsArgs<ExtArgs>
+    _count?: boolean | ColorCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type ColorIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type ColorIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $ColorPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Color"
+    objects: {
+      products: Prisma.$ProductColorPayload<ExtArgs>[]
+      cartItems: Prisma.$CartItemPayload<ExtArgs>[]
+      orderItems: Prisma.$OrderItemPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      hexCode: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["color"]>
+    composites: {}
+  }
+
+  type ColorGetPayload<S extends boolean | null | undefined | ColorDefaultArgs> = $Result.GetResult<Prisma.$ColorPayload, S>
+
+  type ColorCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ColorFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ColorCountAggregateInputType | true
+    }
+
+  export interface ColorDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Color'], meta: { name: 'Color' } }
+    /**
+     * Find zero or one Color that matches the filter.
+     * @param {ColorFindUniqueArgs} args - Arguments to find a Color
+     * @example
+     * // Get one Color
+     * const color = await prisma.color.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ColorFindUniqueArgs>(args: SelectSubset<T, ColorFindUniqueArgs<ExtArgs>>): Prisma__ColorClient<$Result.GetResult<Prisma.$ColorPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Color that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ColorFindUniqueOrThrowArgs} args - Arguments to find a Color
+     * @example
+     * // Get one Color
+     * const color = await prisma.color.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ColorFindUniqueOrThrowArgs>(args: SelectSubset<T, ColorFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ColorClient<$Result.GetResult<Prisma.$ColorPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Color that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ColorFindFirstArgs} args - Arguments to find a Color
+     * @example
+     * // Get one Color
+     * const color = await prisma.color.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ColorFindFirstArgs>(args?: SelectSubset<T, ColorFindFirstArgs<ExtArgs>>): Prisma__ColorClient<$Result.GetResult<Prisma.$ColorPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Color that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ColorFindFirstOrThrowArgs} args - Arguments to find a Color
+     * @example
+     * // Get one Color
+     * const color = await prisma.color.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ColorFindFirstOrThrowArgs>(args?: SelectSubset<T, ColorFindFirstOrThrowArgs<ExtArgs>>): Prisma__ColorClient<$Result.GetResult<Prisma.$ColorPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Colors that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ColorFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Colors
+     * const colors = await prisma.color.findMany()
+     * 
+     * // Get first 10 Colors
+     * const colors = await prisma.color.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const colorWithIdOnly = await prisma.color.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ColorFindManyArgs>(args?: SelectSubset<T, ColorFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ColorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Color.
+     * @param {ColorCreateArgs} args - Arguments to create a Color.
+     * @example
+     * // Create one Color
+     * const Color = await prisma.color.create({
+     *   data: {
+     *     // ... data to create a Color
+     *   }
+     * })
+     * 
+     */
+    create<T extends ColorCreateArgs>(args: SelectSubset<T, ColorCreateArgs<ExtArgs>>): Prisma__ColorClient<$Result.GetResult<Prisma.$ColorPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Colors.
+     * @param {ColorCreateManyArgs} args - Arguments to create many Colors.
+     * @example
+     * // Create many Colors
+     * const color = await prisma.color.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ColorCreateManyArgs>(args?: SelectSubset<T, ColorCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Colors and returns the data saved in the database.
+     * @param {ColorCreateManyAndReturnArgs} args - Arguments to create many Colors.
+     * @example
+     * // Create many Colors
+     * const color = await prisma.color.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Colors and only return the `id`
+     * const colorWithIdOnly = await prisma.color.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ColorCreateManyAndReturnArgs>(args?: SelectSubset<T, ColorCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ColorPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Color.
+     * @param {ColorDeleteArgs} args - Arguments to delete one Color.
+     * @example
+     * // Delete one Color
+     * const Color = await prisma.color.delete({
+     *   where: {
+     *     // ... filter to delete one Color
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ColorDeleteArgs>(args: SelectSubset<T, ColorDeleteArgs<ExtArgs>>): Prisma__ColorClient<$Result.GetResult<Prisma.$ColorPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Color.
+     * @param {ColorUpdateArgs} args - Arguments to update one Color.
+     * @example
+     * // Update one Color
+     * const color = await prisma.color.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ColorUpdateArgs>(args: SelectSubset<T, ColorUpdateArgs<ExtArgs>>): Prisma__ColorClient<$Result.GetResult<Prisma.$ColorPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Colors.
+     * @param {ColorDeleteManyArgs} args - Arguments to filter Colors to delete.
+     * @example
+     * // Delete a few Colors
+     * const { count } = await prisma.color.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ColorDeleteManyArgs>(args?: SelectSubset<T, ColorDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Colors.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ColorUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Colors
+     * const color = await prisma.color.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ColorUpdateManyArgs>(args: SelectSubset<T, ColorUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Colors and returns the data updated in the database.
+     * @param {ColorUpdateManyAndReturnArgs} args - Arguments to update many Colors.
+     * @example
+     * // Update many Colors
+     * const color = await prisma.color.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Colors and only return the `id`
+     * const colorWithIdOnly = await prisma.color.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ColorUpdateManyAndReturnArgs>(args: SelectSubset<T, ColorUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ColorPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Color.
+     * @param {ColorUpsertArgs} args - Arguments to update or create a Color.
+     * @example
+     * // Update or create a Color
+     * const color = await prisma.color.upsert({
+     *   create: {
+     *     // ... data to create a Color
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Color we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ColorUpsertArgs>(args: SelectSubset<T, ColorUpsertArgs<ExtArgs>>): Prisma__ColorClient<$Result.GetResult<Prisma.$ColorPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Colors.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ColorCountArgs} args - Arguments to filter Colors to count.
+     * @example
+     * // Count the number of Colors
+     * const count = await prisma.color.count({
+     *   where: {
+     *     // ... the filter for the Colors we want to count
+     *   }
+     * })
+    **/
+    count<T extends ColorCountArgs>(
+      args?: Subset<T, ColorCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ColorCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Color.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ColorAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ColorAggregateArgs>(args: Subset<T, ColorAggregateArgs>): Prisma.PrismaPromise<GetColorAggregateType<T>>
+
+    /**
+     * Group by Color.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ColorGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ColorGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ColorGroupByArgs['orderBy'] }
+        : { orderBy?: ColorGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ColorGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetColorGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Color model
+   */
+  readonly fields: ColorFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Color.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ColorClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    products<T extends Color$productsArgs<ExtArgs> = {}>(args?: Subset<T, Color$productsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductColorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    cartItems<T extends Color$cartItemsArgs<ExtArgs> = {}>(args?: Subset<T, Color$cartItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CartItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    orderItems<T extends Color$orderItemsArgs<ExtArgs> = {}>(args?: Subset<T, Color$orderItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Color model
+   */
+  interface ColorFieldRefs {
+    readonly id: FieldRef<"Color", 'String'>
+    readonly name: FieldRef<"Color", 'String'>
+    readonly hexCode: FieldRef<"Color", 'String'>
+    readonly createdAt: FieldRef<"Color", 'DateTime'>
+    readonly updatedAt: FieldRef<"Color", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Color findUnique
+   */
+  export type ColorFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Color
+     */
+    select?: ColorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Color
+     */
+    omit?: ColorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ColorInclude<ExtArgs> | null
+    /**
+     * Filter, which Color to fetch.
+     */
+    where: ColorWhereUniqueInput
+  }
+
+  /**
+   * Color findUniqueOrThrow
+   */
+  export type ColorFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Color
+     */
+    select?: ColorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Color
+     */
+    omit?: ColorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ColorInclude<ExtArgs> | null
+    /**
+     * Filter, which Color to fetch.
+     */
+    where: ColorWhereUniqueInput
+  }
+
+  /**
+   * Color findFirst
+   */
+  export type ColorFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Color
+     */
+    select?: ColorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Color
+     */
+    omit?: ColorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ColorInclude<ExtArgs> | null
+    /**
+     * Filter, which Color to fetch.
+     */
+    where?: ColorWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Colors to fetch.
+     */
+    orderBy?: ColorOrderByWithRelationInput | ColorOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Colors.
+     */
+    cursor?: ColorWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Colors from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Colors.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Colors.
+     */
+    distinct?: ColorScalarFieldEnum | ColorScalarFieldEnum[]
+  }
+
+  /**
+   * Color findFirstOrThrow
+   */
+  export type ColorFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Color
+     */
+    select?: ColorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Color
+     */
+    omit?: ColorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ColorInclude<ExtArgs> | null
+    /**
+     * Filter, which Color to fetch.
+     */
+    where?: ColorWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Colors to fetch.
+     */
+    orderBy?: ColorOrderByWithRelationInput | ColorOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Colors.
+     */
+    cursor?: ColorWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Colors from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Colors.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Colors.
+     */
+    distinct?: ColorScalarFieldEnum | ColorScalarFieldEnum[]
+  }
+
+  /**
+   * Color findMany
+   */
+  export type ColorFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Color
+     */
+    select?: ColorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Color
+     */
+    omit?: ColorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ColorInclude<ExtArgs> | null
+    /**
+     * Filter, which Colors to fetch.
+     */
+    where?: ColorWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Colors to fetch.
+     */
+    orderBy?: ColorOrderByWithRelationInput | ColorOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Colors.
+     */
+    cursor?: ColorWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Colors from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Colors.
+     */
+    skip?: number
+    distinct?: ColorScalarFieldEnum | ColorScalarFieldEnum[]
+  }
+
+  /**
+   * Color create
+   */
+  export type ColorCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Color
+     */
+    select?: ColorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Color
+     */
+    omit?: ColorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ColorInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Color.
+     */
+    data: XOR<ColorCreateInput, ColorUncheckedCreateInput>
+  }
+
+  /**
+   * Color createMany
+   */
+  export type ColorCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Colors.
+     */
+    data: ColorCreateManyInput | ColorCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Color createManyAndReturn
+   */
+  export type ColorCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Color
+     */
+    select?: ColorSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Color
+     */
+    omit?: ColorOmit<ExtArgs> | null
+    /**
+     * The data used to create many Colors.
+     */
+    data: ColorCreateManyInput | ColorCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Color update
+   */
+  export type ColorUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Color
+     */
+    select?: ColorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Color
+     */
+    omit?: ColorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ColorInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Color.
+     */
+    data: XOR<ColorUpdateInput, ColorUncheckedUpdateInput>
+    /**
+     * Choose, which Color to update.
+     */
+    where: ColorWhereUniqueInput
+  }
+
+  /**
+   * Color updateMany
+   */
+  export type ColorUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Colors.
+     */
+    data: XOR<ColorUpdateManyMutationInput, ColorUncheckedUpdateManyInput>
+    /**
+     * Filter which Colors to update
+     */
+    where?: ColorWhereInput
+    /**
+     * Limit how many Colors to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Color updateManyAndReturn
+   */
+  export type ColorUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Color
+     */
+    select?: ColorSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Color
+     */
+    omit?: ColorOmit<ExtArgs> | null
+    /**
+     * The data used to update Colors.
+     */
+    data: XOR<ColorUpdateManyMutationInput, ColorUncheckedUpdateManyInput>
+    /**
+     * Filter which Colors to update
+     */
+    where?: ColorWhereInput
+    /**
+     * Limit how many Colors to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Color upsert
+   */
+  export type ColorUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Color
+     */
+    select?: ColorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Color
+     */
+    omit?: ColorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ColorInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Color to update in case it exists.
+     */
+    where: ColorWhereUniqueInput
+    /**
+     * In case the Color found by the `where` argument doesn't exist, create a new Color with this data.
+     */
+    create: XOR<ColorCreateInput, ColorUncheckedCreateInput>
+    /**
+     * In case the Color was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ColorUpdateInput, ColorUncheckedUpdateInput>
+  }
+
+  /**
+   * Color delete
+   */
+  export type ColorDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Color
+     */
+    select?: ColorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Color
+     */
+    omit?: ColorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ColorInclude<ExtArgs> | null
+    /**
+     * Filter which Color to delete.
+     */
+    where: ColorWhereUniqueInput
+  }
+
+  /**
+   * Color deleteMany
+   */
+  export type ColorDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Colors to delete
+     */
+    where?: ColorWhereInput
+    /**
+     * Limit how many Colors to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Color.products
+   */
+  export type Color$productsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductColor
+     */
+    select?: ProductColorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductColor
+     */
+    omit?: ProductColorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductColorInclude<ExtArgs> | null
+    where?: ProductColorWhereInput
+    orderBy?: ProductColorOrderByWithRelationInput | ProductColorOrderByWithRelationInput[]
+    cursor?: ProductColorWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ProductColorScalarFieldEnum | ProductColorScalarFieldEnum[]
+  }
+
+  /**
+   * Color.cartItems
+   */
+  export type Color$cartItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CartItem
+     */
+    select?: CartItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CartItem
+     */
+    omit?: CartItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CartItemInclude<ExtArgs> | null
+    where?: CartItemWhereInput
+    orderBy?: CartItemOrderByWithRelationInput | CartItemOrderByWithRelationInput[]
+    cursor?: CartItemWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CartItemScalarFieldEnum | CartItemScalarFieldEnum[]
+  }
+
+  /**
+   * Color.orderItems
+   */
+  export type Color$orderItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrderItem
+     */
+    select?: OrderItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrderItem
+     */
+    omit?: OrderItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderItemInclude<ExtArgs> | null
+    where?: OrderItemWhereInput
+    orderBy?: OrderItemOrderByWithRelationInput | OrderItemOrderByWithRelationInput[]
+    cursor?: OrderItemWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: OrderItemScalarFieldEnum | OrderItemScalarFieldEnum[]
+  }
+
+  /**
+   * Color without action
+   */
+  export type ColorDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Color
+     */
+    select?: ColorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Color
+     */
+    omit?: ColorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ColorInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ProductColor
+   */
+
+  export type AggregateProductColor = {
+    _count: ProductColorCountAggregateOutputType | null
+    _avg: ProductColorAvgAggregateOutputType | null
+    _sum: ProductColorSumAggregateOutputType | null
+    _min: ProductColorMinAggregateOutputType | null
+    _max: ProductColorMaxAggregateOutputType | null
+  }
+
+  export type ProductColorAvgAggregateOutputType = {
+    stock: number | null
+  }
+
+  export type ProductColorSumAggregateOutputType = {
+    stock: number | null
+  }
+
+  export type ProductColorMinAggregateOutputType = {
+    id: string | null
+    productId: string | null
+    colorId: string | null
+    stock: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ProductColorMaxAggregateOutputType = {
+    id: string | null
+    productId: string | null
+    colorId: string | null
+    stock: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ProductColorCountAggregateOutputType = {
+    id: number
+    productId: number
+    colorId: number
+    stock: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ProductColorAvgAggregateInputType = {
+    stock?: true
+  }
+
+  export type ProductColorSumAggregateInputType = {
+    stock?: true
+  }
+
+  export type ProductColorMinAggregateInputType = {
+    id?: true
+    productId?: true
+    colorId?: true
+    stock?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ProductColorMaxAggregateInputType = {
+    id?: true
+    productId?: true
+    colorId?: true
+    stock?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ProductColorCountAggregateInputType = {
+    id?: true
+    productId?: true
+    colorId?: true
+    stock?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ProductColorAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ProductColor to aggregate.
+     */
+    where?: ProductColorWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProductColors to fetch.
+     */
+    orderBy?: ProductColorOrderByWithRelationInput | ProductColorOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ProductColorWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProductColors from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProductColors.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ProductColors
+    **/
+    _count?: true | ProductColorCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ProductColorAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ProductColorSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ProductColorMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ProductColorMaxAggregateInputType
+  }
+
+  export type GetProductColorAggregateType<T extends ProductColorAggregateArgs> = {
+        [P in keyof T & keyof AggregateProductColor]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateProductColor[P]>
+      : GetScalarType<T[P], AggregateProductColor[P]>
+  }
+
+
+
+
+  export type ProductColorGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProductColorWhereInput
+    orderBy?: ProductColorOrderByWithAggregationInput | ProductColorOrderByWithAggregationInput[]
+    by: ProductColorScalarFieldEnum[] | ProductColorScalarFieldEnum
+    having?: ProductColorScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ProductColorCountAggregateInputType | true
+    _avg?: ProductColorAvgAggregateInputType
+    _sum?: ProductColorSumAggregateInputType
+    _min?: ProductColorMinAggregateInputType
+    _max?: ProductColorMaxAggregateInputType
+  }
+
+  export type ProductColorGroupByOutputType = {
+    id: string
+    productId: string
+    colorId: string
+    stock: number
+    createdAt: Date
+    updatedAt: Date
+    _count: ProductColorCountAggregateOutputType | null
+    _avg: ProductColorAvgAggregateOutputType | null
+    _sum: ProductColorSumAggregateOutputType | null
+    _min: ProductColorMinAggregateOutputType | null
+    _max: ProductColorMaxAggregateOutputType | null
+  }
+
+  type GetProductColorGroupByPayload<T extends ProductColorGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ProductColorGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ProductColorGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ProductColorGroupByOutputType[P]>
+            : GetScalarType<T[P], ProductColorGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ProductColorSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    productId?: boolean
+    colorId?: boolean
+    stock?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    product?: boolean | ProductDefaultArgs<ExtArgs>
+    color?: boolean | ColorDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["productColor"]>
+
+  export type ProductColorSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    productId?: boolean
+    colorId?: boolean
+    stock?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    product?: boolean | ProductDefaultArgs<ExtArgs>
+    color?: boolean | ColorDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["productColor"]>
+
+  export type ProductColorSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    productId?: boolean
+    colorId?: boolean
+    stock?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    product?: boolean | ProductDefaultArgs<ExtArgs>
+    color?: boolean | ColorDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["productColor"]>
+
+  export type ProductColorSelectScalar = {
+    id?: boolean
+    productId?: boolean
+    colorId?: boolean
+    stock?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ProductColorOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "productId" | "colorId" | "stock" | "createdAt" | "updatedAt", ExtArgs["result"]["productColor"]>
+  export type ProductColorInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    product?: boolean | ProductDefaultArgs<ExtArgs>
+    color?: boolean | ColorDefaultArgs<ExtArgs>
+  }
+  export type ProductColorIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    product?: boolean | ProductDefaultArgs<ExtArgs>
+    color?: boolean | ColorDefaultArgs<ExtArgs>
+  }
+  export type ProductColorIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    product?: boolean | ProductDefaultArgs<ExtArgs>
+    color?: boolean | ColorDefaultArgs<ExtArgs>
+  }
+
+  export type $ProductColorPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ProductColor"
+    objects: {
+      product: Prisma.$ProductPayload<ExtArgs>
+      color: Prisma.$ColorPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      productId: string
+      colorId: string
+      stock: number
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["productColor"]>
+    composites: {}
+  }
+
+  type ProductColorGetPayload<S extends boolean | null | undefined | ProductColorDefaultArgs> = $Result.GetResult<Prisma.$ProductColorPayload, S>
+
+  type ProductColorCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ProductColorFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ProductColorCountAggregateInputType | true
+    }
+
+  export interface ProductColorDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ProductColor'], meta: { name: 'ProductColor' } }
+    /**
+     * Find zero or one ProductColor that matches the filter.
+     * @param {ProductColorFindUniqueArgs} args - Arguments to find a ProductColor
+     * @example
+     * // Get one ProductColor
+     * const productColor = await prisma.productColor.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ProductColorFindUniqueArgs>(args: SelectSubset<T, ProductColorFindUniqueArgs<ExtArgs>>): Prisma__ProductColorClient<$Result.GetResult<Prisma.$ProductColorPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ProductColor that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ProductColorFindUniqueOrThrowArgs} args - Arguments to find a ProductColor
+     * @example
+     * // Get one ProductColor
+     * const productColor = await prisma.productColor.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ProductColorFindUniqueOrThrowArgs>(args: SelectSubset<T, ProductColorFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ProductColorClient<$Result.GetResult<Prisma.$ProductColorPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ProductColor that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProductColorFindFirstArgs} args - Arguments to find a ProductColor
+     * @example
+     * // Get one ProductColor
+     * const productColor = await prisma.productColor.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ProductColorFindFirstArgs>(args?: SelectSubset<T, ProductColorFindFirstArgs<ExtArgs>>): Prisma__ProductColorClient<$Result.GetResult<Prisma.$ProductColorPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ProductColor that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProductColorFindFirstOrThrowArgs} args - Arguments to find a ProductColor
+     * @example
+     * // Get one ProductColor
+     * const productColor = await prisma.productColor.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ProductColorFindFirstOrThrowArgs>(args?: SelectSubset<T, ProductColorFindFirstOrThrowArgs<ExtArgs>>): Prisma__ProductColorClient<$Result.GetResult<Prisma.$ProductColorPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ProductColors that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProductColorFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ProductColors
+     * const productColors = await prisma.productColor.findMany()
+     * 
+     * // Get first 10 ProductColors
+     * const productColors = await prisma.productColor.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const productColorWithIdOnly = await prisma.productColor.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ProductColorFindManyArgs>(args?: SelectSubset<T, ProductColorFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductColorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ProductColor.
+     * @param {ProductColorCreateArgs} args - Arguments to create a ProductColor.
+     * @example
+     * // Create one ProductColor
+     * const ProductColor = await prisma.productColor.create({
+     *   data: {
+     *     // ... data to create a ProductColor
+     *   }
+     * })
+     * 
+     */
+    create<T extends ProductColorCreateArgs>(args: SelectSubset<T, ProductColorCreateArgs<ExtArgs>>): Prisma__ProductColorClient<$Result.GetResult<Prisma.$ProductColorPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ProductColors.
+     * @param {ProductColorCreateManyArgs} args - Arguments to create many ProductColors.
+     * @example
+     * // Create many ProductColors
+     * const productColor = await prisma.productColor.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ProductColorCreateManyArgs>(args?: SelectSubset<T, ProductColorCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ProductColors and returns the data saved in the database.
+     * @param {ProductColorCreateManyAndReturnArgs} args - Arguments to create many ProductColors.
+     * @example
+     * // Create many ProductColors
+     * const productColor = await prisma.productColor.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ProductColors and only return the `id`
+     * const productColorWithIdOnly = await prisma.productColor.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ProductColorCreateManyAndReturnArgs>(args?: SelectSubset<T, ProductColorCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductColorPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ProductColor.
+     * @param {ProductColorDeleteArgs} args - Arguments to delete one ProductColor.
+     * @example
+     * // Delete one ProductColor
+     * const ProductColor = await prisma.productColor.delete({
+     *   where: {
+     *     // ... filter to delete one ProductColor
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ProductColorDeleteArgs>(args: SelectSubset<T, ProductColorDeleteArgs<ExtArgs>>): Prisma__ProductColorClient<$Result.GetResult<Prisma.$ProductColorPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ProductColor.
+     * @param {ProductColorUpdateArgs} args - Arguments to update one ProductColor.
+     * @example
+     * // Update one ProductColor
+     * const productColor = await prisma.productColor.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ProductColorUpdateArgs>(args: SelectSubset<T, ProductColorUpdateArgs<ExtArgs>>): Prisma__ProductColorClient<$Result.GetResult<Prisma.$ProductColorPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ProductColors.
+     * @param {ProductColorDeleteManyArgs} args - Arguments to filter ProductColors to delete.
+     * @example
+     * // Delete a few ProductColors
+     * const { count } = await prisma.productColor.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ProductColorDeleteManyArgs>(args?: SelectSubset<T, ProductColorDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ProductColors.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProductColorUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ProductColors
+     * const productColor = await prisma.productColor.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ProductColorUpdateManyArgs>(args: SelectSubset<T, ProductColorUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ProductColors and returns the data updated in the database.
+     * @param {ProductColorUpdateManyAndReturnArgs} args - Arguments to update many ProductColors.
+     * @example
+     * // Update many ProductColors
+     * const productColor = await prisma.productColor.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ProductColors and only return the `id`
+     * const productColorWithIdOnly = await prisma.productColor.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ProductColorUpdateManyAndReturnArgs>(args: SelectSubset<T, ProductColorUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductColorPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ProductColor.
+     * @param {ProductColorUpsertArgs} args - Arguments to update or create a ProductColor.
+     * @example
+     * // Update or create a ProductColor
+     * const productColor = await prisma.productColor.upsert({
+     *   create: {
+     *     // ... data to create a ProductColor
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ProductColor we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ProductColorUpsertArgs>(args: SelectSubset<T, ProductColorUpsertArgs<ExtArgs>>): Prisma__ProductColorClient<$Result.GetResult<Prisma.$ProductColorPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ProductColors.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProductColorCountArgs} args - Arguments to filter ProductColors to count.
+     * @example
+     * // Count the number of ProductColors
+     * const count = await prisma.productColor.count({
+     *   where: {
+     *     // ... the filter for the ProductColors we want to count
+     *   }
+     * })
+    **/
+    count<T extends ProductColorCountArgs>(
+      args?: Subset<T, ProductColorCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ProductColorCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ProductColor.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProductColorAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ProductColorAggregateArgs>(args: Subset<T, ProductColorAggregateArgs>): Prisma.PrismaPromise<GetProductColorAggregateType<T>>
+
+    /**
+     * Group by ProductColor.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProductColorGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ProductColorGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ProductColorGroupByArgs['orderBy'] }
+        : { orderBy?: ProductColorGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ProductColorGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetProductColorGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ProductColor model
+   */
+  readonly fields: ProductColorFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ProductColor.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ProductColorClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    product<T extends ProductDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProductDefaultArgs<ExtArgs>>): Prisma__ProductClient<$Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    color<T extends ColorDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ColorDefaultArgs<ExtArgs>>): Prisma__ColorClient<$Result.GetResult<Prisma.$ColorPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ProductColor model
+   */
+  interface ProductColorFieldRefs {
+    readonly id: FieldRef<"ProductColor", 'String'>
+    readonly productId: FieldRef<"ProductColor", 'String'>
+    readonly colorId: FieldRef<"ProductColor", 'String'>
+    readonly stock: FieldRef<"ProductColor", 'Int'>
+    readonly createdAt: FieldRef<"ProductColor", 'DateTime'>
+    readonly updatedAt: FieldRef<"ProductColor", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ProductColor findUnique
+   */
+  export type ProductColorFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductColor
+     */
+    select?: ProductColorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductColor
+     */
+    omit?: ProductColorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductColorInclude<ExtArgs> | null
+    /**
+     * Filter, which ProductColor to fetch.
+     */
+    where: ProductColorWhereUniqueInput
+  }
+
+  /**
+   * ProductColor findUniqueOrThrow
+   */
+  export type ProductColorFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductColor
+     */
+    select?: ProductColorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductColor
+     */
+    omit?: ProductColorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductColorInclude<ExtArgs> | null
+    /**
+     * Filter, which ProductColor to fetch.
+     */
+    where: ProductColorWhereUniqueInput
+  }
+
+  /**
+   * ProductColor findFirst
+   */
+  export type ProductColorFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductColor
+     */
+    select?: ProductColorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductColor
+     */
+    omit?: ProductColorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductColorInclude<ExtArgs> | null
+    /**
+     * Filter, which ProductColor to fetch.
+     */
+    where?: ProductColorWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProductColors to fetch.
+     */
+    orderBy?: ProductColorOrderByWithRelationInput | ProductColorOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ProductColors.
+     */
+    cursor?: ProductColorWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProductColors from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProductColors.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ProductColors.
+     */
+    distinct?: ProductColorScalarFieldEnum | ProductColorScalarFieldEnum[]
+  }
+
+  /**
+   * ProductColor findFirstOrThrow
+   */
+  export type ProductColorFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductColor
+     */
+    select?: ProductColorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductColor
+     */
+    omit?: ProductColorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductColorInclude<ExtArgs> | null
+    /**
+     * Filter, which ProductColor to fetch.
+     */
+    where?: ProductColorWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProductColors to fetch.
+     */
+    orderBy?: ProductColorOrderByWithRelationInput | ProductColorOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ProductColors.
+     */
+    cursor?: ProductColorWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProductColors from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProductColors.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ProductColors.
+     */
+    distinct?: ProductColorScalarFieldEnum | ProductColorScalarFieldEnum[]
+  }
+
+  /**
+   * ProductColor findMany
+   */
+  export type ProductColorFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductColor
+     */
+    select?: ProductColorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductColor
+     */
+    omit?: ProductColorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductColorInclude<ExtArgs> | null
+    /**
+     * Filter, which ProductColors to fetch.
+     */
+    where?: ProductColorWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProductColors to fetch.
+     */
+    orderBy?: ProductColorOrderByWithRelationInput | ProductColorOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ProductColors.
+     */
+    cursor?: ProductColorWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProductColors from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProductColors.
+     */
+    skip?: number
+    distinct?: ProductColorScalarFieldEnum | ProductColorScalarFieldEnum[]
+  }
+
+  /**
+   * ProductColor create
+   */
+  export type ProductColorCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductColor
+     */
+    select?: ProductColorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductColor
+     */
+    omit?: ProductColorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductColorInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ProductColor.
+     */
+    data: XOR<ProductColorCreateInput, ProductColorUncheckedCreateInput>
+  }
+
+  /**
+   * ProductColor createMany
+   */
+  export type ProductColorCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ProductColors.
+     */
+    data: ProductColorCreateManyInput | ProductColorCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ProductColor createManyAndReturn
+   */
+  export type ProductColorCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductColor
+     */
+    select?: ProductColorSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductColor
+     */
+    omit?: ProductColorOmit<ExtArgs> | null
+    /**
+     * The data used to create many ProductColors.
+     */
+    data: ProductColorCreateManyInput | ProductColorCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductColorIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ProductColor update
+   */
+  export type ProductColorUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductColor
+     */
+    select?: ProductColorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductColor
+     */
+    omit?: ProductColorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductColorInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ProductColor.
+     */
+    data: XOR<ProductColorUpdateInput, ProductColorUncheckedUpdateInput>
+    /**
+     * Choose, which ProductColor to update.
+     */
+    where: ProductColorWhereUniqueInput
+  }
+
+  /**
+   * ProductColor updateMany
+   */
+  export type ProductColorUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ProductColors.
+     */
+    data: XOR<ProductColorUpdateManyMutationInput, ProductColorUncheckedUpdateManyInput>
+    /**
+     * Filter which ProductColors to update
+     */
+    where?: ProductColorWhereInput
+    /**
+     * Limit how many ProductColors to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ProductColor updateManyAndReturn
+   */
+  export type ProductColorUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductColor
+     */
+    select?: ProductColorSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductColor
+     */
+    omit?: ProductColorOmit<ExtArgs> | null
+    /**
+     * The data used to update ProductColors.
+     */
+    data: XOR<ProductColorUpdateManyMutationInput, ProductColorUncheckedUpdateManyInput>
+    /**
+     * Filter which ProductColors to update
+     */
+    where?: ProductColorWhereInput
+    /**
+     * Limit how many ProductColors to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductColorIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ProductColor upsert
+   */
+  export type ProductColorUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductColor
+     */
+    select?: ProductColorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductColor
+     */
+    omit?: ProductColorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductColorInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ProductColor to update in case it exists.
+     */
+    where: ProductColorWhereUniqueInput
+    /**
+     * In case the ProductColor found by the `where` argument doesn't exist, create a new ProductColor with this data.
+     */
+    create: XOR<ProductColorCreateInput, ProductColorUncheckedCreateInput>
+    /**
+     * In case the ProductColor was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ProductColorUpdateInput, ProductColorUncheckedUpdateInput>
+  }
+
+  /**
+   * ProductColor delete
+   */
+  export type ProductColorDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductColor
+     */
+    select?: ProductColorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductColor
+     */
+    omit?: ProductColorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductColorInclude<ExtArgs> | null
+    /**
+     * Filter which ProductColor to delete.
+     */
+    where: ProductColorWhereUniqueInput
+  }
+
+  /**
+   * ProductColor deleteMany
+   */
+  export type ProductColorDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ProductColors to delete
+     */
+    where?: ProductColorWhereInput
+    /**
+     * Limit how many ProductColors to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ProductColor without action
+   */
+  export type ProductColorDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductColor
+     */
+    select?: ProductColorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProductColor
+     */
+    omit?: ProductColorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductColorInclude<ExtArgs> | null
   }
 
 
@@ -13709,2245 +15948,6 @@ export namespace Prisma {
 
 
   /**
-   * Model Color
-   */
-
-  export type AggregateColor = {
-    _count: ColorCountAggregateOutputType | null
-    _min: ColorMinAggregateOutputType | null
-    _max: ColorMaxAggregateOutputType | null
-  }
-
-  export type ColorMinAggregateOutputType = {
-    id: string | null
-    name: string | null
-    hexCode: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
-  }
-
-  export type ColorMaxAggregateOutputType = {
-    id: string | null
-    name: string | null
-    hexCode: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
-  }
-
-  export type ColorCountAggregateOutputType = {
-    id: number
-    name: number
-    hexCode: number
-    createdAt: number
-    updatedAt: number
-    _all: number
-  }
-
-
-  export type ColorMinAggregateInputType = {
-    id?: true
-    name?: true
-    hexCode?: true
-    createdAt?: true
-    updatedAt?: true
-  }
-
-  export type ColorMaxAggregateInputType = {
-    id?: true
-    name?: true
-    hexCode?: true
-    createdAt?: true
-    updatedAt?: true
-  }
-
-  export type ColorCountAggregateInputType = {
-    id?: true
-    name?: true
-    hexCode?: true
-    createdAt?: true
-    updatedAt?: true
-    _all?: true
-  }
-
-  export type ColorAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Color to aggregate.
-     */
-    where?: ColorWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Colors to fetch.
-     */
-    orderBy?: ColorOrderByWithRelationInput | ColorOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: ColorWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Colors from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Colors.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned Colors
-    **/
-    _count?: true | ColorCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: ColorMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: ColorMaxAggregateInputType
-  }
-
-  export type GetColorAggregateType<T extends ColorAggregateArgs> = {
-        [P in keyof T & keyof AggregateColor]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateColor[P]>
-      : GetScalarType<T[P], AggregateColor[P]>
-  }
-
-
-
-
-  export type ColorGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ColorWhereInput
-    orderBy?: ColorOrderByWithAggregationInput | ColorOrderByWithAggregationInput[]
-    by: ColorScalarFieldEnum[] | ColorScalarFieldEnum
-    having?: ColorScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: ColorCountAggregateInputType | true
-    _min?: ColorMinAggregateInputType
-    _max?: ColorMaxAggregateInputType
-  }
-
-  export type ColorGroupByOutputType = {
-    id: string
-    name: string
-    hexCode: string
-    createdAt: Date
-    updatedAt: Date
-    _count: ColorCountAggregateOutputType | null
-    _min: ColorMinAggregateOutputType | null
-    _max: ColorMaxAggregateOutputType | null
-  }
-
-  type GetColorGroupByPayload<T extends ColorGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<ColorGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof ColorGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], ColorGroupByOutputType[P]>
-            : GetScalarType<T[P], ColorGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type ColorSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    name?: boolean
-    hexCode?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    products?: boolean | Color$productsArgs<ExtArgs>
-    cartItems?: boolean | Color$cartItemsArgs<ExtArgs>
-    orderItems?: boolean | Color$orderItemsArgs<ExtArgs>
-    _count?: boolean | ColorCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["color"]>
-
-  export type ColorSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    name?: boolean
-    hexCode?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-  }, ExtArgs["result"]["color"]>
-
-  export type ColorSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    name?: boolean
-    hexCode?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-  }, ExtArgs["result"]["color"]>
-
-  export type ColorSelectScalar = {
-    id?: boolean
-    name?: boolean
-    hexCode?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-  }
-
-  export type ColorOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "hexCode" | "createdAt" | "updatedAt", ExtArgs["result"]["color"]>
-  export type ColorInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    products?: boolean | Color$productsArgs<ExtArgs>
-    cartItems?: boolean | Color$cartItemsArgs<ExtArgs>
-    orderItems?: boolean | Color$orderItemsArgs<ExtArgs>
-    _count?: boolean | ColorCountOutputTypeDefaultArgs<ExtArgs>
-  }
-  export type ColorIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type ColorIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-
-  export type $ColorPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Color"
-    objects: {
-      products: Prisma.$ProductColorPayload<ExtArgs>[]
-      cartItems: Prisma.$CartItemPayload<ExtArgs>[]
-      orderItems: Prisma.$OrderItemPayload<ExtArgs>[]
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: string
-      name: string
-      hexCode: string
-      createdAt: Date
-      updatedAt: Date
-    }, ExtArgs["result"]["color"]>
-    composites: {}
-  }
-
-  type ColorGetPayload<S extends boolean | null | undefined | ColorDefaultArgs> = $Result.GetResult<Prisma.$ColorPayload, S>
-
-  type ColorCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<ColorFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: ColorCountAggregateInputType | true
-    }
-
-  export interface ColorDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Color'], meta: { name: 'Color' } }
-    /**
-     * Find zero or one Color that matches the filter.
-     * @param {ColorFindUniqueArgs} args - Arguments to find a Color
-     * @example
-     * // Get one Color
-     * const color = await prisma.color.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends ColorFindUniqueArgs>(args: SelectSubset<T, ColorFindUniqueArgs<ExtArgs>>): Prisma__ColorClient<$Result.GetResult<Prisma.$ColorPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one Color that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {ColorFindUniqueOrThrowArgs} args - Arguments to find a Color
-     * @example
-     * // Get one Color
-     * const color = await prisma.color.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends ColorFindUniqueOrThrowArgs>(args: SelectSubset<T, ColorFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ColorClient<$Result.GetResult<Prisma.$ColorPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Color that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ColorFindFirstArgs} args - Arguments to find a Color
-     * @example
-     * // Get one Color
-     * const color = await prisma.color.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends ColorFindFirstArgs>(args?: SelectSubset<T, ColorFindFirstArgs<ExtArgs>>): Prisma__ColorClient<$Result.GetResult<Prisma.$ColorPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Color that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ColorFindFirstOrThrowArgs} args - Arguments to find a Color
-     * @example
-     * // Get one Color
-     * const color = await prisma.color.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends ColorFindFirstOrThrowArgs>(args?: SelectSubset<T, ColorFindFirstOrThrowArgs<ExtArgs>>): Prisma__ColorClient<$Result.GetResult<Prisma.$ColorPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more Colors that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ColorFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Colors
-     * const colors = await prisma.color.findMany()
-     * 
-     * // Get first 10 Colors
-     * const colors = await prisma.color.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const colorWithIdOnly = await prisma.color.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends ColorFindManyArgs>(args?: SelectSubset<T, ColorFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ColorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a Color.
-     * @param {ColorCreateArgs} args - Arguments to create a Color.
-     * @example
-     * // Create one Color
-     * const Color = await prisma.color.create({
-     *   data: {
-     *     // ... data to create a Color
-     *   }
-     * })
-     * 
-     */
-    create<T extends ColorCreateArgs>(args: SelectSubset<T, ColorCreateArgs<ExtArgs>>): Prisma__ColorClient<$Result.GetResult<Prisma.$ColorPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many Colors.
-     * @param {ColorCreateManyArgs} args - Arguments to create many Colors.
-     * @example
-     * // Create many Colors
-     * const color = await prisma.color.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends ColorCreateManyArgs>(args?: SelectSubset<T, ColorCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many Colors and returns the data saved in the database.
-     * @param {ColorCreateManyAndReturnArgs} args - Arguments to create many Colors.
-     * @example
-     * // Create many Colors
-     * const color = await prisma.color.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many Colors and only return the `id`
-     * const colorWithIdOnly = await prisma.color.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends ColorCreateManyAndReturnArgs>(args?: SelectSubset<T, ColorCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ColorPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a Color.
-     * @param {ColorDeleteArgs} args - Arguments to delete one Color.
-     * @example
-     * // Delete one Color
-     * const Color = await prisma.color.delete({
-     *   where: {
-     *     // ... filter to delete one Color
-     *   }
-     * })
-     * 
-     */
-    delete<T extends ColorDeleteArgs>(args: SelectSubset<T, ColorDeleteArgs<ExtArgs>>): Prisma__ColorClient<$Result.GetResult<Prisma.$ColorPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one Color.
-     * @param {ColorUpdateArgs} args - Arguments to update one Color.
-     * @example
-     * // Update one Color
-     * const color = await prisma.color.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends ColorUpdateArgs>(args: SelectSubset<T, ColorUpdateArgs<ExtArgs>>): Prisma__ColorClient<$Result.GetResult<Prisma.$ColorPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more Colors.
-     * @param {ColorDeleteManyArgs} args - Arguments to filter Colors to delete.
-     * @example
-     * // Delete a few Colors
-     * const { count } = await prisma.color.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends ColorDeleteManyArgs>(args?: SelectSubset<T, ColorDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Colors.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ColorUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Colors
-     * const color = await prisma.color.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends ColorUpdateManyArgs>(args: SelectSubset<T, ColorUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Colors and returns the data updated in the database.
-     * @param {ColorUpdateManyAndReturnArgs} args - Arguments to update many Colors.
-     * @example
-     * // Update many Colors
-     * const color = await prisma.color.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more Colors and only return the `id`
-     * const colorWithIdOnly = await prisma.color.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends ColorUpdateManyAndReturnArgs>(args: SelectSubset<T, ColorUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ColorPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one Color.
-     * @param {ColorUpsertArgs} args - Arguments to update or create a Color.
-     * @example
-     * // Update or create a Color
-     * const color = await prisma.color.upsert({
-     *   create: {
-     *     // ... data to create a Color
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Color we want to update
-     *   }
-     * })
-     */
-    upsert<T extends ColorUpsertArgs>(args: SelectSubset<T, ColorUpsertArgs<ExtArgs>>): Prisma__ColorClient<$Result.GetResult<Prisma.$ColorPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of Colors.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ColorCountArgs} args - Arguments to filter Colors to count.
-     * @example
-     * // Count the number of Colors
-     * const count = await prisma.color.count({
-     *   where: {
-     *     // ... the filter for the Colors we want to count
-     *   }
-     * })
-    **/
-    count<T extends ColorCountArgs>(
-      args?: Subset<T, ColorCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], ColorCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Color.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ColorAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends ColorAggregateArgs>(args: Subset<T, ColorAggregateArgs>): Prisma.PrismaPromise<GetColorAggregateType<T>>
-
-    /**
-     * Group by Color.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ColorGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends ColorGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: ColorGroupByArgs['orderBy'] }
-        : { orderBy?: ColorGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, ColorGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetColorGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the Color model
-   */
-  readonly fields: ColorFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for Color.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__ColorClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    products<T extends Color$productsArgs<ExtArgs> = {}>(args?: Subset<T, Color$productsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductColorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    cartItems<T extends Color$cartItemsArgs<ExtArgs> = {}>(args?: Subset<T, Color$cartItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CartItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    orderItems<T extends Color$orderItemsArgs<ExtArgs> = {}>(args?: Subset<T, Color$orderItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the Color model
-   */
-  interface ColorFieldRefs {
-    readonly id: FieldRef<"Color", 'String'>
-    readonly name: FieldRef<"Color", 'String'>
-    readonly hexCode: FieldRef<"Color", 'String'>
-    readonly createdAt: FieldRef<"Color", 'DateTime'>
-    readonly updatedAt: FieldRef<"Color", 'DateTime'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * Color findUnique
-   */
-  export type ColorFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Color
-     */
-    select?: ColorSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Color
-     */
-    omit?: ColorOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ColorInclude<ExtArgs> | null
-    /**
-     * Filter, which Color to fetch.
-     */
-    where: ColorWhereUniqueInput
-  }
-
-  /**
-   * Color findUniqueOrThrow
-   */
-  export type ColorFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Color
-     */
-    select?: ColorSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Color
-     */
-    omit?: ColorOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ColorInclude<ExtArgs> | null
-    /**
-     * Filter, which Color to fetch.
-     */
-    where: ColorWhereUniqueInput
-  }
-
-  /**
-   * Color findFirst
-   */
-  export type ColorFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Color
-     */
-    select?: ColorSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Color
-     */
-    omit?: ColorOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ColorInclude<ExtArgs> | null
-    /**
-     * Filter, which Color to fetch.
-     */
-    where?: ColorWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Colors to fetch.
-     */
-    orderBy?: ColorOrderByWithRelationInput | ColorOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Colors.
-     */
-    cursor?: ColorWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Colors from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Colors.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Colors.
-     */
-    distinct?: ColorScalarFieldEnum | ColorScalarFieldEnum[]
-  }
-
-  /**
-   * Color findFirstOrThrow
-   */
-  export type ColorFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Color
-     */
-    select?: ColorSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Color
-     */
-    omit?: ColorOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ColorInclude<ExtArgs> | null
-    /**
-     * Filter, which Color to fetch.
-     */
-    where?: ColorWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Colors to fetch.
-     */
-    orderBy?: ColorOrderByWithRelationInput | ColorOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Colors.
-     */
-    cursor?: ColorWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Colors from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Colors.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Colors.
-     */
-    distinct?: ColorScalarFieldEnum | ColorScalarFieldEnum[]
-  }
-
-  /**
-   * Color findMany
-   */
-  export type ColorFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Color
-     */
-    select?: ColorSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Color
-     */
-    omit?: ColorOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ColorInclude<ExtArgs> | null
-    /**
-     * Filter, which Colors to fetch.
-     */
-    where?: ColorWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Colors to fetch.
-     */
-    orderBy?: ColorOrderByWithRelationInput | ColorOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing Colors.
-     */
-    cursor?: ColorWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Colors from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Colors.
-     */
-    skip?: number
-    distinct?: ColorScalarFieldEnum | ColorScalarFieldEnum[]
-  }
-
-  /**
-   * Color create
-   */
-  export type ColorCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Color
-     */
-    select?: ColorSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Color
-     */
-    omit?: ColorOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ColorInclude<ExtArgs> | null
-    /**
-     * The data needed to create a Color.
-     */
-    data: XOR<ColorCreateInput, ColorUncheckedCreateInput>
-  }
-
-  /**
-   * Color createMany
-   */
-  export type ColorCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many Colors.
-     */
-    data: ColorCreateManyInput | ColorCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * Color createManyAndReturn
-   */
-  export type ColorCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Color
-     */
-    select?: ColorSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Color
-     */
-    omit?: ColorOmit<ExtArgs> | null
-    /**
-     * The data used to create many Colors.
-     */
-    data: ColorCreateManyInput | ColorCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * Color update
-   */
-  export type ColorUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Color
-     */
-    select?: ColorSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Color
-     */
-    omit?: ColorOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ColorInclude<ExtArgs> | null
-    /**
-     * The data needed to update a Color.
-     */
-    data: XOR<ColorUpdateInput, ColorUncheckedUpdateInput>
-    /**
-     * Choose, which Color to update.
-     */
-    where: ColorWhereUniqueInput
-  }
-
-  /**
-   * Color updateMany
-   */
-  export type ColorUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update Colors.
-     */
-    data: XOR<ColorUpdateManyMutationInput, ColorUncheckedUpdateManyInput>
-    /**
-     * Filter which Colors to update
-     */
-    where?: ColorWhereInput
-    /**
-     * Limit how many Colors to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * Color updateManyAndReturn
-   */
-  export type ColorUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Color
-     */
-    select?: ColorSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Color
-     */
-    omit?: ColorOmit<ExtArgs> | null
-    /**
-     * The data used to update Colors.
-     */
-    data: XOR<ColorUpdateManyMutationInput, ColorUncheckedUpdateManyInput>
-    /**
-     * Filter which Colors to update
-     */
-    where?: ColorWhereInput
-    /**
-     * Limit how many Colors to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * Color upsert
-   */
-  export type ColorUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Color
-     */
-    select?: ColorSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Color
-     */
-    omit?: ColorOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ColorInclude<ExtArgs> | null
-    /**
-     * The filter to search for the Color to update in case it exists.
-     */
-    where: ColorWhereUniqueInput
-    /**
-     * In case the Color found by the `where` argument doesn't exist, create a new Color with this data.
-     */
-    create: XOR<ColorCreateInput, ColorUncheckedCreateInput>
-    /**
-     * In case the Color was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<ColorUpdateInput, ColorUncheckedUpdateInput>
-  }
-
-  /**
-   * Color delete
-   */
-  export type ColorDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Color
-     */
-    select?: ColorSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Color
-     */
-    omit?: ColorOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ColorInclude<ExtArgs> | null
-    /**
-     * Filter which Color to delete.
-     */
-    where: ColorWhereUniqueInput
-  }
-
-  /**
-   * Color deleteMany
-   */
-  export type ColorDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Colors to delete
-     */
-    where?: ColorWhereInput
-    /**
-     * Limit how many Colors to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * Color.products
-   */
-  export type Color$productsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ProductColor
-     */
-    select?: ProductColorSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ProductColor
-     */
-    omit?: ProductColorOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ProductColorInclude<ExtArgs> | null
-    where?: ProductColorWhereInput
-    orderBy?: ProductColorOrderByWithRelationInput | ProductColorOrderByWithRelationInput[]
-    cursor?: ProductColorWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: ProductColorScalarFieldEnum | ProductColorScalarFieldEnum[]
-  }
-
-  /**
-   * Color.cartItems
-   */
-  export type Color$cartItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CartItem
-     */
-    select?: CartItemSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the CartItem
-     */
-    omit?: CartItemOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CartItemInclude<ExtArgs> | null
-    where?: CartItemWhereInput
-    orderBy?: CartItemOrderByWithRelationInput | CartItemOrderByWithRelationInput[]
-    cursor?: CartItemWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: CartItemScalarFieldEnum | CartItemScalarFieldEnum[]
-  }
-
-  /**
-   * Color.orderItems
-   */
-  export type Color$orderItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the OrderItem
-     */
-    select?: OrderItemSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the OrderItem
-     */
-    omit?: OrderItemOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: OrderItemInclude<ExtArgs> | null
-    where?: OrderItemWhereInput
-    orderBy?: OrderItemOrderByWithRelationInput | OrderItemOrderByWithRelationInput[]
-    cursor?: OrderItemWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: OrderItemScalarFieldEnum | OrderItemScalarFieldEnum[]
-  }
-
-  /**
-   * Color without action
-   */
-  export type ColorDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Color
-     */
-    select?: ColorSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Color
-     */
-    omit?: ColorOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ColorInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model ProductColor
-   */
-
-  export type AggregateProductColor = {
-    _count: ProductColorCountAggregateOutputType | null
-    _avg: ProductColorAvgAggregateOutputType | null
-    _sum: ProductColorSumAggregateOutputType | null
-    _min: ProductColorMinAggregateOutputType | null
-    _max: ProductColorMaxAggregateOutputType | null
-  }
-
-  export type ProductColorAvgAggregateOutputType = {
-    stock: number | null
-  }
-
-  export type ProductColorSumAggregateOutputType = {
-    stock: number | null
-  }
-
-  export type ProductColorMinAggregateOutputType = {
-    id: string | null
-    productId: string | null
-    colorId: string | null
-    stock: number | null
-    createdAt: Date | null
-    updatedAt: Date | null
-  }
-
-  export type ProductColorMaxAggregateOutputType = {
-    id: string | null
-    productId: string | null
-    colorId: string | null
-    stock: number | null
-    createdAt: Date | null
-    updatedAt: Date | null
-  }
-
-  export type ProductColorCountAggregateOutputType = {
-    id: number
-    productId: number
-    colorId: number
-    stock: number
-    createdAt: number
-    updatedAt: number
-    _all: number
-  }
-
-
-  export type ProductColorAvgAggregateInputType = {
-    stock?: true
-  }
-
-  export type ProductColorSumAggregateInputType = {
-    stock?: true
-  }
-
-  export type ProductColorMinAggregateInputType = {
-    id?: true
-    productId?: true
-    colorId?: true
-    stock?: true
-    createdAt?: true
-    updatedAt?: true
-  }
-
-  export type ProductColorMaxAggregateInputType = {
-    id?: true
-    productId?: true
-    colorId?: true
-    stock?: true
-    createdAt?: true
-    updatedAt?: true
-  }
-
-  export type ProductColorCountAggregateInputType = {
-    id?: true
-    productId?: true
-    colorId?: true
-    stock?: true
-    createdAt?: true
-    updatedAt?: true
-    _all?: true
-  }
-
-  export type ProductColorAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which ProductColor to aggregate.
-     */
-    where?: ProductColorWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of ProductColors to fetch.
-     */
-    orderBy?: ProductColorOrderByWithRelationInput | ProductColorOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: ProductColorWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` ProductColors from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` ProductColors.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned ProductColors
-    **/
-    _count?: true | ProductColorCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: ProductColorAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: ProductColorSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: ProductColorMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: ProductColorMaxAggregateInputType
-  }
-
-  export type GetProductColorAggregateType<T extends ProductColorAggregateArgs> = {
-        [P in keyof T & keyof AggregateProductColor]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateProductColor[P]>
-      : GetScalarType<T[P], AggregateProductColor[P]>
-  }
-
-
-
-
-  export type ProductColorGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ProductColorWhereInput
-    orderBy?: ProductColorOrderByWithAggregationInput | ProductColorOrderByWithAggregationInput[]
-    by: ProductColorScalarFieldEnum[] | ProductColorScalarFieldEnum
-    having?: ProductColorScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: ProductColorCountAggregateInputType | true
-    _avg?: ProductColorAvgAggregateInputType
-    _sum?: ProductColorSumAggregateInputType
-    _min?: ProductColorMinAggregateInputType
-    _max?: ProductColorMaxAggregateInputType
-  }
-
-  export type ProductColorGroupByOutputType = {
-    id: string
-    productId: string
-    colorId: string
-    stock: number
-    createdAt: Date
-    updatedAt: Date
-    _count: ProductColorCountAggregateOutputType | null
-    _avg: ProductColorAvgAggregateOutputType | null
-    _sum: ProductColorSumAggregateOutputType | null
-    _min: ProductColorMinAggregateOutputType | null
-    _max: ProductColorMaxAggregateOutputType | null
-  }
-
-  type GetProductColorGroupByPayload<T extends ProductColorGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<ProductColorGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof ProductColorGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], ProductColorGroupByOutputType[P]>
-            : GetScalarType<T[P], ProductColorGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type ProductColorSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    productId?: boolean
-    colorId?: boolean
-    stock?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    product?: boolean | ProductDefaultArgs<ExtArgs>
-    color?: boolean | ColorDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["productColor"]>
-
-  export type ProductColorSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    productId?: boolean
-    colorId?: boolean
-    stock?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    product?: boolean | ProductDefaultArgs<ExtArgs>
-    color?: boolean | ColorDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["productColor"]>
-
-  export type ProductColorSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    productId?: boolean
-    colorId?: boolean
-    stock?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    product?: boolean | ProductDefaultArgs<ExtArgs>
-    color?: boolean | ColorDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["productColor"]>
-
-  export type ProductColorSelectScalar = {
-    id?: boolean
-    productId?: boolean
-    colorId?: boolean
-    stock?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-  }
-
-  export type ProductColorOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "productId" | "colorId" | "stock" | "createdAt" | "updatedAt", ExtArgs["result"]["productColor"]>
-  export type ProductColorInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    product?: boolean | ProductDefaultArgs<ExtArgs>
-    color?: boolean | ColorDefaultArgs<ExtArgs>
-  }
-  export type ProductColorIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    product?: boolean | ProductDefaultArgs<ExtArgs>
-    color?: boolean | ColorDefaultArgs<ExtArgs>
-  }
-  export type ProductColorIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    product?: boolean | ProductDefaultArgs<ExtArgs>
-    color?: boolean | ColorDefaultArgs<ExtArgs>
-  }
-
-  export type $ProductColorPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "ProductColor"
-    objects: {
-      product: Prisma.$ProductPayload<ExtArgs>
-      color: Prisma.$ColorPayload<ExtArgs>
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: string
-      productId: string
-      colorId: string
-      stock: number
-      createdAt: Date
-      updatedAt: Date
-    }, ExtArgs["result"]["productColor"]>
-    composites: {}
-  }
-
-  type ProductColorGetPayload<S extends boolean | null | undefined | ProductColorDefaultArgs> = $Result.GetResult<Prisma.$ProductColorPayload, S>
-
-  type ProductColorCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<ProductColorFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: ProductColorCountAggregateInputType | true
-    }
-
-  export interface ProductColorDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ProductColor'], meta: { name: 'ProductColor' } }
-    /**
-     * Find zero or one ProductColor that matches the filter.
-     * @param {ProductColorFindUniqueArgs} args - Arguments to find a ProductColor
-     * @example
-     * // Get one ProductColor
-     * const productColor = await prisma.productColor.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends ProductColorFindUniqueArgs>(args: SelectSubset<T, ProductColorFindUniqueArgs<ExtArgs>>): Prisma__ProductColorClient<$Result.GetResult<Prisma.$ProductColorPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one ProductColor that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {ProductColorFindUniqueOrThrowArgs} args - Arguments to find a ProductColor
-     * @example
-     * // Get one ProductColor
-     * const productColor = await prisma.productColor.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends ProductColorFindUniqueOrThrowArgs>(args: SelectSubset<T, ProductColorFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ProductColorClient<$Result.GetResult<Prisma.$ProductColorPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first ProductColor that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ProductColorFindFirstArgs} args - Arguments to find a ProductColor
-     * @example
-     * // Get one ProductColor
-     * const productColor = await prisma.productColor.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends ProductColorFindFirstArgs>(args?: SelectSubset<T, ProductColorFindFirstArgs<ExtArgs>>): Prisma__ProductColorClient<$Result.GetResult<Prisma.$ProductColorPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first ProductColor that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ProductColorFindFirstOrThrowArgs} args - Arguments to find a ProductColor
-     * @example
-     * // Get one ProductColor
-     * const productColor = await prisma.productColor.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends ProductColorFindFirstOrThrowArgs>(args?: SelectSubset<T, ProductColorFindFirstOrThrowArgs<ExtArgs>>): Prisma__ProductColorClient<$Result.GetResult<Prisma.$ProductColorPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more ProductColors that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ProductColorFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all ProductColors
-     * const productColors = await prisma.productColor.findMany()
-     * 
-     * // Get first 10 ProductColors
-     * const productColors = await prisma.productColor.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const productColorWithIdOnly = await prisma.productColor.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends ProductColorFindManyArgs>(args?: SelectSubset<T, ProductColorFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductColorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a ProductColor.
-     * @param {ProductColorCreateArgs} args - Arguments to create a ProductColor.
-     * @example
-     * // Create one ProductColor
-     * const ProductColor = await prisma.productColor.create({
-     *   data: {
-     *     // ... data to create a ProductColor
-     *   }
-     * })
-     * 
-     */
-    create<T extends ProductColorCreateArgs>(args: SelectSubset<T, ProductColorCreateArgs<ExtArgs>>): Prisma__ProductColorClient<$Result.GetResult<Prisma.$ProductColorPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many ProductColors.
-     * @param {ProductColorCreateManyArgs} args - Arguments to create many ProductColors.
-     * @example
-     * // Create many ProductColors
-     * const productColor = await prisma.productColor.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends ProductColorCreateManyArgs>(args?: SelectSubset<T, ProductColorCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many ProductColors and returns the data saved in the database.
-     * @param {ProductColorCreateManyAndReturnArgs} args - Arguments to create many ProductColors.
-     * @example
-     * // Create many ProductColors
-     * const productColor = await prisma.productColor.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many ProductColors and only return the `id`
-     * const productColorWithIdOnly = await prisma.productColor.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends ProductColorCreateManyAndReturnArgs>(args?: SelectSubset<T, ProductColorCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductColorPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a ProductColor.
-     * @param {ProductColorDeleteArgs} args - Arguments to delete one ProductColor.
-     * @example
-     * // Delete one ProductColor
-     * const ProductColor = await prisma.productColor.delete({
-     *   where: {
-     *     // ... filter to delete one ProductColor
-     *   }
-     * })
-     * 
-     */
-    delete<T extends ProductColorDeleteArgs>(args: SelectSubset<T, ProductColorDeleteArgs<ExtArgs>>): Prisma__ProductColorClient<$Result.GetResult<Prisma.$ProductColorPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one ProductColor.
-     * @param {ProductColorUpdateArgs} args - Arguments to update one ProductColor.
-     * @example
-     * // Update one ProductColor
-     * const productColor = await prisma.productColor.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends ProductColorUpdateArgs>(args: SelectSubset<T, ProductColorUpdateArgs<ExtArgs>>): Prisma__ProductColorClient<$Result.GetResult<Prisma.$ProductColorPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more ProductColors.
-     * @param {ProductColorDeleteManyArgs} args - Arguments to filter ProductColors to delete.
-     * @example
-     * // Delete a few ProductColors
-     * const { count } = await prisma.productColor.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends ProductColorDeleteManyArgs>(args?: SelectSubset<T, ProductColorDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more ProductColors.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ProductColorUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many ProductColors
-     * const productColor = await prisma.productColor.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends ProductColorUpdateManyArgs>(args: SelectSubset<T, ProductColorUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more ProductColors and returns the data updated in the database.
-     * @param {ProductColorUpdateManyAndReturnArgs} args - Arguments to update many ProductColors.
-     * @example
-     * // Update many ProductColors
-     * const productColor = await prisma.productColor.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more ProductColors and only return the `id`
-     * const productColorWithIdOnly = await prisma.productColor.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends ProductColorUpdateManyAndReturnArgs>(args: SelectSubset<T, ProductColorUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductColorPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one ProductColor.
-     * @param {ProductColorUpsertArgs} args - Arguments to update or create a ProductColor.
-     * @example
-     * // Update or create a ProductColor
-     * const productColor = await prisma.productColor.upsert({
-     *   create: {
-     *     // ... data to create a ProductColor
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the ProductColor we want to update
-     *   }
-     * })
-     */
-    upsert<T extends ProductColorUpsertArgs>(args: SelectSubset<T, ProductColorUpsertArgs<ExtArgs>>): Prisma__ProductColorClient<$Result.GetResult<Prisma.$ProductColorPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of ProductColors.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ProductColorCountArgs} args - Arguments to filter ProductColors to count.
-     * @example
-     * // Count the number of ProductColors
-     * const count = await prisma.productColor.count({
-     *   where: {
-     *     // ... the filter for the ProductColors we want to count
-     *   }
-     * })
-    **/
-    count<T extends ProductColorCountArgs>(
-      args?: Subset<T, ProductColorCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], ProductColorCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a ProductColor.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ProductColorAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends ProductColorAggregateArgs>(args: Subset<T, ProductColorAggregateArgs>): Prisma.PrismaPromise<GetProductColorAggregateType<T>>
-
-    /**
-     * Group by ProductColor.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ProductColorGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends ProductColorGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: ProductColorGroupByArgs['orderBy'] }
-        : { orderBy?: ProductColorGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, ProductColorGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetProductColorGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the ProductColor model
-   */
-  readonly fields: ProductColorFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for ProductColor.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__ProductColorClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    product<T extends ProductDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProductDefaultArgs<ExtArgs>>): Prisma__ProductClient<$Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    color<T extends ColorDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ColorDefaultArgs<ExtArgs>>): Prisma__ColorClient<$Result.GetResult<Prisma.$ColorPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the ProductColor model
-   */
-  interface ProductColorFieldRefs {
-    readonly id: FieldRef<"ProductColor", 'String'>
-    readonly productId: FieldRef<"ProductColor", 'String'>
-    readonly colorId: FieldRef<"ProductColor", 'String'>
-    readonly stock: FieldRef<"ProductColor", 'Int'>
-    readonly createdAt: FieldRef<"ProductColor", 'DateTime'>
-    readonly updatedAt: FieldRef<"ProductColor", 'DateTime'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * ProductColor findUnique
-   */
-  export type ProductColorFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ProductColor
-     */
-    select?: ProductColorSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ProductColor
-     */
-    omit?: ProductColorOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ProductColorInclude<ExtArgs> | null
-    /**
-     * Filter, which ProductColor to fetch.
-     */
-    where: ProductColorWhereUniqueInput
-  }
-
-  /**
-   * ProductColor findUniqueOrThrow
-   */
-  export type ProductColorFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ProductColor
-     */
-    select?: ProductColorSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ProductColor
-     */
-    omit?: ProductColorOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ProductColorInclude<ExtArgs> | null
-    /**
-     * Filter, which ProductColor to fetch.
-     */
-    where: ProductColorWhereUniqueInput
-  }
-
-  /**
-   * ProductColor findFirst
-   */
-  export type ProductColorFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ProductColor
-     */
-    select?: ProductColorSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ProductColor
-     */
-    omit?: ProductColorOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ProductColorInclude<ExtArgs> | null
-    /**
-     * Filter, which ProductColor to fetch.
-     */
-    where?: ProductColorWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of ProductColors to fetch.
-     */
-    orderBy?: ProductColorOrderByWithRelationInput | ProductColorOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for ProductColors.
-     */
-    cursor?: ProductColorWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` ProductColors from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` ProductColors.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of ProductColors.
-     */
-    distinct?: ProductColorScalarFieldEnum | ProductColorScalarFieldEnum[]
-  }
-
-  /**
-   * ProductColor findFirstOrThrow
-   */
-  export type ProductColorFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ProductColor
-     */
-    select?: ProductColorSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ProductColor
-     */
-    omit?: ProductColorOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ProductColorInclude<ExtArgs> | null
-    /**
-     * Filter, which ProductColor to fetch.
-     */
-    where?: ProductColorWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of ProductColors to fetch.
-     */
-    orderBy?: ProductColorOrderByWithRelationInput | ProductColorOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for ProductColors.
-     */
-    cursor?: ProductColorWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` ProductColors from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` ProductColors.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of ProductColors.
-     */
-    distinct?: ProductColorScalarFieldEnum | ProductColorScalarFieldEnum[]
-  }
-
-  /**
-   * ProductColor findMany
-   */
-  export type ProductColorFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ProductColor
-     */
-    select?: ProductColorSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ProductColor
-     */
-    omit?: ProductColorOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ProductColorInclude<ExtArgs> | null
-    /**
-     * Filter, which ProductColors to fetch.
-     */
-    where?: ProductColorWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of ProductColors to fetch.
-     */
-    orderBy?: ProductColorOrderByWithRelationInput | ProductColorOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing ProductColors.
-     */
-    cursor?: ProductColorWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` ProductColors from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` ProductColors.
-     */
-    skip?: number
-    distinct?: ProductColorScalarFieldEnum | ProductColorScalarFieldEnum[]
-  }
-
-  /**
-   * ProductColor create
-   */
-  export type ProductColorCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ProductColor
-     */
-    select?: ProductColorSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ProductColor
-     */
-    omit?: ProductColorOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ProductColorInclude<ExtArgs> | null
-    /**
-     * The data needed to create a ProductColor.
-     */
-    data: XOR<ProductColorCreateInput, ProductColorUncheckedCreateInput>
-  }
-
-  /**
-   * ProductColor createMany
-   */
-  export type ProductColorCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many ProductColors.
-     */
-    data: ProductColorCreateManyInput | ProductColorCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * ProductColor createManyAndReturn
-   */
-  export type ProductColorCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ProductColor
-     */
-    select?: ProductColorSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the ProductColor
-     */
-    omit?: ProductColorOmit<ExtArgs> | null
-    /**
-     * The data used to create many ProductColors.
-     */
-    data: ProductColorCreateManyInput | ProductColorCreateManyInput[]
-    skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ProductColorIncludeCreateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * ProductColor update
-   */
-  export type ProductColorUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ProductColor
-     */
-    select?: ProductColorSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ProductColor
-     */
-    omit?: ProductColorOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ProductColorInclude<ExtArgs> | null
-    /**
-     * The data needed to update a ProductColor.
-     */
-    data: XOR<ProductColorUpdateInput, ProductColorUncheckedUpdateInput>
-    /**
-     * Choose, which ProductColor to update.
-     */
-    where: ProductColorWhereUniqueInput
-  }
-
-  /**
-   * ProductColor updateMany
-   */
-  export type ProductColorUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update ProductColors.
-     */
-    data: XOR<ProductColorUpdateManyMutationInput, ProductColorUncheckedUpdateManyInput>
-    /**
-     * Filter which ProductColors to update
-     */
-    where?: ProductColorWhereInput
-    /**
-     * Limit how many ProductColors to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * ProductColor updateManyAndReturn
-   */
-  export type ProductColorUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ProductColor
-     */
-    select?: ProductColorSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the ProductColor
-     */
-    omit?: ProductColorOmit<ExtArgs> | null
-    /**
-     * The data used to update ProductColors.
-     */
-    data: XOR<ProductColorUpdateManyMutationInput, ProductColorUncheckedUpdateManyInput>
-    /**
-     * Filter which ProductColors to update
-     */
-    where?: ProductColorWhereInput
-    /**
-     * Limit how many ProductColors to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ProductColorIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * ProductColor upsert
-   */
-  export type ProductColorUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ProductColor
-     */
-    select?: ProductColorSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ProductColor
-     */
-    omit?: ProductColorOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ProductColorInclude<ExtArgs> | null
-    /**
-     * The filter to search for the ProductColor to update in case it exists.
-     */
-    where: ProductColorWhereUniqueInput
-    /**
-     * In case the ProductColor found by the `where` argument doesn't exist, create a new ProductColor with this data.
-     */
-    create: XOR<ProductColorCreateInput, ProductColorUncheckedCreateInput>
-    /**
-     * In case the ProductColor was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<ProductColorUpdateInput, ProductColorUncheckedUpdateInput>
-  }
-
-  /**
-   * ProductColor delete
-   */
-  export type ProductColorDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ProductColor
-     */
-    select?: ProductColorSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ProductColor
-     */
-    omit?: ProductColorOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ProductColorInclude<ExtArgs> | null
-    /**
-     * Filter which ProductColor to delete.
-     */
-    where: ProductColorWhereUniqueInput
-  }
-
-  /**
-   * ProductColor deleteMany
-   */
-  export type ProductColorDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which ProductColors to delete
-     */
-    where?: ProductColorWhereInput
-    /**
-     * Limit how many ProductColors to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * ProductColor without action
-   */
-  export type ProductColorDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ProductColor
-     */
-    select?: ProductColorSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ProductColor
-     */
-    omit?: ProductColorOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ProductColorInclude<ExtArgs> | null
-  }
-
-
-  /**
    * Enums
    */
 
@@ -16024,6 +16024,29 @@ export namespace Prisma {
   export type ProductImageScalarFieldEnum = (typeof ProductImageScalarFieldEnum)[keyof typeof ProductImageScalarFieldEnum]
 
 
+  export const ColorScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    hexCode: 'hexCode',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ColorScalarFieldEnum = (typeof ColorScalarFieldEnum)[keyof typeof ColorScalarFieldEnum]
+
+
+  export const ProductColorScalarFieldEnum: {
+    id: 'id',
+    productId: 'productId',
+    colorId: 'colorId',
+    stock: 'stock',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ProductColorScalarFieldEnum = (typeof ProductColorScalarFieldEnum)[keyof typeof ProductColorScalarFieldEnum]
+
+
   export const AddressScalarFieldEnum: {
     id: 'id',
     userId: 'userId',
@@ -16089,29 +16112,6 @@ export namespace Prisma {
   };
 
   export type OrderItemScalarFieldEnum = (typeof OrderItemScalarFieldEnum)[keyof typeof OrderItemScalarFieldEnum]
-
-
-  export const ColorScalarFieldEnum: {
-    id: 'id',
-    name: 'name',
-    hexCode: 'hexCode',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
-  };
-
-  export type ColorScalarFieldEnum = (typeof ColorScalarFieldEnum)[keyof typeof ColorScalarFieldEnum]
-
-
-  export const ProductColorScalarFieldEnum: {
-    id: 'id',
-    productId: 'productId',
-    colorId: 'colorId',
-    stock: 'stock',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
-  };
-
-  export type ProductColorScalarFieldEnum = (typeof ProductColorScalarFieldEnum)[keyof typeof ProductColorScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -16582,6 +16582,133 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"ProductImage"> | Date | string
   }
 
+  export type ColorWhereInput = {
+    AND?: ColorWhereInput | ColorWhereInput[]
+    OR?: ColorWhereInput[]
+    NOT?: ColorWhereInput | ColorWhereInput[]
+    id?: StringFilter<"Color"> | string
+    name?: StringFilter<"Color"> | string
+    hexCode?: StringFilter<"Color"> | string
+    createdAt?: DateTimeFilter<"Color"> | Date | string
+    updatedAt?: DateTimeFilter<"Color"> | Date | string
+    products?: ProductColorListRelationFilter
+    cartItems?: CartItemListRelationFilter
+    orderItems?: OrderItemListRelationFilter
+  }
+
+  export type ColorOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    hexCode?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    products?: ProductColorOrderByRelationAggregateInput
+    cartItems?: CartItemOrderByRelationAggregateInput
+    orderItems?: OrderItemOrderByRelationAggregateInput
+  }
+
+  export type ColorWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    name?: string
+    hexCode?: string
+    AND?: ColorWhereInput | ColorWhereInput[]
+    OR?: ColorWhereInput[]
+    NOT?: ColorWhereInput | ColorWhereInput[]
+    createdAt?: DateTimeFilter<"Color"> | Date | string
+    updatedAt?: DateTimeFilter<"Color"> | Date | string
+    products?: ProductColorListRelationFilter
+    cartItems?: CartItemListRelationFilter
+    orderItems?: OrderItemListRelationFilter
+  }, "id" | "id" | "name" | "hexCode">
+
+  export type ColorOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    hexCode?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ColorCountOrderByAggregateInput
+    _max?: ColorMaxOrderByAggregateInput
+    _min?: ColorMinOrderByAggregateInput
+  }
+
+  export type ColorScalarWhereWithAggregatesInput = {
+    AND?: ColorScalarWhereWithAggregatesInput | ColorScalarWhereWithAggregatesInput[]
+    OR?: ColorScalarWhereWithAggregatesInput[]
+    NOT?: ColorScalarWhereWithAggregatesInput | ColorScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Color"> | string
+    name?: StringWithAggregatesFilter<"Color"> | string
+    hexCode?: StringWithAggregatesFilter<"Color"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Color"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Color"> | Date | string
+  }
+
+  export type ProductColorWhereInput = {
+    AND?: ProductColorWhereInput | ProductColorWhereInput[]
+    OR?: ProductColorWhereInput[]
+    NOT?: ProductColorWhereInput | ProductColorWhereInput[]
+    id?: StringFilter<"ProductColor"> | string
+    productId?: StringFilter<"ProductColor"> | string
+    colorId?: StringFilter<"ProductColor"> | string
+    stock?: IntFilter<"ProductColor"> | number
+    createdAt?: DateTimeFilter<"ProductColor"> | Date | string
+    updatedAt?: DateTimeFilter<"ProductColor"> | Date | string
+    product?: XOR<ProductScalarRelationFilter, ProductWhereInput>
+    color?: XOR<ColorScalarRelationFilter, ColorWhereInput>
+  }
+
+  export type ProductColorOrderByWithRelationInput = {
+    id?: SortOrder
+    productId?: SortOrder
+    colorId?: SortOrder
+    stock?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    product?: ProductOrderByWithRelationInput
+    color?: ColorOrderByWithRelationInput
+  }
+
+  export type ProductColorWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    productId_colorId?: ProductColorProductIdColorIdCompoundUniqueInput
+    AND?: ProductColorWhereInput | ProductColorWhereInput[]
+    OR?: ProductColorWhereInput[]
+    NOT?: ProductColorWhereInput | ProductColorWhereInput[]
+    productId?: StringFilter<"ProductColor"> | string
+    colorId?: StringFilter<"ProductColor"> | string
+    stock?: IntFilter<"ProductColor"> | number
+    createdAt?: DateTimeFilter<"ProductColor"> | Date | string
+    updatedAt?: DateTimeFilter<"ProductColor"> | Date | string
+    product?: XOR<ProductScalarRelationFilter, ProductWhereInput>
+    color?: XOR<ColorScalarRelationFilter, ColorWhereInput>
+  }, "id" | "id" | "productId_colorId">
+
+  export type ProductColorOrderByWithAggregationInput = {
+    id?: SortOrder
+    productId?: SortOrder
+    colorId?: SortOrder
+    stock?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ProductColorCountOrderByAggregateInput
+    _avg?: ProductColorAvgOrderByAggregateInput
+    _max?: ProductColorMaxOrderByAggregateInput
+    _min?: ProductColorMinOrderByAggregateInput
+    _sum?: ProductColorSumOrderByAggregateInput
+  }
+
+  export type ProductColorScalarWhereWithAggregatesInput = {
+    AND?: ProductColorScalarWhereWithAggregatesInput | ProductColorScalarWhereWithAggregatesInput[]
+    OR?: ProductColorScalarWhereWithAggregatesInput[]
+    NOT?: ProductColorScalarWhereWithAggregatesInput | ProductColorScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ProductColor"> | string
+    productId?: StringWithAggregatesFilter<"ProductColor"> | string
+    colorId?: StringWithAggregatesFilter<"ProductColor"> | string
+    stock?: IntWithAggregatesFilter<"ProductColor"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"ProductColor"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"ProductColor"> | Date | string
+  }
+
   export type AddressWhereInput = {
     AND?: AddressWhereInput | AddressWhereInput[]
     OR?: AddressWhereInput[]
@@ -16757,6 +16884,8 @@ export namespace Prisma {
 
   export type CartItemWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    cartId_productId_colorId?: CartItemCartIdProductIdColorIdCompoundUniqueInput
+    cartId_productId?: CartItemCartIdProductIdCompoundUniqueInput
     AND?: CartItemWhereInput | CartItemWhereInput[]
     OR?: CartItemWhereInput[]
     NOT?: CartItemWhereInput | CartItemWhereInput[]
@@ -16769,7 +16898,7 @@ export namespace Prisma {
     cart?: XOR<CartScalarRelationFilter, CartWhereInput>
     product?: XOR<ProductScalarRelationFilter, ProductWhereInput>
     color?: XOR<ColorNullableScalarRelationFilter, ColorWhereInput> | null
-  }, "id" | "id">
+  }, "id" | "id" | "cartId_productId_colorId" | "cartId_productId">
 
   export type CartItemOrderByWithAggregationInput = {
     id?: SortOrder
@@ -16951,133 +17080,6 @@ export namespace Prisma {
     quantity?: IntWithAggregatesFilter<"OrderItem"> | number
     price?: FloatWithAggregatesFilter<"OrderItem"> | number
     createdAt?: DateTimeWithAggregatesFilter<"OrderItem"> | Date | string
-  }
-
-  export type ColorWhereInput = {
-    AND?: ColorWhereInput | ColorWhereInput[]
-    OR?: ColorWhereInput[]
-    NOT?: ColorWhereInput | ColorWhereInput[]
-    id?: StringFilter<"Color"> | string
-    name?: StringFilter<"Color"> | string
-    hexCode?: StringFilter<"Color"> | string
-    createdAt?: DateTimeFilter<"Color"> | Date | string
-    updatedAt?: DateTimeFilter<"Color"> | Date | string
-    products?: ProductColorListRelationFilter
-    cartItems?: CartItemListRelationFilter
-    orderItems?: OrderItemListRelationFilter
-  }
-
-  export type ColorOrderByWithRelationInput = {
-    id?: SortOrder
-    name?: SortOrder
-    hexCode?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    products?: ProductColorOrderByRelationAggregateInput
-    cartItems?: CartItemOrderByRelationAggregateInput
-    orderItems?: OrderItemOrderByRelationAggregateInput
-  }
-
-  export type ColorWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
-    name?: string
-    hexCode?: string
-    AND?: ColorWhereInput | ColorWhereInput[]
-    OR?: ColorWhereInput[]
-    NOT?: ColorWhereInput | ColorWhereInput[]
-    createdAt?: DateTimeFilter<"Color"> | Date | string
-    updatedAt?: DateTimeFilter<"Color"> | Date | string
-    products?: ProductColorListRelationFilter
-    cartItems?: CartItemListRelationFilter
-    orderItems?: OrderItemListRelationFilter
-  }, "id" | "id" | "name" | "hexCode">
-
-  export type ColorOrderByWithAggregationInput = {
-    id?: SortOrder
-    name?: SortOrder
-    hexCode?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    _count?: ColorCountOrderByAggregateInput
-    _max?: ColorMaxOrderByAggregateInput
-    _min?: ColorMinOrderByAggregateInput
-  }
-
-  export type ColorScalarWhereWithAggregatesInput = {
-    AND?: ColorScalarWhereWithAggregatesInput | ColorScalarWhereWithAggregatesInput[]
-    OR?: ColorScalarWhereWithAggregatesInput[]
-    NOT?: ColorScalarWhereWithAggregatesInput | ColorScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"Color"> | string
-    name?: StringWithAggregatesFilter<"Color"> | string
-    hexCode?: StringWithAggregatesFilter<"Color"> | string
-    createdAt?: DateTimeWithAggregatesFilter<"Color"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"Color"> | Date | string
-  }
-
-  export type ProductColorWhereInput = {
-    AND?: ProductColorWhereInput | ProductColorWhereInput[]
-    OR?: ProductColorWhereInput[]
-    NOT?: ProductColorWhereInput | ProductColorWhereInput[]
-    id?: StringFilter<"ProductColor"> | string
-    productId?: StringFilter<"ProductColor"> | string
-    colorId?: StringFilter<"ProductColor"> | string
-    stock?: IntFilter<"ProductColor"> | number
-    createdAt?: DateTimeFilter<"ProductColor"> | Date | string
-    updatedAt?: DateTimeFilter<"ProductColor"> | Date | string
-    product?: XOR<ProductScalarRelationFilter, ProductWhereInput>
-    color?: XOR<ColorScalarRelationFilter, ColorWhereInput>
-  }
-
-  export type ProductColorOrderByWithRelationInput = {
-    id?: SortOrder
-    productId?: SortOrder
-    colorId?: SortOrder
-    stock?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    product?: ProductOrderByWithRelationInput
-    color?: ColorOrderByWithRelationInput
-  }
-
-  export type ProductColorWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
-    productId_colorId?: ProductColorProductIdColorIdCompoundUniqueInput
-    AND?: ProductColorWhereInput | ProductColorWhereInput[]
-    OR?: ProductColorWhereInput[]
-    NOT?: ProductColorWhereInput | ProductColorWhereInput[]
-    productId?: StringFilter<"ProductColor"> | string
-    colorId?: StringFilter<"ProductColor"> | string
-    stock?: IntFilter<"ProductColor"> | number
-    createdAt?: DateTimeFilter<"ProductColor"> | Date | string
-    updatedAt?: DateTimeFilter<"ProductColor"> | Date | string
-    product?: XOR<ProductScalarRelationFilter, ProductWhereInput>
-    color?: XOR<ColorScalarRelationFilter, ColorWhereInput>
-  }, "id" | "id" | "productId_colorId">
-
-  export type ProductColorOrderByWithAggregationInput = {
-    id?: SortOrder
-    productId?: SortOrder
-    colorId?: SortOrder
-    stock?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    _count?: ProductColorCountOrderByAggregateInput
-    _avg?: ProductColorAvgOrderByAggregateInput
-    _max?: ProductColorMaxOrderByAggregateInput
-    _min?: ProductColorMinOrderByAggregateInput
-    _sum?: ProductColorSumOrderByAggregateInput
-  }
-
-  export type ProductColorScalarWhereWithAggregatesInput = {
-    AND?: ProductColorScalarWhereWithAggregatesInput | ProductColorScalarWhereWithAggregatesInput[]
-    OR?: ProductColorScalarWhereWithAggregatesInput[]
-    NOT?: ProductColorScalarWhereWithAggregatesInput | ProductColorScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"ProductColor"> | string
-    productId?: StringWithAggregatesFilter<"ProductColor"> | string
-    colorId?: StringWithAggregatesFilter<"ProductColor"> | string
-    stock?: IntWithAggregatesFilter<"ProductColor"> | number
-    createdAt?: DateTimeWithAggregatesFilter<"ProductColor"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"ProductColor"> | Date | string
   }
 
   export type UserCreateInput = {
@@ -17442,6 +17444,135 @@ export namespace Prisma {
     publicId?: StringFieldUpdateOperationsInput | string
     productId?: StringFieldUpdateOperationsInput | string
     isDefault?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ColorCreateInput = {
+    id?: string
+    name: string
+    hexCode: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    products?: ProductColorCreateNestedManyWithoutColorInput
+    cartItems?: CartItemCreateNestedManyWithoutColorInput
+    orderItems?: OrderItemCreateNestedManyWithoutColorInput
+  }
+
+  export type ColorUncheckedCreateInput = {
+    id?: string
+    name: string
+    hexCode: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    products?: ProductColorUncheckedCreateNestedManyWithoutColorInput
+    cartItems?: CartItemUncheckedCreateNestedManyWithoutColorInput
+    orderItems?: OrderItemUncheckedCreateNestedManyWithoutColorInput
+  }
+
+  export type ColorUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    hexCode?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    products?: ProductColorUpdateManyWithoutColorNestedInput
+    cartItems?: CartItemUpdateManyWithoutColorNestedInput
+    orderItems?: OrderItemUpdateManyWithoutColorNestedInput
+  }
+
+  export type ColorUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    hexCode?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    products?: ProductColorUncheckedUpdateManyWithoutColorNestedInput
+    cartItems?: CartItemUncheckedUpdateManyWithoutColorNestedInput
+    orderItems?: OrderItemUncheckedUpdateManyWithoutColorNestedInput
+  }
+
+  export type ColorCreateManyInput = {
+    id?: string
+    name: string
+    hexCode: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ColorUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    hexCode?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ColorUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    hexCode?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProductColorCreateInput = {
+    id?: string
+    stock?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    product: ProductCreateNestedOneWithoutColorsInput
+    color: ColorCreateNestedOneWithoutProductsInput
+  }
+
+  export type ProductColorUncheckedCreateInput = {
+    id?: string
+    productId: string
+    colorId: string
+    stock?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProductColorUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    stock?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    product?: ProductUpdateOneRequiredWithoutColorsNestedInput
+    color?: ColorUpdateOneRequiredWithoutProductsNestedInput
+  }
+
+  export type ProductColorUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    productId?: StringFieldUpdateOperationsInput | string
+    colorId?: StringFieldUpdateOperationsInput | string
+    stock?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProductColorCreateManyInput = {
+    id?: string
+    productId: string
+    colorId: string
+    stock?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProductColorUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    stock?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProductColorUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    productId?: StringFieldUpdateOperationsInput | string
+    colorId?: StringFieldUpdateOperationsInput | string
+    stock?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -17813,135 +17944,6 @@ export namespace Prisma {
     quantity?: IntFieldUpdateOperationsInput | number
     price?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ColorCreateInput = {
-    id?: string
-    name: string
-    hexCode: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    products?: ProductColorCreateNestedManyWithoutColorInput
-    cartItems?: CartItemCreateNestedManyWithoutColorInput
-    orderItems?: OrderItemCreateNestedManyWithoutColorInput
-  }
-
-  export type ColorUncheckedCreateInput = {
-    id?: string
-    name: string
-    hexCode: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    products?: ProductColorUncheckedCreateNestedManyWithoutColorInput
-    cartItems?: CartItemUncheckedCreateNestedManyWithoutColorInput
-    orderItems?: OrderItemUncheckedCreateNestedManyWithoutColorInput
-  }
-
-  export type ColorUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    hexCode?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    products?: ProductColorUpdateManyWithoutColorNestedInput
-    cartItems?: CartItemUpdateManyWithoutColorNestedInput
-    orderItems?: OrderItemUpdateManyWithoutColorNestedInput
-  }
-
-  export type ColorUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    hexCode?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    products?: ProductColorUncheckedUpdateManyWithoutColorNestedInput
-    cartItems?: CartItemUncheckedUpdateManyWithoutColorNestedInput
-    orderItems?: OrderItemUncheckedUpdateManyWithoutColorNestedInput
-  }
-
-  export type ColorCreateManyInput = {
-    id?: string
-    name: string
-    hexCode: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type ColorUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    hexCode?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ColorUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    hexCode?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ProductColorCreateInput = {
-    id?: string
-    stock?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    product: ProductCreateNestedOneWithoutColorsInput
-    color: ColorCreateNestedOneWithoutProductsInput
-  }
-
-  export type ProductColorUncheckedCreateInput = {
-    id?: string
-    productId: string
-    colorId: string
-    stock?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type ProductColorUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    stock?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    product?: ProductUpdateOneRequiredWithoutColorsNestedInput
-    color?: ColorUpdateOneRequiredWithoutProductsNestedInput
-  }
-
-  export type ProductColorUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    productId?: StringFieldUpdateOperationsInput | string
-    colorId?: StringFieldUpdateOperationsInput | string
-    stock?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ProductColorCreateManyInput = {
-    id?: string
-    productId: string
-    colorId: string
-    stock?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type ProductColorUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    stock?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ProductColorUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    productId?: StringFieldUpdateOperationsInput | string
-    colorId?: StringFieldUpdateOperationsInput | string
-    stock?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -18424,6 +18426,75 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
+  export type ColorCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    hexCode?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ColorMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    hexCode?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ColorMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    hexCode?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ColorScalarRelationFilter = {
+    is?: ColorWhereInput
+    isNot?: ColorWhereInput
+  }
+
+  export type ProductColorProductIdColorIdCompoundUniqueInput = {
+    productId: string
+    colorId: string
+  }
+
+  export type ProductColorCountOrderByAggregateInput = {
+    id?: SortOrder
+    productId?: SortOrder
+    colorId?: SortOrder
+    stock?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ProductColorAvgOrderByAggregateInput = {
+    stock?: SortOrder
+  }
+
+  export type ProductColorMaxOrderByAggregateInput = {
+    id?: SortOrder
+    productId?: SortOrder
+    colorId?: SortOrder
+    stock?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ProductColorMinOrderByAggregateInput = {
+    id?: SortOrder
+    productId?: SortOrder
+    colorId?: SortOrder
+    stock?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ProductColorSumOrderByAggregateInput = {
+    stock?: SortOrder
+  }
+
   export type UserScalarRelationFilter = {
     is?: UserWhereInput
     isNot?: UserWhereInput
@@ -18505,6 +18576,17 @@ export namespace Prisma {
   export type ColorNullableScalarRelationFilter = {
     is?: ColorWhereInput | null
     isNot?: ColorWhereInput | null
+  }
+
+  export type CartItemCartIdProductIdColorIdCompoundUniqueInput = {
+    cartId: string
+    productId: string
+    colorId: string
+  }
+
+  export type CartItemCartIdProductIdCompoundUniqueInput = {
+    cartId: string
+    productId: string
   }
 
   export type CartItemCountOrderByAggregateInput = {
@@ -18651,75 +18733,6 @@ export namespace Prisma {
   export type OrderItemSumOrderByAggregateInput = {
     quantity?: SortOrder
     price?: SortOrder
-  }
-
-  export type ColorCountOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
-    hexCode?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type ColorMaxOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
-    hexCode?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type ColorMinOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
-    hexCode?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type ColorScalarRelationFilter = {
-    is?: ColorWhereInput
-    isNot?: ColorWhereInput
-  }
-
-  export type ProductColorProductIdColorIdCompoundUniqueInput = {
-    productId: string
-    colorId: string
-  }
-
-  export type ProductColorCountOrderByAggregateInput = {
-    id?: SortOrder
-    productId?: SortOrder
-    colorId?: SortOrder
-    stock?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type ProductColorAvgOrderByAggregateInput = {
-    stock?: SortOrder
-  }
-
-  export type ProductColorMaxOrderByAggregateInput = {
-    id?: SortOrder
-    productId?: SortOrder
-    colorId?: SortOrder
-    stock?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type ProductColorMinOrderByAggregateInput = {
-    id?: SortOrder
-    productId?: SortOrder
-    colorId?: SortOrder
-    stock?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type ProductColorSumOrderByAggregateInput = {
-    stock?: SortOrder
   }
 
   export type AddressCreateNestedManyWithoutUserInput = {
@@ -19186,6 +19199,160 @@ export namespace Prisma {
     update?: XOR<XOR<ProductUpdateToOneWithWhereWithoutImagesInput, ProductUpdateWithoutImagesInput>, ProductUncheckedUpdateWithoutImagesInput>
   }
 
+  export type ProductColorCreateNestedManyWithoutColorInput = {
+    create?: XOR<ProductColorCreateWithoutColorInput, ProductColorUncheckedCreateWithoutColorInput> | ProductColorCreateWithoutColorInput[] | ProductColorUncheckedCreateWithoutColorInput[]
+    connectOrCreate?: ProductColorCreateOrConnectWithoutColorInput | ProductColorCreateOrConnectWithoutColorInput[]
+    createMany?: ProductColorCreateManyColorInputEnvelope
+    connect?: ProductColorWhereUniqueInput | ProductColorWhereUniqueInput[]
+  }
+
+  export type CartItemCreateNestedManyWithoutColorInput = {
+    create?: XOR<CartItemCreateWithoutColorInput, CartItemUncheckedCreateWithoutColorInput> | CartItemCreateWithoutColorInput[] | CartItemUncheckedCreateWithoutColorInput[]
+    connectOrCreate?: CartItemCreateOrConnectWithoutColorInput | CartItemCreateOrConnectWithoutColorInput[]
+    createMany?: CartItemCreateManyColorInputEnvelope
+    connect?: CartItemWhereUniqueInput | CartItemWhereUniqueInput[]
+  }
+
+  export type OrderItemCreateNestedManyWithoutColorInput = {
+    create?: XOR<OrderItemCreateWithoutColorInput, OrderItemUncheckedCreateWithoutColorInput> | OrderItemCreateWithoutColorInput[] | OrderItemUncheckedCreateWithoutColorInput[]
+    connectOrCreate?: OrderItemCreateOrConnectWithoutColorInput | OrderItemCreateOrConnectWithoutColorInput[]
+    createMany?: OrderItemCreateManyColorInputEnvelope
+    connect?: OrderItemWhereUniqueInput | OrderItemWhereUniqueInput[]
+  }
+
+  export type ProductColorUncheckedCreateNestedManyWithoutColorInput = {
+    create?: XOR<ProductColorCreateWithoutColorInput, ProductColorUncheckedCreateWithoutColorInput> | ProductColorCreateWithoutColorInput[] | ProductColorUncheckedCreateWithoutColorInput[]
+    connectOrCreate?: ProductColorCreateOrConnectWithoutColorInput | ProductColorCreateOrConnectWithoutColorInput[]
+    createMany?: ProductColorCreateManyColorInputEnvelope
+    connect?: ProductColorWhereUniqueInput | ProductColorWhereUniqueInput[]
+  }
+
+  export type CartItemUncheckedCreateNestedManyWithoutColorInput = {
+    create?: XOR<CartItemCreateWithoutColorInput, CartItemUncheckedCreateWithoutColorInput> | CartItemCreateWithoutColorInput[] | CartItemUncheckedCreateWithoutColorInput[]
+    connectOrCreate?: CartItemCreateOrConnectWithoutColorInput | CartItemCreateOrConnectWithoutColorInput[]
+    createMany?: CartItemCreateManyColorInputEnvelope
+    connect?: CartItemWhereUniqueInput | CartItemWhereUniqueInput[]
+  }
+
+  export type OrderItemUncheckedCreateNestedManyWithoutColorInput = {
+    create?: XOR<OrderItemCreateWithoutColorInput, OrderItemUncheckedCreateWithoutColorInput> | OrderItemCreateWithoutColorInput[] | OrderItemUncheckedCreateWithoutColorInput[]
+    connectOrCreate?: OrderItemCreateOrConnectWithoutColorInput | OrderItemCreateOrConnectWithoutColorInput[]
+    createMany?: OrderItemCreateManyColorInputEnvelope
+    connect?: OrderItemWhereUniqueInput | OrderItemWhereUniqueInput[]
+  }
+
+  export type ProductColorUpdateManyWithoutColorNestedInput = {
+    create?: XOR<ProductColorCreateWithoutColorInput, ProductColorUncheckedCreateWithoutColorInput> | ProductColorCreateWithoutColorInput[] | ProductColorUncheckedCreateWithoutColorInput[]
+    connectOrCreate?: ProductColorCreateOrConnectWithoutColorInput | ProductColorCreateOrConnectWithoutColorInput[]
+    upsert?: ProductColorUpsertWithWhereUniqueWithoutColorInput | ProductColorUpsertWithWhereUniqueWithoutColorInput[]
+    createMany?: ProductColorCreateManyColorInputEnvelope
+    set?: ProductColorWhereUniqueInput | ProductColorWhereUniqueInput[]
+    disconnect?: ProductColorWhereUniqueInput | ProductColorWhereUniqueInput[]
+    delete?: ProductColorWhereUniqueInput | ProductColorWhereUniqueInput[]
+    connect?: ProductColorWhereUniqueInput | ProductColorWhereUniqueInput[]
+    update?: ProductColorUpdateWithWhereUniqueWithoutColorInput | ProductColorUpdateWithWhereUniqueWithoutColorInput[]
+    updateMany?: ProductColorUpdateManyWithWhereWithoutColorInput | ProductColorUpdateManyWithWhereWithoutColorInput[]
+    deleteMany?: ProductColorScalarWhereInput | ProductColorScalarWhereInput[]
+  }
+
+  export type CartItemUpdateManyWithoutColorNestedInput = {
+    create?: XOR<CartItemCreateWithoutColorInput, CartItemUncheckedCreateWithoutColorInput> | CartItemCreateWithoutColorInput[] | CartItemUncheckedCreateWithoutColorInput[]
+    connectOrCreate?: CartItemCreateOrConnectWithoutColorInput | CartItemCreateOrConnectWithoutColorInput[]
+    upsert?: CartItemUpsertWithWhereUniqueWithoutColorInput | CartItemUpsertWithWhereUniqueWithoutColorInput[]
+    createMany?: CartItemCreateManyColorInputEnvelope
+    set?: CartItemWhereUniqueInput | CartItemWhereUniqueInput[]
+    disconnect?: CartItemWhereUniqueInput | CartItemWhereUniqueInput[]
+    delete?: CartItemWhereUniqueInput | CartItemWhereUniqueInput[]
+    connect?: CartItemWhereUniqueInput | CartItemWhereUniqueInput[]
+    update?: CartItemUpdateWithWhereUniqueWithoutColorInput | CartItemUpdateWithWhereUniqueWithoutColorInput[]
+    updateMany?: CartItemUpdateManyWithWhereWithoutColorInput | CartItemUpdateManyWithWhereWithoutColorInput[]
+    deleteMany?: CartItemScalarWhereInput | CartItemScalarWhereInput[]
+  }
+
+  export type OrderItemUpdateManyWithoutColorNestedInput = {
+    create?: XOR<OrderItemCreateWithoutColorInput, OrderItemUncheckedCreateWithoutColorInput> | OrderItemCreateWithoutColorInput[] | OrderItemUncheckedCreateWithoutColorInput[]
+    connectOrCreate?: OrderItemCreateOrConnectWithoutColorInput | OrderItemCreateOrConnectWithoutColorInput[]
+    upsert?: OrderItemUpsertWithWhereUniqueWithoutColorInput | OrderItemUpsertWithWhereUniqueWithoutColorInput[]
+    createMany?: OrderItemCreateManyColorInputEnvelope
+    set?: OrderItemWhereUniqueInput | OrderItemWhereUniqueInput[]
+    disconnect?: OrderItemWhereUniqueInput | OrderItemWhereUniqueInput[]
+    delete?: OrderItemWhereUniqueInput | OrderItemWhereUniqueInput[]
+    connect?: OrderItemWhereUniqueInput | OrderItemWhereUniqueInput[]
+    update?: OrderItemUpdateWithWhereUniqueWithoutColorInput | OrderItemUpdateWithWhereUniqueWithoutColorInput[]
+    updateMany?: OrderItemUpdateManyWithWhereWithoutColorInput | OrderItemUpdateManyWithWhereWithoutColorInput[]
+    deleteMany?: OrderItemScalarWhereInput | OrderItemScalarWhereInput[]
+  }
+
+  export type ProductColorUncheckedUpdateManyWithoutColorNestedInput = {
+    create?: XOR<ProductColorCreateWithoutColorInput, ProductColorUncheckedCreateWithoutColorInput> | ProductColorCreateWithoutColorInput[] | ProductColorUncheckedCreateWithoutColorInput[]
+    connectOrCreate?: ProductColorCreateOrConnectWithoutColorInput | ProductColorCreateOrConnectWithoutColorInput[]
+    upsert?: ProductColorUpsertWithWhereUniqueWithoutColorInput | ProductColorUpsertWithWhereUniqueWithoutColorInput[]
+    createMany?: ProductColorCreateManyColorInputEnvelope
+    set?: ProductColorWhereUniqueInput | ProductColorWhereUniqueInput[]
+    disconnect?: ProductColorWhereUniqueInput | ProductColorWhereUniqueInput[]
+    delete?: ProductColorWhereUniqueInput | ProductColorWhereUniqueInput[]
+    connect?: ProductColorWhereUniqueInput | ProductColorWhereUniqueInput[]
+    update?: ProductColorUpdateWithWhereUniqueWithoutColorInput | ProductColorUpdateWithWhereUniqueWithoutColorInput[]
+    updateMany?: ProductColorUpdateManyWithWhereWithoutColorInput | ProductColorUpdateManyWithWhereWithoutColorInput[]
+    deleteMany?: ProductColorScalarWhereInput | ProductColorScalarWhereInput[]
+  }
+
+  export type CartItemUncheckedUpdateManyWithoutColorNestedInput = {
+    create?: XOR<CartItemCreateWithoutColorInput, CartItemUncheckedCreateWithoutColorInput> | CartItemCreateWithoutColorInput[] | CartItemUncheckedCreateWithoutColorInput[]
+    connectOrCreate?: CartItemCreateOrConnectWithoutColorInput | CartItemCreateOrConnectWithoutColorInput[]
+    upsert?: CartItemUpsertWithWhereUniqueWithoutColorInput | CartItemUpsertWithWhereUniqueWithoutColorInput[]
+    createMany?: CartItemCreateManyColorInputEnvelope
+    set?: CartItemWhereUniqueInput | CartItemWhereUniqueInput[]
+    disconnect?: CartItemWhereUniqueInput | CartItemWhereUniqueInput[]
+    delete?: CartItemWhereUniqueInput | CartItemWhereUniqueInput[]
+    connect?: CartItemWhereUniqueInput | CartItemWhereUniqueInput[]
+    update?: CartItemUpdateWithWhereUniqueWithoutColorInput | CartItemUpdateWithWhereUniqueWithoutColorInput[]
+    updateMany?: CartItemUpdateManyWithWhereWithoutColorInput | CartItemUpdateManyWithWhereWithoutColorInput[]
+    deleteMany?: CartItemScalarWhereInput | CartItemScalarWhereInput[]
+  }
+
+  export type OrderItemUncheckedUpdateManyWithoutColorNestedInput = {
+    create?: XOR<OrderItemCreateWithoutColorInput, OrderItemUncheckedCreateWithoutColorInput> | OrderItemCreateWithoutColorInput[] | OrderItemUncheckedCreateWithoutColorInput[]
+    connectOrCreate?: OrderItemCreateOrConnectWithoutColorInput | OrderItemCreateOrConnectWithoutColorInput[]
+    upsert?: OrderItemUpsertWithWhereUniqueWithoutColorInput | OrderItemUpsertWithWhereUniqueWithoutColorInput[]
+    createMany?: OrderItemCreateManyColorInputEnvelope
+    set?: OrderItemWhereUniqueInput | OrderItemWhereUniqueInput[]
+    disconnect?: OrderItemWhereUniqueInput | OrderItemWhereUniqueInput[]
+    delete?: OrderItemWhereUniqueInput | OrderItemWhereUniqueInput[]
+    connect?: OrderItemWhereUniqueInput | OrderItemWhereUniqueInput[]
+    update?: OrderItemUpdateWithWhereUniqueWithoutColorInput | OrderItemUpdateWithWhereUniqueWithoutColorInput[]
+    updateMany?: OrderItemUpdateManyWithWhereWithoutColorInput | OrderItemUpdateManyWithWhereWithoutColorInput[]
+    deleteMany?: OrderItemScalarWhereInput | OrderItemScalarWhereInput[]
+  }
+
+  export type ProductCreateNestedOneWithoutColorsInput = {
+    create?: XOR<ProductCreateWithoutColorsInput, ProductUncheckedCreateWithoutColorsInput>
+    connectOrCreate?: ProductCreateOrConnectWithoutColorsInput
+    connect?: ProductWhereUniqueInput
+  }
+
+  export type ColorCreateNestedOneWithoutProductsInput = {
+    create?: XOR<ColorCreateWithoutProductsInput, ColorUncheckedCreateWithoutProductsInput>
+    connectOrCreate?: ColorCreateOrConnectWithoutProductsInput
+    connect?: ColorWhereUniqueInput
+  }
+
+  export type ProductUpdateOneRequiredWithoutColorsNestedInput = {
+    create?: XOR<ProductCreateWithoutColorsInput, ProductUncheckedCreateWithoutColorsInput>
+    connectOrCreate?: ProductCreateOrConnectWithoutColorsInput
+    upsert?: ProductUpsertWithoutColorsInput
+    connect?: ProductWhereUniqueInput
+    update?: XOR<XOR<ProductUpdateToOneWithWhereWithoutColorsInput, ProductUpdateWithoutColorsInput>, ProductUncheckedUpdateWithoutColorsInput>
+  }
+
+  export type ColorUpdateOneRequiredWithoutProductsNestedInput = {
+    create?: XOR<ColorCreateWithoutProductsInput, ColorUncheckedCreateWithoutProductsInput>
+    connectOrCreate?: ColorCreateOrConnectWithoutProductsInput
+    upsert?: ColorUpsertWithoutProductsInput
+    connect?: ColorWhereUniqueInput
+    update?: XOR<XOR<ColorUpdateToOneWithWhereWithoutProductsInput, ColorUpdateWithoutProductsInput>, ColorUncheckedUpdateWithoutProductsInput>
+  }
+
   export type UserCreateNestedOneWithoutAddressesInput = {
     create?: XOR<UserCreateWithoutAddressesInput, UserUncheckedCreateWithoutAddressesInput>
     connectOrCreate?: UserCreateOrConnectWithoutAddressesInput
@@ -19506,160 +19673,6 @@ export namespace Prisma {
     delete?: ColorWhereInput | boolean
     connect?: ColorWhereUniqueInput
     update?: XOR<XOR<ColorUpdateToOneWithWhereWithoutOrderItemsInput, ColorUpdateWithoutOrderItemsInput>, ColorUncheckedUpdateWithoutOrderItemsInput>
-  }
-
-  export type ProductColorCreateNestedManyWithoutColorInput = {
-    create?: XOR<ProductColorCreateWithoutColorInput, ProductColorUncheckedCreateWithoutColorInput> | ProductColorCreateWithoutColorInput[] | ProductColorUncheckedCreateWithoutColorInput[]
-    connectOrCreate?: ProductColorCreateOrConnectWithoutColorInput | ProductColorCreateOrConnectWithoutColorInput[]
-    createMany?: ProductColorCreateManyColorInputEnvelope
-    connect?: ProductColorWhereUniqueInput | ProductColorWhereUniqueInput[]
-  }
-
-  export type CartItemCreateNestedManyWithoutColorInput = {
-    create?: XOR<CartItemCreateWithoutColorInput, CartItemUncheckedCreateWithoutColorInput> | CartItemCreateWithoutColorInput[] | CartItemUncheckedCreateWithoutColorInput[]
-    connectOrCreate?: CartItemCreateOrConnectWithoutColorInput | CartItemCreateOrConnectWithoutColorInput[]
-    createMany?: CartItemCreateManyColorInputEnvelope
-    connect?: CartItemWhereUniqueInput | CartItemWhereUniqueInput[]
-  }
-
-  export type OrderItemCreateNestedManyWithoutColorInput = {
-    create?: XOR<OrderItemCreateWithoutColorInput, OrderItemUncheckedCreateWithoutColorInput> | OrderItemCreateWithoutColorInput[] | OrderItemUncheckedCreateWithoutColorInput[]
-    connectOrCreate?: OrderItemCreateOrConnectWithoutColorInput | OrderItemCreateOrConnectWithoutColorInput[]
-    createMany?: OrderItemCreateManyColorInputEnvelope
-    connect?: OrderItemWhereUniqueInput | OrderItemWhereUniqueInput[]
-  }
-
-  export type ProductColorUncheckedCreateNestedManyWithoutColorInput = {
-    create?: XOR<ProductColorCreateWithoutColorInput, ProductColorUncheckedCreateWithoutColorInput> | ProductColorCreateWithoutColorInput[] | ProductColorUncheckedCreateWithoutColorInput[]
-    connectOrCreate?: ProductColorCreateOrConnectWithoutColorInput | ProductColorCreateOrConnectWithoutColorInput[]
-    createMany?: ProductColorCreateManyColorInputEnvelope
-    connect?: ProductColorWhereUniqueInput | ProductColorWhereUniqueInput[]
-  }
-
-  export type CartItemUncheckedCreateNestedManyWithoutColorInput = {
-    create?: XOR<CartItemCreateWithoutColorInput, CartItemUncheckedCreateWithoutColorInput> | CartItemCreateWithoutColorInput[] | CartItemUncheckedCreateWithoutColorInput[]
-    connectOrCreate?: CartItemCreateOrConnectWithoutColorInput | CartItemCreateOrConnectWithoutColorInput[]
-    createMany?: CartItemCreateManyColorInputEnvelope
-    connect?: CartItemWhereUniqueInput | CartItemWhereUniqueInput[]
-  }
-
-  export type OrderItemUncheckedCreateNestedManyWithoutColorInput = {
-    create?: XOR<OrderItemCreateWithoutColorInput, OrderItemUncheckedCreateWithoutColorInput> | OrderItemCreateWithoutColorInput[] | OrderItemUncheckedCreateWithoutColorInput[]
-    connectOrCreate?: OrderItemCreateOrConnectWithoutColorInput | OrderItemCreateOrConnectWithoutColorInput[]
-    createMany?: OrderItemCreateManyColorInputEnvelope
-    connect?: OrderItemWhereUniqueInput | OrderItemWhereUniqueInput[]
-  }
-
-  export type ProductColorUpdateManyWithoutColorNestedInput = {
-    create?: XOR<ProductColorCreateWithoutColorInput, ProductColorUncheckedCreateWithoutColorInput> | ProductColorCreateWithoutColorInput[] | ProductColorUncheckedCreateWithoutColorInput[]
-    connectOrCreate?: ProductColorCreateOrConnectWithoutColorInput | ProductColorCreateOrConnectWithoutColorInput[]
-    upsert?: ProductColorUpsertWithWhereUniqueWithoutColorInput | ProductColorUpsertWithWhereUniqueWithoutColorInput[]
-    createMany?: ProductColorCreateManyColorInputEnvelope
-    set?: ProductColorWhereUniqueInput | ProductColorWhereUniqueInput[]
-    disconnect?: ProductColorWhereUniqueInput | ProductColorWhereUniqueInput[]
-    delete?: ProductColorWhereUniqueInput | ProductColorWhereUniqueInput[]
-    connect?: ProductColorWhereUniqueInput | ProductColorWhereUniqueInput[]
-    update?: ProductColorUpdateWithWhereUniqueWithoutColorInput | ProductColorUpdateWithWhereUniqueWithoutColorInput[]
-    updateMany?: ProductColorUpdateManyWithWhereWithoutColorInput | ProductColorUpdateManyWithWhereWithoutColorInput[]
-    deleteMany?: ProductColorScalarWhereInput | ProductColorScalarWhereInput[]
-  }
-
-  export type CartItemUpdateManyWithoutColorNestedInput = {
-    create?: XOR<CartItemCreateWithoutColorInput, CartItemUncheckedCreateWithoutColorInput> | CartItemCreateWithoutColorInput[] | CartItemUncheckedCreateWithoutColorInput[]
-    connectOrCreate?: CartItemCreateOrConnectWithoutColorInput | CartItemCreateOrConnectWithoutColorInput[]
-    upsert?: CartItemUpsertWithWhereUniqueWithoutColorInput | CartItemUpsertWithWhereUniqueWithoutColorInput[]
-    createMany?: CartItemCreateManyColorInputEnvelope
-    set?: CartItemWhereUniqueInput | CartItemWhereUniqueInput[]
-    disconnect?: CartItemWhereUniqueInput | CartItemWhereUniqueInput[]
-    delete?: CartItemWhereUniqueInput | CartItemWhereUniqueInput[]
-    connect?: CartItemWhereUniqueInput | CartItemWhereUniqueInput[]
-    update?: CartItemUpdateWithWhereUniqueWithoutColorInput | CartItemUpdateWithWhereUniqueWithoutColorInput[]
-    updateMany?: CartItemUpdateManyWithWhereWithoutColorInput | CartItemUpdateManyWithWhereWithoutColorInput[]
-    deleteMany?: CartItemScalarWhereInput | CartItemScalarWhereInput[]
-  }
-
-  export type OrderItemUpdateManyWithoutColorNestedInput = {
-    create?: XOR<OrderItemCreateWithoutColorInput, OrderItemUncheckedCreateWithoutColorInput> | OrderItemCreateWithoutColorInput[] | OrderItemUncheckedCreateWithoutColorInput[]
-    connectOrCreate?: OrderItemCreateOrConnectWithoutColorInput | OrderItemCreateOrConnectWithoutColorInput[]
-    upsert?: OrderItemUpsertWithWhereUniqueWithoutColorInput | OrderItemUpsertWithWhereUniqueWithoutColorInput[]
-    createMany?: OrderItemCreateManyColorInputEnvelope
-    set?: OrderItemWhereUniqueInput | OrderItemWhereUniqueInput[]
-    disconnect?: OrderItemWhereUniqueInput | OrderItemWhereUniqueInput[]
-    delete?: OrderItemWhereUniqueInput | OrderItemWhereUniqueInput[]
-    connect?: OrderItemWhereUniqueInput | OrderItemWhereUniqueInput[]
-    update?: OrderItemUpdateWithWhereUniqueWithoutColorInput | OrderItemUpdateWithWhereUniqueWithoutColorInput[]
-    updateMany?: OrderItemUpdateManyWithWhereWithoutColorInput | OrderItemUpdateManyWithWhereWithoutColorInput[]
-    deleteMany?: OrderItemScalarWhereInput | OrderItemScalarWhereInput[]
-  }
-
-  export type ProductColorUncheckedUpdateManyWithoutColorNestedInput = {
-    create?: XOR<ProductColorCreateWithoutColorInput, ProductColorUncheckedCreateWithoutColorInput> | ProductColorCreateWithoutColorInput[] | ProductColorUncheckedCreateWithoutColorInput[]
-    connectOrCreate?: ProductColorCreateOrConnectWithoutColorInput | ProductColorCreateOrConnectWithoutColorInput[]
-    upsert?: ProductColorUpsertWithWhereUniqueWithoutColorInput | ProductColorUpsertWithWhereUniqueWithoutColorInput[]
-    createMany?: ProductColorCreateManyColorInputEnvelope
-    set?: ProductColorWhereUniqueInput | ProductColorWhereUniqueInput[]
-    disconnect?: ProductColorWhereUniqueInput | ProductColorWhereUniqueInput[]
-    delete?: ProductColorWhereUniqueInput | ProductColorWhereUniqueInput[]
-    connect?: ProductColorWhereUniqueInput | ProductColorWhereUniqueInput[]
-    update?: ProductColorUpdateWithWhereUniqueWithoutColorInput | ProductColorUpdateWithWhereUniqueWithoutColorInput[]
-    updateMany?: ProductColorUpdateManyWithWhereWithoutColorInput | ProductColorUpdateManyWithWhereWithoutColorInput[]
-    deleteMany?: ProductColorScalarWhereInput | ProductColorScalarWhereInput[]
-  }
-
-  export type CartItemUncheckedUpdateManyWithoutColorNestedInput = {
-    create?: XOR<CartItemCreateWithoutColorInput, CartItemUncheckedCreateWithoutColorInput> | CartItemCreateWithoutColorInput[] | CartItemUncheckedCreateWithoutColorInput[]
-    connectOrCreate?: CartItemCreateOrConnectWithoutColorInput | CartItemCreateOrConnectWithoutColorInput[]
-    upsert?: CartItemUpsertWithWhereUniqueWithoutColorInput | CartItemUpsertWithWhereUniqueWithoutColorInput[]
-    createMany?: CartItemCreateManyColorInputEnvelope
-    set?: CartItemWhereUniqueInput | CartItemWhereUniqueInput[]
-    disconnect?: CartItemWhereUniqueInput | CartItemWhereUniqueInput[]
-    delete?: CartItemWhereUniqueInput | CartItemWhereUniqueInput[]
-    connect?: CartItemWhereUniqueInput | CartItemWhereUniqueInput[]
-    update?: CartItemUpdateWithWhereUniqueWithoutColorInput | CartItemUpdateWithWhereUniqueWithoutColorInput[]
-    updateMany?: CartItemUpdateManyWithWhereWithoutColorInput | CartItemUpdateManyWithWhereWithoutColorInput[]
-    deleteMany?: CartItemScalarWhereInput | CartItemScalarWhereInput[]
-  }
-
-  export type OrderItemUncheckedUpdateManyWithoutColorNestedInput = {
-    create?: XOR<OrderItemCreateWithoutColorInput, OrderItemUncheckedCreateWithoutColorInput> | OrderItemCreateWithoutColorInput[] | OrderItemUncheckedCreateWithoutColorInput[]
-    connectOrCreate?: OrderItemCreateOrConnectWithoutColorInput | OrderItemCreateOrConnectWithoutColorInput[]
-    upsert?: OrderItemUpsertWithWhereUniqueWithoutColorInput | OrderItemUpsertWithWhereUniqueWithoutColorInput[]
-    createMany?: OrderItemCreateManyColorInputEnvelope
-    set?: OrderItemWhereUniqueInput | OrderItemWhereUniqueInput[]
-    disconnect?: OrderItemWhereUniqueInput | OrderItemWhereUniqueInput[]
-    delete?: OrderItemWhereUniqueInput | OrderItemWhereUniqueInput[]
-    connect?: OrderItemWhereUniqueInput | OrderItemWhereUniqueInput[]
-    update?: OrderItemUpdateWithWhereUniqueWithoutColorInput | OrderItemUpdateWithWhereUniqueWithoutColorInput[]
-    updateMany?: OrderItemUpdateManyWithWhereWithoutColorInput | OrderItemUpdateManyWithWhereWithoutColorInput[]
-    deleteMany?: OrderItemScalarWhereInput | OrderItemScalarWhereInput[]
-  }
-
-  export type ProductCreateNestedOneWithoutColorsInput = {
-    create?: XOR<ProductCreateWithoutColorsInput, ProductUncheckedCreateWithoutColorsInput>
-    connectOrCreate?: ProductCreateOrConnectWithoutColorsInput
-    connect?: ProductWhereUniqueInput
-  }
-
-  export type ColorCreateNestedOneWithoutProductsInput = {
-    create?: XOR<ColorCreateWithoutProductsInput, ColorUncheckedCreateWithoutProductsInput>
-    connectOrCreate?: ColorCreateOrConnectWithoutProductsInput
-    connect?: ColorWhereUniqueInput
-  }
-
-  export type ProductUpdateOneRequiredWithoutColorsNestedInput = {
-    create?: XOR<ProductCreateWithoutColorsInput, ProductUncheckedCreateWithoutColorsInput>
-    connectOrCreate?: ProductCreateOrConnectWithoutColorsInput
-    upsert?: ProductUpsertWithoutColorsInput
-    connect?: ProductWhereUniqueInput
-    update?: XOR<XOR<ProductUpdateToOneWithWhereWithoutColorsInput, ProductUpdateWithoutColorsInput>, ProductUncheckedUpdateWithoutColorsInput>
-  }
-
-  export type ColorUpdateOneRequiredWithoutProductsNestedInput = {
-    create?: XOR<ColorCreateWithoutProductsInput, ColorUncheckedCreateWithoutProductsInput>
-    connectOrCreate?: ColorCreateOrConnectWithoutProductsInput
-    upsert?: ColorUpsertWithoutProductsInput
-    connect?: ColorWhereUniqueInput
-    update?: XOR<XOR<ColorUpdateToOneWithWhereWithoutProductsInput, ColorUpdateWithoutProductsInput>, ColorUncheckedUpdateWithoutProductsInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -20579,6 +20592,264 @@ export namespace Prisma {
     orderItems?: OrderItemUncheckedUpdateManyWithoutProductNestedInput
   }
 
+  export type ProductColorCreateWithoutColorInput = {
+    id?: string
+    stock?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    product: ProductCreateNestedOneWithoutColorsInput
+  }
+
+  export type ProductColorUncheckedCreateWithoutColorInput = {
+    id?: string
+    productId: string
+    stock?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProductColorCreateOrConnectWithoutColorInput = {
+    where: ProductColorWhereUniqueInput
+    create: XOR<ProductColorCreateWithoutColorInput, ProductColorUncheckedCreateWithoutColorInput>
+  }
+
+  export type ProductColorCreateManyColorInputEnvelope = {
+    data: ProductColorCreateManyColorInput | ProductColorCreateManyColorInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type CartItemCreateWithoutColorInput = {
+    id?: string
+    quantity: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    cart: CartCreateNestedOneWithoutCartItemsInput
+    product: ProductCreateNestedOneWithoutCartItemsInput
+  }
+
+  export type CartItemUncheckedCreateWithoutColorInput = {
+    id?: string
+    cartId: string
+    productId: string
+    quantity: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CartItemCreateOrConnectWithoutColorInput = {
+    where: CartItemWhereUniqueInput
+    create: XOR<CartItemCreateWithoutColorInput, CartItemUncheckedCreateWithoutColorInput>
+  }
+
+  export type CartItemCreateManyColorInputEnvelope = {
+    data: CartItemCreateManyColorInput | CartItemCreateManyColorInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type OrderItemCreateWithoutColorInput = {
+    id?: string
+    quantity?: number
+    price: number
+    createdAt?: Date | string
+    order: OrderCreateNestedOneWithoutOrderItemsInput
+    product: ProductCreateNestedOneWithoutOrderItemsInput
+  }
+
+  export type OrderItemUncheckedCreateWithoutColorInput = {
+    id?: string
+    orderId: string
+    productId: string
+    quantity?: number
+    price: number
+    createdAt?: Date | string
+  }
+
+  export type OrderItemCreateOrConnectWithoutColorInput = {
+    where: OrderItemWhereUniqueInput
+    create: XOR<OrderItemCreateWithoutColorInput, OrderItemUncheckedCreateWithoutColorInput>
+  }
+
+  export type OrderItemCreateManyColorInputEnvelope = {
+    data: OrderItemCreateManyColorInput | OrderItemCreateManyColorInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ProductColorUpsertWithWhereUniqueWithoutColorInput = {
+    where: ProductColorWhereUniqueInput
+    update: XOR<ProductColorUpdateWithoutColorInput, ProductColorUncheckedUpdateWithoutColorInput>
+    create: XOR<ProductColorCreateWithoutColorInput, ProductColorUncheckedCreateWithoutColorInput>
+  }
+
+  export type ProductColorUpdateWithWhereUniqueWithoutColorInput = {
+    where: ProductColorWhereUniqueInput
+    data: XOR<ProductColorUpdateWithoutColorInput, ProductColorUncheckedUpdateWithoutColorInput>
+  }
+
+  export type ProductColorUpdateManyWithWhereWithoutColorInput = {
+    where: ProductColorScalarWhereInput
+    data: XOR<ProductColorUpdateManyMutationInput, ProductColorUncheckedUpdateManyWithoutColorInput>
+  }
+
+  export type CartItemUpsertWithWhereUniqueWithoutColorInput = {
+    where: CartItemWhereUniqueInput
+    update: XOR<CartItemUpdateWithoutColorInput, CartItemUncheckedUpdateWithoutColorInput>
+    create: XOR<CartItemCreateWithoutColorInput, CartItemUncheckedCreateWithoutColorInput>
+  }
+
+  export type CartItemUpdateWithWhereUniqueWithoutColorInput = {
+    where: CartItemWhereUniqueInput
+    data: XOR<CartItemUpdateWithoutColorInput, CartItemUncheckedUpdateWithoutColorInput>
+  }
+
+  export type CartItemUpdateManyWithWhereWithoutColorInput = {
+    where: CartItemScalarWhereInput
+    data: XOR<CartItemUpdateManyMutationInput, CartItemUncheckedUpdateManyWithoutColorInput>
+  }
+
+  export type OrderItemUpsertWithWhereUniqueWithoutColorInput = {
+    where: OrderItemWhereUniqueInput
+    update: XOR<OrderItemUpdateWithoutColorInput, OrderItemUncheckedUpdateWithoutColorInput>
+    create: XOR<OrderItemCreateWithoutColorInput, OrderItemUncheckedCreateWithoutColorInput>
+  }
+
+  export type OrderItemUpdateWithWhereUniqueWithoutColorInput = {
+    where: OrderItemWhereUniqueInput
+    data: XOR<OrderItemUpdateWithoutColorInput, OrderItemUncheckedUpdateWithoutColorInput>
+  }
+
+  export type OrderItemUpdateManyWithWhereWithoutColorInput = {
+    where: OrderItemScalarWhereInput
+    data: XOR<OrderItemUpdateManyMutationInput, OrderItemUncheckedUpdateManyWithoutColorInput>
+  }
+
+  export type ProductCreateWithoutColorsInput = {
+    id?: string
+    name: string
+    description?: string | null
+    price: number
+    stock: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    images?: ProductImageCreateNestedManyWithoutProductInput
+    categories?: ProductCategoryCreateNestedManyWithoutProductInput
+    cartItems?: CartItemCreateNestedManyWithoutProductInput
+    orderItems?: OrderItemCreateNestedManyWithoutProductInput
+  }
+
+  export type ProductUncheckedCreateWithoutColorsInput = {
+    id?: string
+    name: string
+    description?: string | null
+    price: number
+    stock: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    images?: ProductImageUncheckedCreateNestedManyWithoutProductInput
+    categories?: ProductCategoryUncheckedCreateNestedManyWithoutProductInput
+    cartItems?: CartItemUncheckedCreateNestedManyWithoutProductInput
+    orderItems?: OrderItemUncheckedCreateNestedManyWithoutProductInput
+  }
+
+  export type ProductCreateOrConnectWithoutColorsInput = {
+    where: ProductWhereUniqueInput
+    create: XOR<ProductCreateWithoutColorsInput, ProductUncheckedCreateWithoutColorsInput>
+  }
+
+  export type ColorCreateWithoutProductsInput = {
+    id?: string
+    name: string
+    hexCode: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    cartItems?: CartItemCreateNestedManyWithoutColorInput
+    orderItems?: OrderItemCreateNestedManyWithoutColorInput
+  }
+
+  export type ColorUncheckedCreateWithoutProductsInput = {
+    id?: string
+    name: string
+    hexCode: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    cartItems?: CartItemUncheckedCreateNestedManyWithoutColorInput
+    orderItems?: OrderItemUncheckedCreateNestedManyWithoutColorInput
+  }
+
+  export type ColorCreateOrConnectWithoutProductsInput = {
+    where: ColorWhereUniqueInput
+    create: XOR<ColorCreateWithoutProductsInput, ColorUncheckedCreateWithoutProductsInput>
+  }
+
+  export type ProductUpsertWithoutColorsInput = {
+    update: XOR<ProductUpdateWithoutColorsInput, ProductUncheckedUpdateWithoutColorsInput>
+    create: XOR<ProductCreateWithoutColorsInput, ProductUncheckedCreateWithoutColorsInput>
+    where?: ProductWhereInput
+  }
+
+  export type ProductUpdateToOneWithWhereWithoutColorsInput = {
+    where?: ProductWhereInput
+    data: XOR<ProductUpdateWithoutColorsInput, ProductUncheckedUpdateWithoutColorsInput>
+  }
+
+  export type ProductUpdateWithoutColorsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: FloatFieldUpdateOperationsInput | number
+    stock?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    images?: ProductImageUpdateManyWithoutProductNestedInput
+    categories?: ProductCategoryUpdateManyWithoutProductNestedInput
+    cartItems?: CartItemUpdateManyWithoutProductNestedInput
+    orderItems?: OrderItemUpdateManyWithoutProductNestedInput
+  }
+
+  export type ProductUncheckedUpdateWithoutColorsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    price?: FloatFieldUpdateOperationsInput | number
+    stock?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    images?: ProductImageUncheckedUpdateManyWithoutProductNestedInput
+    categories?: ProductCategoryUncheckedUpdateManyWithoutProductNestedInput
+    cartItems?: CartItemUncheckedUpdateManyWithoutProductNestedInput
+    orderItems?: OrderItemUncheckedUpdateManyWithoutProductNestedInput
+  }
+
+  export type ColorUpsertWithoutProductsInput = {
+    update: XOR<ColorUpdateWithoutProductsInput, ColorUncheckedUpdateWithoutProductsInput>
+    create: XOR<ColorCreateWithoutProductsInput, ColorUncheckedCreateWithoutProductsInput>
+    where?: ColorWhereInput
+  }
+
+  export type ColorUpdateToOneWithWhereWithoutProductsInput = {
+    where?: ColorWhereInput
+    data: XOR<ColorUpdateWithoutProductsInput, ColorUncheckedUpdateWithoutProductsInput>
+  }
+
+  export type ColorUpdateWithoutProductsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    hexCode?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cartItems?: CartItemUpdateManyWithoutColorNestedInput
+    orderItems?: OrderItemUpdateManyWithoutColorNestedInput
+  }
+
+  export type ColorUncheckedUpdateWithoutProductsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    hexCode?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cartItems?: CartItemUncheckedUpdateManyWithoutColorNestedInput
+    orderItems?: OrderItemUncheckedUpdateManyWithoutColorNestedInput
+  }
+
   export type UserCreateWithoutAddressesInput = {
     id?: string
     email: string
@@ -21479,264 +21750,6 @@ export namespace Prisma {
     cartItems?: CartItemUncheckedUpdateManyWithoutColorNestedInput
   }
 
-  export type ProductColorCreateWithoutColorInput = {
-    id?: string
-    stock?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    product: ProductCreateNestedOneWithoutColorsInput
-  }
-
-  export type ProductColorUncheckedCreateWithoutColorInput = {
-    id?: string
-    productId: string
-    stock?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type ProductColorCreateOrConnectWithoutColorInput = {
-    where: ProductColorWhereUniqueInput
-    create: XOR<ProductColorCreateWithoutColorInput, ProductColorUncheckedCreateWithoutColorInput>
-  }
-
-  export type ProductColorCreateManyColorInputEnvelope = {
-    data: ProductColorCreateManyColorInput | ProductColorCreateManyColorInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type CartItemCreateWithoutColorInput = {
-    id?: string
-    quantity: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    cart: CartCreateNestedOneWithoutCartItemsInput
-    product: ProductCreateNestedOneWithoutCartItemsInput
-  }
-
-  export type CartItemUncheckedCreateWithoutColorInput = {
-    id?: string
-    cartId: string
-    productId: string
-    quantity: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type CartItemCreateOrConnectWithoutColorInput = {
-    where: CartItemWhereUniqueInput
-    create: XOR<CartItemCreateWithoutColorInput, CartItemUncheckedCreateWithoutColorInput>
-  }
-
-  export type CartItemCreateManyColorInputEnvelope = {
-    data: CartItemCreateManyColorInput | CartItemCreateManyColorInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type OrderItemCreateWithoutColorInput = {
-    id?: string
-    quantity?: number
-    price: number
-    createdAt?: Date | string
-    order: OrderCreateNestedOneWithoutOrderItemsInput
-    product: ProductCreateNestedOneWithoutOrderItemsInput
-  }
-
-  export type OrderItemUncheckedCreateWithoutColorInput = {
-    id?: string
-    orderId: string
-    productId: string
-    quantity?: number
-    price: number
-    createdAt?: Date | string
-  }
-
-  export type OrderItemCreateOrConnectWithoutColorInput = {
-    where: OrderItemWhereUniqueInput
-    create: XOR<OrderItemCreateWithoutColorInput, OrderItemUncheckedCreateWithoutColorInput>
-  }
-
-  export type OrderItemCreateManyColorInputEnvelope = {
-    data: OrderItemCreateManyColorInput | OrderItemCreateManyColorInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type ProductColorUpsertWithWhereUniqueWithoutColorInput = {
-    where: ProductColorWhereUniqueInput
-    update: XOR<ProductColorUpdateWithoutColorInput, ProductColorUncheckedUpdateWithoutColorInput>
-    create: XOR<ProductColorCreateWithoutColorInput, ProductColorUncheckedCreateWithoutColorInput>
-  }
-
-  export type ProductColorUpdateWithWhereUniqueWithoutColorInput = {
-    where: ProductColorWhereUniqueInput
-    data: XOR<ProductColorUpdateWithoutColorInput, ProductColorUncheckedUpdateWithoutColorInput>
-  }
-
-  export type ProductColorUpdateManyWithWhereWithoutColorInput = {
-    where: ProductColorScalarWhereInput
-    data: XOR<ProductColorUpdateManyMutationInput, ProductColorUncheckedUpdateManyWithoutColorInput>
-  }
-
-  export type CartItemUpsertWithWhereUniqueWithoutColorInput = {
-    where: CartItemWhereUniqueInput
-    update: XOR<CartItemUpdateWithoutColorInput, CartItemUncheckedUpdateWithoutColorInput>
-    create: XOR<CartItemCreateWithoutColorInput, CartItemUncheckedCreateWithoutColorInput>
-  }
-
-  export type CartItemUpdateWithWhereUniqueWithoutColorInput = {
-    where: CartItemWhereUniqueInput
-    data: XOR<CartItemUpdateWithoutColorInput, CartItemUncheckedUpdateWithoutColorInput>
-  }
-
-  export type CartItemUpdateManyWithWhereWithoutColorInput = {
-    where: CartItemScalarWhereInput
-    data: XOR<CartItemUpdateManyMutationInput, CartItemUncheckedUpdateManyWithoutColorInput>
-  }
-
-  export type OrderItemUpsertWithWhereUniqueWithoutColorInput = {
-    where: OrderItemWhereUniqueInput
-    update: XOR<OrderItemUpdateWithoutColorInput, OrderItemUncheckedUpdateWithoutColorInput>
-    create: XOR<OrderItemCreateWithoutColorInput, OrderItemUncheckedCreateWithoutColorInput>
-  }
-
-  export type OrderItemUpdateWithWhereUniqueWithoutColorInput = {
-    where: OrderItemWhereUniqueInput
-    data: XOR<OrderItemUpdateWithoutColorInput, OrderItemUncheckedUpdateWithoutColorInput>
-  }
-
-  export type OrderItemUpdateManyWithWhereWithoutColorInput = {
-    where: OrderItemScalarWhereInput
-    data: XOR<OrderItemUpdateManyMutationInput, OrderItemUncheckedUpdateManyWithoutColorInput>
-  }
-
-  export type ProductCreateWithoutColorsInput = {
-    id?: string
-    name: string
-    description?: string | null
-    price: number
-    stock: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    images?: ProductImageCreateNestedManyWithoutProductInput
-    categories?: ProductCategoryCreateNestedManyWithoutProductInput
-    cartItems?: CartItemCreateNestedManyWithoutProductInput
-    orderItems?: OrderItemCreateNestedManyWithoutProductInput
-  }
-
-  export type ProductUncheckedCreateWithoutColorsInput = {
-    id?: string
-    name: string
-    description?: string | null
-    price: number
-    stock: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    images?: ProductImageUncheckedCreateNestedManyWithoutProductInput
-    categories?: ProductCategoryUncheckedCreateNestedManyWithoutProductInput
-    cartItems?: CartItemUncheckedCreateNestedManyWithoutProductInput
-    orderItems?: OrderItemUncheckedCreateNestedManyWithoutProductInput
-  }
-
-  export type ProductCreateOrConnectWithoutColorsInput = {
-    where: ProductWhereUniqueInput
-    create: XOR<ProductCreateWithoutColorsInput, ProductUncheckedCreateWithoutColorsInput>
-  }
-
-  export type ColorCreateWithoutProductsInput = {
-    id?: string
-    name: string
-    hexCode: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    cartItems?: CartItemCreateNestedManyWithoutColorInput
-    orderItems?: OrderItemCreateNestedManyWithoutColorInput
-  }
-
-  export type ColorUncheckedCreateWithoutProductsInput = {
-    id?: string
-    name: string
-    hexCode: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    cartItems?: CartItemUncheckedCreateNestedManyWithoutColorInput
-    orderItems?: OrderItemUncheckedCreateNestedManyWithoutColorInput
-  }
-
-  export type ColorCreateOrConnectWithoutProductsInput = {
-    where: ColorWhereUniqueInput
-    create: XOR<ColorCreateWithoutProductsInput, ColorUncheckedCreateWithoutProductsInput>
-  }
-
-  export type ProductUpsertWithoutColorsInput = {
-    update: XOR<ProductUpdateWithoutColorsInput, ProductUncheckedUpdateWithoutColorsInput>
-    create: XOR<ProductCreateWithoutColorsInput, ProductUncheckedCreateWithoutColorsInput>
-    where?: ProductWhereInput
-  }
-
-  export type ProductUpdateToOneWithWhereWithoutColorsInput = {
-    where?: ProductWhereInput
-    data: XOR<ProductUpdateWithoutColorsInput, ProductUncheckedUpdateWithoutColorsInput>
-  }
-
-  export type ProductUpdateWithoutColorsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    price?: FloatFieldUpdateOperationsInput | number
-    stock?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    images?: ProductImageUpdateManyWithoutProductNestedInput
-    categories?: ProductCategoryUpdateManyWithoutProductNestedInput
-    cartItems?: CartItemUpdateManyWithoutProductNestedInput
-    orderItems?: OrderItemUpdateManyWithoutProductNestedInput
-  }
-
-  export type ProductUncheckedUpdateWithoutColorsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    price?: FloatFieldUpdateOperationsInput | number
-    stock?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    images?: ProductImageUncheckedUpdateManyWithoutProductNestedInput
-    categories?: ProductCategoryUncheckedUpdateManyWithoutProductNestedInput
-    cartItems?: CartItemUncheckedUpdateManyWithoutProductNestedInput
-    orderItems?: OrderItemUncheckedUpdateManyWithoutProductNestedInput
-  }
-
-  export type ColorUpsertWithoutProductsInput = {
-    update: XOR<ColorUpdateWithoutProductsInput, ColorUncheckedUpdateWithoutProductsInput>
-    create: XOR<ColorCreateWithoutProductsInput, ColorUncheckedCreateWithoutProductsInput>
-    where?: ColorWhereInput
-  }
-
-  export type ColorUpdateToOneWithWhereWithoutProductsInput = {
-    where?: ColorWhereInput
-    data: XOR<ColorUpdateWithoutProductsInput, ColorUncheckedUpdateWithoutProductsInput>
-  }
-
-  export type ColorUpdateWithoutProductsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    hexCode?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    cartItems?: CartItemUpdateManyWithoutColorNestedInput
-    orderItems?: OrderItemUpdateManyWithoutColorNestedInput
-  }
-
-  export type ColorUncheckedUpdateWithoutProductsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    hexCode?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    cartItems?: CartItemUncheckedUpdateManyWithoutColorNestedInput
-    orderItems?: OrderItemUncheckedUpdateManyWithoutColorNestedInput
-  }
-
   export type AddressCreateManyUserInput = {
     id?: string
     street: string
@@ -22057,6 +22070,110 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type ProductColorCreateManyColorInput = {
+    id?: string
+    productId: string
+    stock?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CartItemCreateManyColorInput = {
+    id?: string
+    cartId: string
+    productId: string
+    quantity: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type OrderItemCreateManyColorInput = {
+    id?: string
+    orderId: string
+    productId: string
+    quantity?: number
+    price: number
+    createdAt?: Date | string
+  }
+
+  export type ProductColorUpdateWithoutColorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    stock?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    product?: ProductUpdateOneRequiredWithoutColorsNestedInput
+  }
+
+  export type ProductColorUncheckedUpdateWithoutColorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    productId?: StringFieldUpdateOperationsInput | string
+    stock?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProductColorUncheckedUpdateManyWithoutColorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    productId?: StringFieldUpdateOperationsInput | string
+    stock?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CartItemUpdateWithoutColorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cart?: CartUpdateOneRequiredWithoutCartItemsNestedInput
+    product?: ProductUpdateOneRequiredWithoutCartItemsNestedInput
+  }
+
+  export type CartItemUncheckedUpdateWithoutColorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cartId?: StringFieldUpdateOperationsInput | string
+    productId?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CartItemUncheckedUpdateManyWithoutColorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cartId?: StringFieldUpdateOperationsInput | string
+    productId?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OrderItemUpdateWithoutColorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    price?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    order?: OrderUpdateOneRequiredWithoutOrderItemsNestedInput
+    product?: ProductUpdateOneRequiredWithoutOrderItemsNestedInput
+  }
+
+  export type OrderItemUncheckedUpdateWithoutColorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    orderId?: StringFieldUpdateOperationsInput | string
+    productId?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    price?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OrderItemUncheckedUpdateManyWithoutColorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    orderId?: StringFieldUpdateOperationsInput | string
+    productId?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    price?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type OrderCreateManyAddressInput = {
     id?: string
     userId: string
@@ -22166,110 +22283,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     productId?: StringFieldUpdateOperationsInput | string
     colorId?: NullableStringFieldUpdateOperationsInput | string | null
-    quantity?: IntFieldUpdateOperationsInput | number
-    price?: FloatFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ProductColorCreateManyColorInput = {
-    id?: string
-    productId: string
-    stock?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type CartItemCreateManyColorInput = {
-    id?: string
-    cartId: string
-    productId: string
-    quantity: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type OrderItemCreateManyColorInput = {
-    id?: string
-    orderId: string
-    productId: string
-    quantity?: number
-    price: number
-    createdAt?: Date | string
-  }
-
-  export type ProductColorUpdateWithoutColorInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    stock?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    product?: ProductUpdateOneRequiredWithoutColorsNestedInput
-  }
-
-  export type ProductColorUncheckedUpdateWithoutColorInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    productId?: StringFieldUpdateOperationsInput | string
-    stock?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ProductColorUncheckedUpdateManyWithoutColorInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    productId?: StringFieldUpdateOperationsInput | string
-    stock?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type CartItemUpdateWithoutColorInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    quantity?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    cart?: CartUpdateOneRequiredWithoutCartItemsNestedInput
-    product?: ProductUpdateOneRequiredWithoutCartItemsNestedInput
-  }
-
-  export type CartItemUncheckedUpdateWithoutColorInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    cartId?: StringFieldUpdateOperationsInput | string
-    productId?: StringFieldUpdateOperationsInput | string
-    quantity?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type CartItemUncheckedUpdateManyWithoutColorInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    cartId?: StringFieldUpdateOperationsInput | string
-    productId?: StringFieldUpdateOperationsInput | string
-    quantity?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type OrderItemUpdateWithoutColorInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    quantity?: IntFieldUpdateOperationsInput | number
-    price?: FloatFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    order?: OrderUpdateOneRequiredWithoutOrderItemsNestedInput
-    product?: ProductUpdateOneRequiredWithoutOrderItemsNestedInput
-  }
-
-  export type OrderItemUncheckedUpdateWithoutColorInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    orderId?: StringFieldUpdateOperationsInput | string
-    productId?: StringFieldUpdateOperationsInput | string
-    quantity?: IntFieldUpdateOperationsInput | number
-    price?: FloatFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type OrderItemUncheckedUpdateManyWithoutColorInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    orderId?: StringFieldUpdateOperationsInput | string
-    productId?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
     price?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string

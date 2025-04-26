@@ -324,3 +324,15 @@ export const deleteProduct =async(req:Request,res:Response)=>{
 
   };
 
+
+
+  /*
+  if want extra features then can add follow routes 
+
+
+  /products/:productId/colors/:colorId	PATCH	Update stock for a specific color (e.g., increment/decrement stock without full update)
+/products/:productId/categories/:categoryId	DELETE	Remove a specific category from a product
+/products/:productId/images/:imageId	DELETE	Remove a specific image
+/products/:productId/default-image	PATCH	Set a specific image as default
+
+  */ 
