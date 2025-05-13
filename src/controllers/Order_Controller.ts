@@ -54,12 +54,20 @@ try{
 
     console.log("total Price: ",totalAmount,orderItemsData);
 
+    // Calculate final amount (considering any discounts from cart)
+    const finalAmount = cart.discountAmount 
+      ? totalAmount - cart.discountAmount 
+      : totalAmount;
+
     const order = await prisma.order.create({
         data: {
           userId,
           cartId:cart.id,
           addressId,                // optional if nullable
           totalAmount,
+          finalAmount, // Add this required field
+          offerId: cart.offerId, // Add this to track which offer was used
+          discountAmount: cart.discountAmount, // Add this to track discount
           status:   "PENDING",
           orderItems: {
             create: orderItemsData
