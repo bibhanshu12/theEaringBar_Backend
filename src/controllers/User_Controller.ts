@@ -1,11 +1,11 @@
-import { PrismaClient } from '../generated/prisma';
+// import { PrismaClient } from '../generated/prisma';
+import { PrismaClient} from "@prisma/client";
 import { ApiError } from "../utils/apiErrorUtils";
 import type {NextFunction, Request,Response} from "express";
 import { signUpInput,signInInput } from "../validation/index";
 import * as bcrypt from "bcrypt"
 import type { Asserts } from 'yup'
 import { generateToken } from "../utils/generateToken.util";
-import jwt from "jsonwebtoken";
 
 const prisma = new PrismaClient();
 

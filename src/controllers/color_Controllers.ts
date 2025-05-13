@@ -1,5 +1,6 @@
 import { Response,Request } from "express";
-import { PrismaClient } from "../generated/prisma";
+// import { PrismaClient } from "../generated/prisma";
+import {PrismaClient} from "@prisma/client";
 import { ApiError } from "../utils/apiErrorUtils";
 
 const prisma=new PrismaClient();

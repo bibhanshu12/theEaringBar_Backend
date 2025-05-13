@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import { PrismaClient } from "../generated/prisma";
+// import { PrismaClient } from "../generated/prisma";
+import {PrismaClient} from "@prisma/client";
 import { cloudinaryUploads } from "../utils/cloudinaryfunc";
 import { ApiError } from "../utils/apiErrorUtils";
 import fs from "fs-extra";
