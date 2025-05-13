@@ -15,18 +15,20 @@ datasource db {
 }
 
 model User {
-  id        String    @id @unique @default(uuid())
-  email     String    @unique
-  password  String
-  firstName String
-  lastName  String
-  phoneNo   Int?
-  role      userRole  @default(CUSTOMER)
-  addresses Address[]
-  carts     Cart[]
-  orders    Order[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  id             String         @id @unique @default(uuid())
+  email          String         @unique
+  password       String
+  firstName      String
+  lastName       String
+  phoneNo        Int?
+  role           userRole       @default(CUSTOMER)
+  addresses      Address[]
+  carts          Cart[]
+  orders         Order[]
+  appliedOffers  UserOffer[] // Track which offers user has used
+  eligibleOffers EligibleUser[] // Offers specifically assigned to this user
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
 }
 
 enum userRole {
@@ -36,29 +38,30 @@ enum userRole {
 }
 
 model Category {
-  id          Int              @id @unique @default(autoincrement())
-  name        String           @unique
+  id          Int               @id @unique @default(autoincrement())
+  name        String            @unique
   description String?
-  products    ProductCategory[] 
-  createdAt   DateTime         @default(now())
-  updatedAt   DateTime         @updatedAt
+  offer       Offer[]
+  products    ProductCategory[]
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
 }
 
 model Product {
-  id          String           @id @unique @default(uuid())
-  name        String
+  id          String            @id @unique @default(uuid())
+  name        String 
   description String?
   images      ProductImage[]
   price       Float
   stock       Int
-  categories  ProductCategory[] 
+  categories  ProductCategory[]
   colors      ProductColor[]
   cartItems   CartItem[]
   orderItems  OrderItem[]
-  createdAt   DateTime         @default(now())
-  updatedAt   DateTime         @updatedAt
+  offers      Offer[] // Add this line for many-to-many relation with Offer
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
 }
-
 
 model ProductCategory {
   id         String   @id @unique @default(uuid())
@@ -70,7 +73,7 @@ model ProductCategory {
   updatedAt  DateTime @default(now())
 
   @@unique([productId, categoryId])
-} 
+}
 
 model ProductImage {
   id        String   @id @unique @default(uuid())
@@ -78,7 +81,7 @@ model ProductImage {
   publicId  String
   product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId String
-  isDefault Boolean @default(false)
+  isDefault Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -123,14 +126,17 @@ model Address {
 }
 
 model Cart {
-  id        String     @id @unique @default(uuid())
-  userId    String
-  user      User       @relation(fields: [userId], references: [id])
-  cartItems CartItem[]
-  isOrdered Boolean    @default(false)
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  order     Order? // One-to-one relation with Order imp to know 
+  id             String     @id @unique @default(uuid())
+  userId         String
+  user           User       @relation(fields: [userId], references: [id])
+  cartItems      CartItem[]
+  appliedOffer   Offer?     @relation(fields: [offerId], references: [id])
+  offerId        String?
+  discountAmount Float? // Stores the calculated discount amount
+  isOrdered      Boolean    @default(false)
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+  order          Order? // One-to-one relation with Order imp to know 
 }
 
 model CartItem {
@@ -145,24 +151,27 @@ model CartItem {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-
-  @@unique([cartId, productId, colorId])  //very important for using cartId_productId_colorId like this things 
+  @@unique([cartId, productId, colorId]) //very important for using cartId_productId_colorId like this things 
   @@unique([cartId, productId]) //same to here
 }
 
 model Order {
-  id          String      @id @unique @default(uuid())
-  userId      String
-  user        User        @relation(fields: [userId], references: [id])
-  cart        Cart        @relation(fields: [cartId], references: [id])
-  cartId      String      @unique
-  addressId   String?
-  address     Address?    @relation(fields: [addressId], references: [id])
-  totalAmount Float
-  status      OrderStatus @default(PENDING)
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-  orderItems  OrderItem[]
+  id             String      @id @unique @default(uuid())
+  userId         String
+  user           User        @relation(fields: [userId], references: [id])
+  cart           Cart        @relation(fields: [cartId], references: [id])
+  cartId         String      @unique
+  appliedOffer   Offer?      @relation(fields: [offerId], references: [id])
+  offerId        String?
+  discountAmount Float? // Stores the final discount amount
+  addressId      String?
+  address        Address?    @relation(fields: [addressId], references: [id])
+  totalAmount    Float
+  finalAmount    Float // Total after discount
+  status         OrderStatus @default(PENDING)
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  orderItems     OrderItem[]
 }
 
 enum OrderStatus {
@@ -186,5 +195,76 @@ model OrderItem {
   quantity  Int      @default(1)
   price     Float
   createdAt DateTime @default(now())
+}
+
+model Offer {
+  id             String          @id @unique @default(uuid())
+  code           String          @unique
+  title          String
+  description    String?
+  discountValue  Int
+  discountType   DiscountType
+  minOrder       Float? // Minimum order amount required
+  maxDiscount    Float? // Maximum discount amount allowed
+  startDate      DateTime
+  endDate        DateTime
+  useCount       Int             @default(0)
+  usageLimit     Int? // Maximum number of times offer can be used
+  status         OfferStatus     @default(ACTIVE)
+  products       Product[] // This now has its opposite relation in Product model
+  categories     Category[] // Categories this offer applies to (optional)
+  appliedCarts   Cart[] // Carts where this offer is applied
+  usedInOrders   Order[] // Orders where this offer was used
+  visibility     OfferVisibility @default(PUBLIC) // Control who can see this offer
+  appliedByUsers UserOffer[] // Track which users used this offer
+  eligibleUsers  EligibleUser[] // Users who can use this private offer
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  @@index([code])
+  @@index([status])
+}
+
+enum OfferStatus {
+  ACTIVE
+  DRAFT
+  EXPIRED
+  ARCHIVED
+}
+
+enum DiscountType {
+  FIXED
+  PERCENTAGE
+}
+
+enum OfferVisibility {
+  PUBLIC // Available to all users
+  PRIVATE // Available only to specific users
+  ROLE_BASED // Available based on user role
+}
+
+model UserOffer {
+  id      String   @id @unique @default(uuid())
+  user    User     @relation(fields: [userId], references: [id])
+  userId  String
+  offer   Offer    @relation(fields: [offerId], references: [id])
+  offerId String
+  usedAt  DateTime @default(now())
+  orderId String? // Optional reference to order where offer was used
+
+  @@unique([userId, offerId])
+}
+
+model EligibleUser {
+  id        String    @id @unique @default(uuid())
+  user      User      @relation(fields: [userId], references: [id])
+  userId    String
+  offer     Offer     @relation(fields: [offerId], references: [id])
+  offerId   String
+  validFrom DateTime  @default(now())
+  validTo   DateTime?
+  isActive  Boolean   @default(true)
+
+  @@unique([userId, offerId])
 }
 

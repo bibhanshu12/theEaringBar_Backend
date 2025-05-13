@@ -198,6 +198,8 @@ exports.Prisma.AddressScalarFieldEnum = {
 exports.Prisma.CartScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
+  offerId: 'offerId',
+  discountAmount: 'discountAmount',
   isOrdered: 'isOrdered',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -217,8 +219,11 @@ exports.Prisma.OrderScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   cartId: 'cartId',
+  offerId: 'offerId',
+  discountAmount: 'discountAmount',
   addressId: 'addressId',
   totalAmount: 'totalAmount',
+  finalAmount: 'finalAmount',
   status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -232,6 +237,42 @@ exports.Prisma.OrderItemScalarFieldEnum = {
   quantity: 'quantity',
   price: 'price',
   createdAt: 'createdAt'
+};
+
+exports.Prisma.OfferScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  title: 'title',
+  description: 'description',
+  discountValue: 'discountValue',
+  discountType: 'discountType',
+  minOrder: 'minOrder',
+  maxDiscount: 'maxDiscount',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  useCount: 'useCount',
+  usageLimit: 'usageLimit',
+  status: 'status',
+  visibility: 'visibility',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.UserOfferScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  offerId: 'offerId',
+  usedAt: 'usedAt',
+  orderId: 'orderId'
+};
+
+exports.Prisma.EligibleUserScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  offerId: 'offerId',
+  validFrom: 'validFrom',
+  validTo: 'validTo',
+  isActive: 'isActive'
 };
 
 exports.Prisma.SortOrder = {
@@ -262,6 +303,24 @@ exports.OrderStatus = exports.$Enums.OrderStatus = {
   REFUNDED: 'REFUNDED'
 };
 
+exports.DiscountType = exports.$Enums.DiscountType = {
+  FIXED: 'FIXED',
+  PERCENTAGE: 'PERCENTAGE'
+};
+
+exports.OfferStatus = exports.$Enums.OfferStatus = {
+  ACTIVE: 'ACTIVE',
+  DRAFT: 'DRAFT',
+  EXPIRED: 'EXPIRED',
+  ARCHIVED: 'ARCHIVED'
+};
+
+exports.OfferVisibility = exports.$Enums.OfferVisibility = {
+  PUBLIC: 'PUBLIC',
+  PRIVATE: 'PRIVATE',
+  ROLE_BASED: 'ROLE_BASED'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   Category: 'Category',
@@ -274,7 +333,10 @@ exports.Prisma.ModelName = {
   Cart: 'Cart',
   CartItem: 'CartItem',
   Order: 'Order',
-  OrderItem: 'OrderItem'
+  OrderItem: 'OrderItem',
+  Offer: 'Offer',
+  UserOffer: 'UserOffer',
+  EligibleUser: 'EligibleUser'
 };
 
 /**

@@ -8,5 +8,3 @@ export const router= Router();
 
 
 
-router.post("/addorder",isauthenticated,placeOrder);
-

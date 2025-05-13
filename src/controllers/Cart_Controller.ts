@@ -1,4 +1,4 @@
-import { Response, Request } from "express";
+import { Response, Request,NextFunction } from "express";
 import { ApiError } from "../utils/apiErrorUtils";
 import { PrismaClient, Prisma } from "../generated/prisma";
 
@@ -158,5 +158,76 @@ export const deletecartItem = async (req: Request, res: Response) => {
     res.json({ msg: "Successfully Deleted Cart Item" });
   } catch (err: any) {
     res.status(400).json({ msg: "Failed to deleteCart Item !", err: err.message });
+  }
+};
+
+
+
+export const applyCartOffers = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const userId = (req as any).user.id;
+
+  try {
+    // 1) fetch the open cart with items & product-offers
+    const cart = await prisma.cart.findFirst({
+      where: { userId, isOrdered: false },
+      include: {
+        cartItems: {
+          include: { product: { include: { offers: true } } },
+        },
+      },
+    });
+    if (!cart) throw new ApiError(404, "No active cart");
+
+    let bestOfferId: string | null = null;
+    let totalDiscount = 0;
+
+    // 2) scan items
+    for (const item of cart.cartItems) {
+      if (item.quantity >= 2) {
+        // find first ACTIVE offer on this product
+        const offer = item.product.offers.find(o =>
+          o.status === "ACTIVE" &&
+          o.startDate <= new Date() &&
+          o.endDate >= new Date() &&
+          (o.usageLimit === null || o.useCount < o.usageLimit)
+        );
+        if (offer) {
+          // compute discount
+          let discount = 0;
+          const lineTotal = item.product.price * item.quantity;
+
+          if (offer.discountType === "FIXED") {
+            discount = offer.discountValue;
+          } else {
+            // PERCENTAGE
+            discount = (lineTotal * offer.discountValue) / 100;
+            if (offer.maxDiscount) {
+              discount = Math.min(discount, offer.maxDiscount);
+            }
+          }
+
+          totalDiscount += discount;
+          bestOfferId = offer.id;
+          break; // remove if you want to apply multiple offers
+        }
+      }
+    }
+
+    // 3) update cart
+    const updated = await prisma.cart.update({
+      where: { id: cart.id },
+      data: {
+        appliedOffer: bestOfferId ? { connect: { id: bestOfferId } } : undefined,
+        discountAmount: totalDiscount,
+      },
+    });
+
+    res.status(200).json({ success: true, cart: updated });
+  } catch (err) {
+    return next(err);
   }
 };

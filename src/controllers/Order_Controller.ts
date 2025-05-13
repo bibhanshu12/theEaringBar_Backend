@@ -124,6 +124,7 @@ export const deleteOrder = async (
   };
 
 
+  
 //  update the status if want to delete   softly 
 //recommended this one 
 export const updateOrderStatus = async (
@@ -171,4 +172,4 @@ export const updateOrderStatus = async (
     }
   };
 
-  
+
