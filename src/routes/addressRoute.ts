@@ -26,7 +26,7 @@ router.put(
 );
 
 router.get(
-    "/address/get",
+    "/address/getUseraddress",
     isauthenticated,
     catchAsync(getAddresses)
 );

@@ -1,4 +1,4 @@
-import { Response,Request } from "express";
+import { Response,Request, response } from "express";
 // import { PrismaClient } from "../generated/prisma";
 import {PrismaClient} from "@prisma/client";
 import { ApiError } from "../utils/apiErrorUtils";
@@ -47,3 +47,29 @@ export const getColors=async(req:Request,res:Response)=>{
     
     }
 
+
+    
+    export const getColorById = async (req: Request, res: Response) => {
+      try {
+        const { id } = req.params;
+    
+        if (!id) {
+          return res.status(400).json({ success: false, message: 'Color ID is required' });
+        }
+
+        const getColor = await prisma.color.findFirst({
+          where: {
+            id: id,
+          },
+        });
+
+        if (!getColor) {
+          return res.status(404).json({ success: false, message: 'Color not found' });
+        }
+            return res.status(200).json({ success: true, data: getColor });
+    
+      } catch (error) {
+        console.error('Error fetching color:', error);
+        return res.status(500).json({ success: false, message: 'Internal Server Error' });
+      }
+    };

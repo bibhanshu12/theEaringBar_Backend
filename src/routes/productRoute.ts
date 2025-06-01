@@ -1,5 +1,5 @@
 import express from "express";
-import { addProduct, allProducts, assignOfferToProduct, createOffer, deleteOffer, deleteProduct, getAllLinkedProductByOfferId, getAllOffer, getProductsById, getProductsColorById, updateOffer, updateProduct } from "../controllers/Product_Controller";
+import { addProduct, allProducts, assignOfferToProduct, batchProductsByIds, createOffer, deleteOffer, deleteProduct, getAllLinkedProductByOfferId, getAllOffer, getProductsById, getProductsColorById, getSearchProduct, updateOffer, updateProduct } from "../controllers/Product_Controller";
 import { validate } from "../middleware/validateMiddleware";
 import { addProductSchema, updateProductSchema } from "../validation/index";
 import { upload } from "../middleware/multerfileuploader";
@@ -42,14 +42,17 @@ router.post(
   catchAsync(updateProduct)
 );
 router.delete("/delproduct/:productId",isauthenticated,isAdmin,deleteProduct);
-router.get("/allproducts",isauthenticated,allProducts);
-router.get('/singleproduct/:id',isauthenticated,getProductsById);
+router.get("/allproducts",allProducts);
+router.get('/singleproduct/:id',getProductsById);
 router.get('/product/getcolors/:id',isauthenticated,getProductsColorById)
+router.post('/products/batch',isauthenticated,catchAsync(batchProductsByIds))
 // router.put('/updatecolors/:productId',updateProductColorStock);
+router.get('/products/search',catchAsync(getSearchProduct))
+
 
 //cart routes
 
-router.post('/addcart',isauthenticated,addCart);
+router.post('/addcart',isauthenticated,catchAsync(addCart));
 router.get('/getcart',isauthenticated,showCart);
 router.delete('/deletecartitem',isauthenticated,deletecartItem);
 

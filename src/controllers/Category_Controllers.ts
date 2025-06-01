@@ -80,6 +80,43 @@ export const deleteCategory=async(req:Request,res:Response)=>{
       return;
     };
     
+    interface categoryid{
+      CategoryId:number;
+    }
+export const getProductByCategory=async(req:Request,res:Response)=>{
+
+    // const {CategoryId:categoryid}=parseInt(req.params.CategoryId);
+   try{
+    const categoryId = parseInt(req.params.categoryId);
+    
+    const products=await prisma.product.findMany({
+      where:{
+        categories:{
+          some:{
+            categoryId
+          }
+        }
+      },
+     include:{
+      images: true,
+      categories: { include: { category: true } },
+      colors: { include: { color: true } },
+     }
+      
+    });
+
+    if(!products){
+      throw new ApiError(400,"No Product Found for this Category!")
+    }
+    res.json({data:products});
+
+   }catch(error){
+    console.error('Error fetching products by category:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+   }
+}
+
+
 
     export const searchCategoriesByName = async (req: Request, res: Response) => {
       // grab whatever the client passed as the search term

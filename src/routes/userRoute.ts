@@ -1,5 +1,5 @@
     import { Router } from "express";
-    import { forgetPassword, getAllUsers, signIn, signOut, signUp } from "../controllers/User_Controller";
+    import { forgetPassword, getAllUsers, mailCode, signIn, signOut, signUp, verifyCode } from "../controllers/User_Controller";
     import { validate } from "../middleware/validateMiddleware";
     import { signUpInput,signInInput } from "../validation/index";
     import { catchAsync } from "../utils/catchAsync";
@@ -14,6 +14,7 @@
     router.post("/signout",isauthenticated,catchAsync(signOut));
     router.post('/passwordchange',isauthenticated,catchAsync(forgetPassword))
     router.get('/allusers',isauthenticated,isAdmin,catchAsync(getAllUsers));
-
+    router.post('/user/forgotpassword',mailCode);
+    router.post('/user/verifyCode',verifyCode);
 
 

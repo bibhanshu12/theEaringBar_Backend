@@ -21,6 +21,7 @@ model User {
   firstName      String
   lastName       String
   phoneNo        Int?
+  resetCode      String?
   role           userRole       @default(CUSTOMER)
   addresses      Address[]
   carts          Cart[]

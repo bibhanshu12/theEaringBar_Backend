@@ -6,6 +6,8 @@ import { signUpInput,signInInput } from "../validation/index";
 import * as bcrypt from "bcrypt"
 import type { Asserts } from 'yup'
 import { generateToken } from "../utils/generateToken.util";
+import { doMail } from "../utils/transportEmail";
+import { PasswordReset, signupMail } from "../seeds/mailSeeds";
 
 const prisma = new PrismaClient();
 
@@ -28,8 +30,9 @@ export const signUp = async (req: Request, res: Response,next:NextFunction):Prom
 
     if (user) {
       // throw new ApiError(400, 'User already exists with this email. Please login!');
-      const error = new ApiError(400, "User already exist with the email!");
-      throw error;
+      res.status(400).json(
+        {msg:"User already exist with this email! "}
+      )
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -43,6 +46,17 @@ export const signUp = async (req: Request, res: Response,next:NextFunction):Prom
         role:role || "CUSTOMER"
       },
     });
+
+     try{
+          doMail(signupMail(newUser.email))
+          console.log("Mail sent successfully");
+    
+        }catch(err){
+          console.error("Failed to send email", err);
+        }
+       
+
+
 
     const token=generateToken(newUser.id.toString(),res);
 
@@ -140,14 +154,14 @@ export const signIn=async(req:Request,res:Response)=>{
   export const signOut=(req:Request,res:Response)=>{
 
     try{
-      console.log('logout Attempted!');
+      // console.log('logout Attempted!');
       // res.clearCookie("jwt", {
       //   httpOnly: true,
       //   // secure: process.env.NODE_ENV === "production", // optional, good for security
       //   sameSite: "strict",
       // });
       res.clearCookie('jwt');
-      console.log("logout successfull! cleared cookies !");
+      // console.log("logout successfull! cleared cookies !");
 
       return res.status(200).json({ msg: "Logged out successfully!" });
 
@@ -235,3 +249,92 @@ export const getAllUsers=async(req:Request,res:Response)=>{
     res.status(500).json({ message: "Error fetching users", error: err });
   }
 };
+
+
+function 
+generateRandomCode(length = 6): string {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let result = '';
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * chars.length);
+    result += chars[randomIndex];
+  }
+  return result;
+}
+
+export const mailCode=async(req:Request,res:Response)=>{
+  const {getmail}= req.body;
+  const user= await prisma.user.findFirst(
+  {
+    where:{
+      email:getmail,
+      NOT:{
+        role:"ADMIN"
+      }
+    }
+  }
+  )
+  if(!user){
+    res.json({msg:"No user Found !. please Signup first. "});
+    return ;
+  }
+
+  const autoPw= generateRandomCode();
+  // console.log(autoPw);
+  await prisma.user.update({
+    where:{
+      email:getmail,
+    },
+    data:{
+
+      resetCode:autoPw
+    }
+  })
+
+  doMail(PasswordReset(getmail,autoPw));
+  
+  res.status(200).json({
+    msg:"Code has been send to your email!"
+  })
+
+
+}
+
+export const verifyCode=async(req:Request,res:Response)=>{
+
+  const {email,code,newPassword}= req.body;
+
+  const user= await prisma.user.findFirst({
+    where:{
+      email
+    }
+  })
+  if(!user){
+    throw new ApiError(400, "User not Found")
+  }
+
+  if(user.resetCode!=code){
+    throw new ApiError(400, "Code didn't match with send code ")
+  }
+  const hashedPassword= await bcrypt.hash(newPassword,10);
+
+  await  prisma.user.update({
+    where:{
+      email
+    },data:{
+      password:hashedPassword
+    }
+  })
+  await prisma.user.update({
+    where:{
+      email
+    },
+    data:{
+      resetCode:null
+    }
+  })
+  
+
+  res.status(200).json({msg:"Password Changed!!"})
+
+}

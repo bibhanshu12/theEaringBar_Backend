@@ -34,6 +34,7 @@ export const addAddressValidate = yup.object({
   state: yup.string().required(),
 });
 
+
 export const updateAddressValidate = yup.object({
   street: yup.string().optional(),
   zipCode: yup.string().max(10, "can have only upto 10 digits").required(),

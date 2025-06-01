@@ -8,6 +8,7 @@ import { addProductSchema, updateProductSchema, createOfferSchema } from "../val
 import * as yup from 'yup';
 import { ValidationError } from 'yup';
 import { cloudinaryDestroy } from "../utils/cloudinaryDestroy";
+import { doMail } from "../utils/transportEmail";
 
 interface ColorInput {
   name: string;
@@ -144,8 +145,8 @@ export const addProduct = async (
   next: NextFunction
 ) => {
   // DEBUG: what came in?
-  console.log("BODY:", req.body);
-  console.log("FILES:", req.files);
+  // console.log("BODY:", req.body);
+  // console.log("FILES:", req.files);
 
   // Check if req.files exists and is iterable
   if (!req.files || !Array.isArray(req.files)) {
@@ -426,12 +427,16 @@ export const allProducts = async (req: Request, res: Response) => {
             color:true
           }
         },
-      }
+      },
+      
     });
     if (!allProducts) {
       throw new ApiError(400, "No any post found !");
     }
 
+   
+   
+    
     // Optionally pull page & limit from req.query
     const page = Number(req.query.page) || 1;
     const limit = Number(req.query.limit) || allProducts.length;
@@ -499,6 +504,85 @@ export const getProductsById=async(req:Request,res:Response)=>{
     throw new ApiError(400,"Failed to fetch a Product !")
   }
 }
+
+export const getSearchProduct=async(req:Request,res:Response)=>{
+
+try {
+    const { q } = req.query;
+
+    if (!q || typeof q !== "string") {
+      return res.status(400).json({
+        success: false,
+        message: "Search query is required.",
+      });
+    }
+
+    const products = await prisma.product.findMany({
+      where: {
+        OR: [
+          {
+            name: {
+              contains: q,
+              mode: "insensitive", // case-insensitive
+            },
+          },
+          {
+            description: {
+              contains: q,
+              mode: "insensitive",
+            },
+          },
+        ],
+      },
+      include:{
+        images:true
+      },
+      orderBy: {
+        name: "asc",
+      },
+    });
+
+    res.json({
+      success: true,
+      message: "Search results fetched successfully.",
+      data: products,
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: error.message || "Something went wrong.",
+    });
+  }
+
+}
+
+export const batchProductsByIds=async(req:Request,res:Response)=>{
+
+ try {
+    const { ids } = req.body;
+
+    if (!Array.isArray(ids) || ids.length === 0) {
+      return res.status(400).json({ status: 'error', message: 'Invalid or missing product IDs' });
+    }
+
+    const products = await prisma.product.findMany({
+      where: {
+        id: {
+          in: ids,
+        },
+      },
+      orderBy:{
+        name:"asc"
+      }
+    });
+
+    res.json({ status: 'success', data: products });
+  } catch (error: any) {
+    res.status(500).json({ status: 'error', message: error.message });
+  }
+
+}
+
 
 export const deleteProduct = async (req: Request, res: Response) => {
   const { productId } = req.params;
@@ -756,7 +840,6 @@ export const updateOffer = async (req: Request, res: Response) => {
     data: updatedOffer,
   });
 };
-
 
 
 
