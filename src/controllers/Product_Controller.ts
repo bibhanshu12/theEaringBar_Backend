@@ -421,7 +421,6 @@ export const allProducts = async (req: Request, res: Response) => {
       include:{
         images:true,
         categories:true,
-        offers:true,
         colors:{
           include:{
             color:true
@@ -453,6 +452,15 @@ export const allProducts = async (req: Request, res: Response) => {
 export const freshDrops = async (req: Request, res: Response) => {
   try {
     const latestProducts = await prisma.product.findMany({
+      include:{
+        images:true,
+        categories:true,
+        colors:{
+          include:{
+            color:true
+          }
+        }
+      },
       orderBy: {
         createdAt: 'desc', // newest first
       },
