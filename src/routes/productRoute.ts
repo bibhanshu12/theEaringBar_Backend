@@ -1,5 +1,5 @@
 import express from "express";
-import { addProduct, allProducts, assignOfferToProduct, batchProductsByIds, createOffer, deleteOffer, deleteProduct, getAllLinkedProductByOfferId, getAllOffer, getProductsById, getProductsColorById, getSearchProduct, updateOffer, updateProduct } from "../controllers/Product_Controller";
+import { addProduct, allProducts, assignOfferToProduct, batchProductsByIds, createOffer, deleteOffer, deleteProduct, freshDrops, getAllLinkedProductByOfferId, getAllOffer, getProductsById, getProductsColorById, getSearchProduct, updateOffer, updateProduct } from "../controllers/Product_Controller";
 import { validate } from "../middleware/validateMiddleware";
 import { addProductSchema, updateProductSchema } from "../validation/index";
 import { upload } from "../middleware/multerfileuploader";
@@ -44,6 +44,7 @@ router.post(
 router.delete("/delproduct/:productId",isauthenticated,isAdmin,deleteProduct);
 router.get("/allproducts",allProducts);
 router.get('/singleproduct/:id',getProductsById);
+router.get("/freshdrops",catchAsync(freshDrops))
 router.get('/product/getcolors/:id',isauthenticated,getProductsColorById)
 router.post('/products/batch',isauthenticated,catchAsync(batchProductsByIds))
 // router.put('/updatecolors/:productId',updateProductColorStock);

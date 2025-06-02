@@ -450,6 +450,29 @@ export const allProducts = async (req: Request, res: Response) => {
   }
 };
 
+export const freshDrops = async (req: Request, res: Response) => {
+  try {
+    const latestProducts = await prisma.product.findMany({
+      orderBy: {
+        createdAt: 'desc', // newest first
+      },
+      take: 10, // limit to 10 latest products (optional)
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: "Latest products fetched successfully",
+      data: latestProducts,
+    });
+  } catch (error) {
+    console.error("Error fetching latest products:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong while fetching latest products",
+    });
+  }
+};
+
 export const getProductsColorById = async (req: Request, res: Response) => {
   try {
     const productid = req.params.id;
