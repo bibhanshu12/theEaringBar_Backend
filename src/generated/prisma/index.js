@@ -354,7 +354,7 @@ const config = {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "postgres://avnadmin:AVNS_ztfTawvemM-0nkJ1GLn@pg-170dd367-ecommerce-database1.l.aivencloud.com:24727/edb?sslmode=require"
+        
       }
     }
   },
